@@ -1,0 +1,33 @@
+.headerWrapper {
+  max-width: 1920px;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  display: flex;
+  width: calc(1920px - 640px);
+  justify-content: space-between;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: row;
+  color: #8585AD;
+}
+
+.navItemActive {
+  color: #F2F2F3;
+}
+
+.nav {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 495px;
+}
