@@ -1,0 +1,25 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  max-height: 873px;
+  overflow-y: scroll;
+}
+
+.heading {
+  text-align: left;
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(auto, 1fr));
+}
+
+.navItem {
+  text-align: center;
+}
+
+.ingredientsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+}

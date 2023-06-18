@@ -3,7 +3,6 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 import appHeader from './app-header.module.css';
 
 export default function AppHeader() {
-  console.log(appHeader);
   return (
     <header className={appHeader.headerWrapper}>
       <div className={appHeader.header}>
