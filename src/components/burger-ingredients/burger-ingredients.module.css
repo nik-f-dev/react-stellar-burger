@@ -21,3 +21,10 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
 }
+
+@media screen and (max-width: 1280px) {
+  .ingredientsWrapper {
+    max-height: 560px;
+  }
+}
+

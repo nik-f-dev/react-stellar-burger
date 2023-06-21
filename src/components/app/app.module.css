@@ -12,3 +12,18 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+.header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: #1C1C21;
+}
+
+@media screen and (max-width: 1280px) {
+  .main {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
+}

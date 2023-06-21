@@ -1,11 +1,11 @@
 import burgerConstructor from './burger-constructor.module.css';
-import { Button, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import priceLogo from './../../images/price-logo.svg';
 
 export default function BurgerConstructor({ ingredients, removeIngredient }) {
   const ingredientPrice = ingredients.reduce((acc, current) => acc + current.price, 0);
   return (
-    <section className={`${burgerConstructor.section} mt-25`}>
+    <section className={`${burgerConstructor.section}`}>
       <div className='mr-4'>
         {ingredients.map((ingredient, index) => (
           ingredient.type === 'bun' &&
@@ -16,6 +16,7 @@ export default function BurgerConstructor({ ingredients, removeIngredient }) {
           price={ingredient.price}
           key={index}
           thumbnail={ingredient.image}
+          extraClass={burgerConstructor.shoppingCartElement}
           />
         ))}
       </div>
@@ -23,14 +24,17 @@ export default function BurgerConstructor({ ingredients, removeIngredient }) {
       <div className={`${burgerConstructor.shoppingCart} mb-2 mt-4 custom-scroll`}>
         {ingredients.map((ingredient, index) => (
           ingredient.type !== 'bun' &&
-          <ConstructorElement
-          text={ingredient.name}
-          key={index}
-          price={ingredient.price}
-          thumbnail={ingredient.image}
-          handleClose={() => removeIngredient(ingredient.id)}
-          extraClass={burgerConstructor.shoppingCartElement}
-          />
+          <div className={burgerConstructor.shoppingCartWrapper}>
+            <DragIcon type="primary" />
+            <ConstructorElement
+            text={ingredient.name}
+            key={index}
+            price={ingredient.price}
+            thumbnail={ingredient.image}
+            handleClose={() => removeIngredient(ingredient.id)}
+            extraClass={`${burgerConstructor.shoppingCartElement} ml-2`}
+            />
+          </div>
          ))}
       </div>
 
@@ -44,6 +48,7 @@ export default function BurgerConstructor({ ingredients, removeIngredient }) {
           price={ingredient.price}
           key={index}
           thumbnail={ingredient.image}
+          extraClass={burgerConstructor.shoppingCartElement}
         />
         ))}
       </div>

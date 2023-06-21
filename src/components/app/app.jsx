@@ -45,7 +45,9 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <AppHeader />
+      <header className={styles.header}>
+        <AppHeader />
+      </header>
       <main className={styles.main}>
         {isLoading && 'Загрузка...'}
         {hasError && 'Произошла ошибка'}
