@@ -2,29 +2,3 @@ body {
   margin: 0;
   max-height: 100vh;
 }
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #8585AD;
-  border: 1px solid black;
-}
-
-::-moz-scrollbar {
-  width: 10px;
-}
-
-::-moz-scrollbar-track {
-  background-color: transparent;
-}
-
-::-moz-scrollbar-thumb {
-  background-color: #8585AD;
-  border: 1px solid black;
-}

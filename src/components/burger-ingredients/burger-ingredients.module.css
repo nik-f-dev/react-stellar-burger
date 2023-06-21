@@ -2,21 +2,19 @@
   display: flex;
   flex-direction: column;
   width: 600px;
-  max-height: 873px;
-  overflow-y: scroll;
 }
 
 .heading {
   text-align: left;
 }
 
-.nav {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(auto, 1fr));
-}
-
 .navItem {
   text-align: center;
+}
+
+.ingredientsWrapper {
+  max-height: 660px;
+  overflow-y: scroll;
 }
 
 .ingredientsContainer {

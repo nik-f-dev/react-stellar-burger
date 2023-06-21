@@ -8,7 +8,10 @@
 .element {
   display: flex;
   flex-direction: column;
-  width: 272px
+  width: 272px;
+  max-height: 208px;
+  position: relative;
+  cursor: pointer;
 }
 
 .description {

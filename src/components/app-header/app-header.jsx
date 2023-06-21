@@ -7,16 +7,16 @@ export default function AppHeader() {
     <header className={appHeader.headerWrapper}>
       <div className={appHeader.header}>
         <nav className={appHeader.nav}>
-          <div className={`${appHeader.navItem} pl-5 pr-5 pb-5 pt-5 mr-2 mt-4 mb-4`}>
+          <div className={`${appHeader.navItem} pl-5 pr-5 pb-4 pt-4 mr-2 mt-4 mb-4`}>
             <BurgerIcon type="primary" />
             <p className="text text_type_main-default ml-2">
               Конструктор
             </p>
           </div>
 
-          <div className={`${appHeader.navItem} pl-5 pr-5 pb-5 pt-5 mr-2 mt-4 mb-4`}>
+          <div className={`${appHeader.navItem} pl-5 pr-5 pb-4 pt-4 mr-2 mt-4 mb-4`}>
             <ListIcon type="secondary" />
-            <p className="text text_type_main-default ml-2">
+            <p className="text text_type_main-default text_color_inactive ml-2">
               Лента заказов
             </p>
           </div>
@@ -26,9 +26,9 @@ export default function AppHeader() {
           </div>
         </nav>
 
-        <div className={`${appHeader.navItem} pl-5 pr-5 pb-5 pt-5 mt-4 mb-4`}>
+        <div className={`${appHeader.navItem} pl-5 pr-5 pb-4 pt-4 mt-4 mb-4`}>
           <ProfileIcon type="secondary" />
-          <p className="text text_type_main-default ml-2">
+          <p className="text text_type_main-default text_color_inactive ml-2">
             Личный кабинет
           </p>
         </div>

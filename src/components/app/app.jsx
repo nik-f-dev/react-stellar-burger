@@ -6,6 +6,15 @@ import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
 
+function generateUniqueId() {
+  const timeStamp = Date.now().toString(36);
+
+  // Генерируем случайное число в диапазоне от 0 до 100000
+  const randomNum = Math.floor(Math.random() * 100000).toString(36);
+
+  return `${timeStamp}-${randomNum}`;
+}
+
 function App() {
   const [state, setState] = useState({
     isLoading: false,
@@ -22,6 +31,16 @@ function App() {
       });
   }, [])
 
+  const [ingredients, setIngredients] = useState([]);
+
+  const addIngredient = (ingredient) => {
+      setIngredients((ingredients) => ([...ingredients, {...ingredient, id: generateUniqueId()}]));
+  }
+
+  const removeIngredient = (ingredientId) => {
+    setIngredients(ingredients.filter((item) => item.id !== ingredientId));
+  }
+
   const { isLoading, hasError, data } = state;
 
   return (
@@ -33,8 +52,8 @@ function App() {
         {!isLoading &&
           !hasError &&
           data.data &&
-          <BurgerIngredients ingredients={data.data}/>}
-        <BurgerConstructor />
+          <BurgerIngredients addIngredient={addIngredient} ingredients={data.data} currentIngredients={ingredients} removeIngredient={removeIngredient} />}
+        <BurgerConstructor ingredients={ingredients} removeIngredient={removeIngredient} />
       </main>
     </div>
   );
