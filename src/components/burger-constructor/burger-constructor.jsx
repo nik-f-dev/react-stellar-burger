@@ -2,7 +2,7 @@ import burgerConstructor from './burger-constructor.module.css';
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import priceLogo from './../../images/price-logo.svg';
 
-export default function BurgerConstructor({ ingredients, removeIngredient }) {
+export default function BurgerConstructor({ ingredients, removeIngredient, openOrderModal }) {
   const ingredientPrice = ingredients.reduce((acc, current) => acc + current.price, 0);
   return (
     <section className={`${burgerConstructor.section}`}>
@@ -21,10 +21,10 @@ export default function BurgerConstructor({ ingredients, removeIngredient }) {
         ))}
       </div>
 
-      <div className={`${burgerConstructor.shoppingCart} mb-2 mt-4 custom-scroll`}>
+      <ul className={`${burgerConstructor.shoppingCart} mb-2 mt-4 custom-scroll`}>
         {ingredients.map((ingredient, index) => (
           ingredient.type !== 'bun' &&
-          <div className={burgerConstructor.shoppingCartWrapper}>
+          <li className={burgerConstructor.shoppingCartWrapper}>
             <DragIcon type="primary" />
             <ConstructorElement
             text={ingredient.name}
@@ -34,9 +34,9 @@ export default function BurgerConstructor({ ingredients, removeIngredient }) {
             handleClose={() => removeIngredient(ingredient.id)}
             extraClass={`${burgerConstructor.shoppingCartElement} ml-2`}
             />
-          </div>
+          </li>
          ))}
-      </div>
+      </ul>
 
       <div className='mr-4 mt-2'>
         {ingredients.map((ingredient, index) => (
@@ -58,11 +58,10 @@ export default function BurgerConstructor({ ingredients, removeIngredient }) {
           <p className="text text_type_digits-medium mr-2">{ingredientPrice}</p>
           <img src={priceLogo} alt="price logo" />
         </div>
-        <Button htmlType="button" type="primary" size="large">
+        <Button htmlType="button" type="primary" size="large" onClick={openOrderModal}>
           Оформить заказ
         </Button>
       </div>
-
     </section>
   )
 }

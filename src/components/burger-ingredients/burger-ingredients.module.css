@@ -20,6 +20,7 @@
 .ingredientsContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+  padding: 0;
 }
 
 @media screen and (max-width: 1280px) {

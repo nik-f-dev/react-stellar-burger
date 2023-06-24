@@ -3,17 +3,11 @@ import { useEffect, useState } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
+import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const url = 'https://norma.nomoreparties.space/api/ingredients';
-
-function generateUniqueId() {
-  const timeStamp = Date.now().toString(36);
-
-  // Генерируем случайное число в диапазоне от 0 до 100000
-  const randomNum = Math.floor(Math.random() * 100000).toString(36);
-
-  return `${timeStamp}-${randomNum}`;
-}
 
 function App() {
   const [state, setState] = useState({
@@ -34,11 +28,29 @@ function App() {
   const [ingredients, setIngredients] = useState([]);
 
   const addIngredient = (ingredient) => {
-      setIngredients((ingredients) => ([...ingredients, {...ingredient, id: generateUniqueId()}]));
+    setIngredients((ingredients) => ([...ingredients, {...ingredient, id: crypto.randomUUID()}]));
   }
 
   const removeIngredient = (ingredientId) => {
     setIngredients(ingredients.filter((item) => item.id !== ingredientId));
+  }
+
+  const [isOpenModal, setIsOpenModal] = useState({
+    orderModal: false,
+    ingredientModal: false,
+    isOpen: false
+  });
+
+  const [ingredient, setIngredient] = useState(null);
+
+  const openIngredientModal = (ingredient) => {
+    setIngredient(ingredient);
+    setIsOpenModal({...isOpenModal, ingredientModal: true, isOpen: true});
+  }
+
+  const openOrderModal = (ingredient) => {
+    setIngredient(ingredient);
+    setIsOpenModal({...isOpenModal, orderModal: true, isOpen: true});
   }
 
   const { isLoading, hasError, data } = state;
@@ -54,9 +66,13 @@ function App() {
         {!isLoading &&
           !hasError &&
           data.data &&
-          <BurgerIngredients addIngredient={addIngredient} ingredients={data.data} currentIngredients={ingredients} removeIngredient={removeIngredient} />}
-        <BurgerConstructor ingredients={ingredients} removeIngredient={removeIngredient} />
+          <BurgerIngredients addIngredient={addIngredient} ingredients={data.data} currentIngredients={ingredients} removeIngredient={removeIngredient} getIngredient={openIngredientModal} />}
+        <BurgerConstructor ingredients={ingredients} removeIngredient={removeIngredient} openOrderModal={openOrderModal} />
       </main>
+      <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
+        {isOpenModal.ingredientModal && <IngredientDetails ingredient={ingredient} isOpenModal={isOpenModal}/>}
+        {isOpenModal.orderModal && <OrderDetails />}
+      </Modal>
     </div>
   );
 }
