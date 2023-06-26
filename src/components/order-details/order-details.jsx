@@ -1,7 +1,7 @@
 import styles from './order-details.module.css';
 import checkmark from './../../images/checkmark.svg';
 
-export default function IngredientDetails () {
+export default function OrderDetails () {
   return(
     <div className='mt-30'>
       <h2 className='text text_type_digits-large'>034536</h2>

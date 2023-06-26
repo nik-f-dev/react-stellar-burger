@@ -1,6 +1,8 @@
 import burgerConstructor from './burger-constructor.module.css';
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import priceLogo from './../../images/price-logo.svg';
+import PropTypes from "prop-types";
+import { ingredientsPropType } from './../../utils/prop-types';
 
 export default function BurgerConstructor({ ingredients, removeIngredient, openOrderModal }) {
   const ingredientPrice = ingredients.reduce((acc, current) => acc + current.price, 0);
@@ -24,12 +26,12 @@ export default function BurgerConstructor({ ingredients, removeIngredient, openO
       <ul className={`${burgerConstructor.shoppingCart} mb-2 mt-4 custom-scroll`}>
         {ingredients.map((ingredient, index) => (
           ingredient.type !== 'bun' &&
-          <li className={burgerConstructor.shoppingCartWrapper}>
+          <li className={burgerConstructor.shoppingCartWrapper} key={index}>
             <DragIcon type="primary" />
             <ConstructorElement
             text={ingredient.name}
-            key={index}
             price={ingredient.price}
+            key={index}
             thumbnail={ingredient.image}
             handleClose={() => removeIngredient(ingredient.id)}
             extraClass={`${burgerConstructor.shoppingCartElement} ml-2`}
@@ -65,3 +67,9 @@ export default function BurgerConstructor({ ingredients, removeIngredient, openO
     </section>
   )
 }
+
+BurgerConstructor.propTypes = {
+  ingredients: ingredientsPropType.isRequired,
+  removeIngredient: PropTypes.func.isRequired,
+  openOrderModal: PropTypes.func.isRequired
+};

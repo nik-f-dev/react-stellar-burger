@@ -2,6 +2,8 @@ import burgerIngredients from './burger-ingredients.module.css';
 import { useState, useRef } from 'react';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ingredientsPropType } from './../../utils/prop-types';
+import PropTypes from "prop-types";
 
 
 export default function BurgerIngredients({ ingredients, addIngredient, currentIngredients, removeIngredient, getIngredient }) {
@@ -64,3 +66,12 @@ export default function BurgerIngredients({ ingredients, addIngredient, currentI
     </section>
   )
 }
+
+BurgerIngredients.propTypes = {
+  ingredients: ingredientsPropType.isRequired,
+  addIngredient: PropTypes.func.isRequired,
+  removeIngredient: PropTypes.func.isRequired,
+  getIngredient: PropTypes.func.isRequired,
+  currentIngredients: ingredientsPropType
+};
+

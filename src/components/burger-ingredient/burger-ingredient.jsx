@@ -1,5 +1,7 @@
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredient from './burger-ingredient.module.css';
+import { ingredientPropType, ingredientsPropType } from './../../utils/prop-types';
+import PropTypes from "prop-types";
 
 export default function BurgerIngredient({ ingredients, ingredient, addIngredient, removeIngredient, getIngredient }) {
   const count = ingredients.filter(_ingredient => _ingredient._id === ingredient._id).length;
@@ -25,3 +27,11 @@ export default function BurgerIngredient({ ingredients, ingredient, addIngredien
     </li>
   )
 }
+
+BurgerIngredient.propTypes = {
+  ingredients: ingredientsPropType.isRequired,
+  ingredient: ingredientPropType,
+  addIngredient: PropTypes.func.isRequired,
+  removeIngredient: PropTypes.func.isRequired,
+  getIngredient: PropTypes.func.isRequired
+};
