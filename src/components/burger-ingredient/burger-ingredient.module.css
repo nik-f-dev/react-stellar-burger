@@ -1,0 +1,21 @@
+.priceContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.element {
+  display: flex;
+  flex-direction: column;
+  width: 272px;
+  max-height: 208px;
+  position: relative;
+  cursor: pointer;
+}
+
+.description {
+  text-align: center;
+  min-height: 48px;
+  text-overflow: ellipsis;
+}

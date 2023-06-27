@@ -1,0 +1,35 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+}
+
+.heading {
+  text-align: left;
+}
+
+.navItem {
+  text-align: center;
+}
+
+.ingredientsWrapper {
+  max-height: 660px;
+  overflow-y: scroll;
+}
+
+.ingredientsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(272px, 1fr));
+  padding: 0;
+}
+
+.tabWrapper {
+  display: flex;
+}
+
+@media screen and (max-width: 1280px) {
+  .ingredientsWrapper {
+    max-height: 560px;
+  }
+}
+

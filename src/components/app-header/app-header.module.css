@@ -1,0 +1,58 @@
+.header {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: #1C1C21;
+}
+
+.navItem {
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+}
+
+.absoluteNavItem {
+  position: absolute;
+  left: 186px;
+}
+
+.nav {
+  width: 1280px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.navWrapper {
+  width: 1280px;
+}
+
+.navItemWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.logo {
+  margin: 19px 0 0 22px;
+}
+
+@media screen and (max-width: 1300px) {
+  .nav {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 1120px) {
+  .absoluteNavItem {
+    position: static;
+  }
+
+  .absoluteNavItem {
+    position: static;
+  }
+
+  .navItemWrapper {
+    flex-direction: column;
+  }
+}

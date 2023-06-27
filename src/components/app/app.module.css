@@ -1,7 +1,22 @@
 .app {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  align-items: center;
   background-color: #131316;
   color: #f2f2f3;
+}
+
+.main {
+  width: 1240px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 1280px) {
+  .main {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+  }
 }

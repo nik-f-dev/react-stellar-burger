@@ -1,0 +1,40 @@
+.heading {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  width: 640px;
+  min-height: 66px;
+}
+
+.ingredientImg {
+  text-align: center;
+}
+
+.ingredientName {
+  text-align: center;
+}
+
+.ingredientDescription {
+  text-align: center;
+}
+
+.ingredientCalories {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 0;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 125px;
+  height: 58px;
+}
+
+.text {
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
