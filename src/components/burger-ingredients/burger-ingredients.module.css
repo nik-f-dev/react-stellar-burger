@@ -23,6 +23,10 @@
   padding: 0;
 }
 
+.tabWrapper {
+  display: flex;
+}
+
 @media screen and (max-width: 1280px) {
   .ingredientsWrapper {
     max-height: 560px;

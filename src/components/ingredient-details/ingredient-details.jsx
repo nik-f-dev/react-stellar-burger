@@ -4,6 +4,7 @@ import { ingredientPropType } from './../../utils/prop-types';
 export default function IngredientDetails ({ingredient}) {
   return(
     <div>
+      <h2 className={`${ingredientModule.heading} mt-10 text text_type_main-large`}>Детали ингредиента</h2>
       <div className={`${ingredientModule.ingredientImg} mr-5 ml-5`}>
         <img src={ingredient.image_large} alt={ingredient.name} />
       </div>

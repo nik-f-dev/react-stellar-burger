@@ -37,7 +37,7 @@ export default function BurgerIngredients({ ingredients, addIngredient, currentI
   return (
     <section className={burgerIngredients.section}>
       <h1 className={`${burgerIngredients.heading} mt-10 mb-5 text text_type_main-large`}>Соберите бургер</h1>
-      <div style={{ display: 'flex' }} className='mb-10'>
+      <div className={`${burgerIngredients.tabWrapper} mb-10`}>
         <Tab value="bun" active={current === 'bun'} onClick={() => handleNavigationClick('bun')}>
           Булки
         </Tab>

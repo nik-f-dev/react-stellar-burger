@@ -1,3 +1,15 @@
+.heading {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  width: 640px;
+  min-height: 66px;
+}
+
+.ingredientImg {
+  text-align: center;
+}
+
 .ingredientName {
   text-align: center;
 }

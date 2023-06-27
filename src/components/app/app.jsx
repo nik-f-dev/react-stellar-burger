@@ -18,12 +18,17 @@ function App() {
 
   useEffect(() => {
     fetch(url)
-      .then(res => res.json())
-      .then(data => setState({ ...state, data, isLoading: false }))
-      .catch(e => {
-        setState({ ...state, hasError: true, isLoading: false });
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка ${res.status}`);
+      })
+      .then(data => setState(prevState => ({ ...prevState, data, isLoading: false })))
+      .catch(error => {
+        setState(prevState => ({ ...prevState, hasError: true, isLoading: false }));
       });
-  }, [])
+  }, []);
 
   const [ingredients, setIngredients] = useState([]);
 
@@ -37,29 +42,27 @@ function App() {
 
   const [isOpenModal, setIsOpenModal] = useState({
     orderModal: false,
-    ingredientModal: false,
-    isOpen: false
+    ingredientModal: false
   });
 
   const [ingredient, setIngredient] = useState(null);
 
   const openIngredientModal = (ingredient) => {
     setIngredient(ingredient);
-    setIsOpenModal({...isOpenModal, ingredientModal: true, isOpen: true});
+    setIsOpenModal({...isOpenModal, ingredientModal: true});
   }
 
   const openOrderModal = (ingredient) => {
     setIngredient(ingredient);
-    setIsOpenModal({...isOpenModal, orderModal: true, isOpen: true});
+    setIsOpenModal({...isOpenModal, orderModal: true});
   }
 
+  const isOpen = isOpenModal.ingredientModal || isOpenModal.orderModal;
   const { isLoading, hasError, data } = state;
 
   return (
     <div className={styles.app}>
-      <header className={styles.header}>
-        <AppHeader />
-      </header>
+      <AppHeader />
       <main className={styles.main}>
         {isLoading && 'Загрузка...'}
         {hasError && 'Произошла ошибка'}
@@ -69,10 +72,10 @@ function App() {
           <BurgerIngredients addIngredient={addIngredient} ingredients={data.data} currentIngredients={ingredients} removeIngredient={removeIngredient} getIngredient={openIngredientModal} />}
         <BurgerConstructor ingredients={ingredients} removeIngredient={removeIngredient} openOrderModal={openOrderModal} />
       </main>
-      <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal}>
+      {isOpen && <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} isOpen={isOpen}>
         {isOpenModal.ingredientModal && <IngredientDetails ingredient={ingredient} isOpenModal={isOpenModal}/>}
         {isOpenModal.orderModal && <OrderDetails />}
-      </Modal>
+      </Modal>}
     </div>
   );
 }

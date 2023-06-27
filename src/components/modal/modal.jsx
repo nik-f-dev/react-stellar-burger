@@ -7,12 +7,11 @@ import PropTypes from "prop-types";
 
 const modalRootElement = document.querySelector("#react-modals");
 
-export default function Modal({ children, isOpenModal, setIsOpenModal }) {
+export default function Modal({ children, isOpenModal, setIsOpenModal, isOpen }) {
   function closeModal() {
     setIsOpenModal({...isOpenModal,
       orderModal: false,
-      ingredientModal: false,
-      isOpen: false
+      ingredientModal: false
     });
   }
 
@@ -23,22 +22,19 @@ export default function Modal({ children, isOpenModal, setIsOpenModal }) {
   }
 
   useEffect(() => {
-    if (isOpenModal.isOpen) {
-    document.addEventListener('keydown', handleKeyDown);
-    } else {
-      document.removeEventListener('keydown', handleKeyDown);
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown);
     }
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [isOpenModal]);
+  }, [isOpen]);
 
   return ReactDOM.createPortal(
     (
-      <div className={isOpenModal.isOpen ? `${modal.active}`: `${modal.inactive}`}>
+      <div className={isOpen ? `${modal.active}`: `${modal.inactive}`}>
         <ModalOverlay closeModal={closeModal}/>
         <div className={modal.modalBody}>
-          {isOpenModal.ingredientModal && <h2 className={`${modal.heading} mt-10 text text_type_main-large`}>Детали ингредиента</h2>}
           <button className={modal.closeButton} onClick={closeModal}>
             <CloseIcon type="primary" />
           </button>
@@ -55,7 +51,6 @@ Modal.propTypes = {
   isOpenModal: PropTypes.shape({
     orderModal: PropTypes.bool.isRequired,
     ingredientModal: PropTypes.bool.isRequired,
-    isOpen: PropTypes.bool.isRequired
   }).isRequired,
   setIsOpenModal: PropTypes.func.isRequired
 }
