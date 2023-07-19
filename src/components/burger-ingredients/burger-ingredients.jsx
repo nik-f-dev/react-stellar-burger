@@ -5,7 +5,6 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientsPropType } from './../../utils/prop-types';
 import PropTypes from "prop-types";
 
-
 export default function BurgerIngredients({ ingredients, addIngredient, currentIngredients, removeIngredient, getIngredient }) {
   const [current, setCurrent] = useState('bun');
 
@@ -62,7 +61,6 @@ export default function BurgerIngredients({ ingredients, addIngredient, currentI
           {main.map((ingredient) => <BurgerIngredient addIngredient={addIngredient} key={ingredient._id} ingredient={ingredient} ingredients={currentIngredients} removeIngredient={removeIngredient} getIngredient={getIngredient} />)}
         </ul>
       </div>
-
     </section>
   )
 }
