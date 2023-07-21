@@ -4,9 +4,11 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientsPropType } from './../../utils/prop-types';
 import PropTypes from "prop-types";
+import { useSelector } from 'react-redux';
 
-export default function BurgerIngredients({ ingredients, addIngredient, currentIngredients, removeIngredient, getIngredient }) {
+export default function BurgerIngredients({ getIngredient }) {
   const [current, setCurrent] = useState('bun');
+  const ingredients = useSelector(state => state.burgerIngredients.ingredients);
 
   const buns = ingredients.filter(item => item.type === 'bun');
   const main = ingredients.filter(item => item.type === 'main');
@@ -50,15 +52,15 @@ export default function BurgerIngredients({ ingredients, addIngredient, currentI
       <div className={`${burgerIngredients.ingredientsWrapper} custom-scroll`}>
         <h2 ref={bunRef} className={`${burgerIngredients.heading} mb-6 text text_type_main-medium`}>Булки</h2>
         <ul className={burgerIngredients.ingredientsContainer}>
-          {buns.map((ingredient) => <BurgerIngredient addIngredient={addIngredient} key={ingredient._id} ingredient={ingredient} ingredients={currentIngredients} removeIngredient={removeIngredient} getIngredient={getIngredient} />)}
+          {buns.map((ingredient) => <BurgerIngredient key={ingredient._id} ingredient={ingredient} getIngredient={getIngredient} />)}
         </ul>
         <h2 ref={sauceRef} className={`${burgerIngredients.heading} mt-2 mb-5 text text_type_main-medium`}>Соусы</h2>
         <ul className={burgerIngredients.ingredientsContainer}>
-          {sauces.map((ingredient) => <BurgerIngredient addIngredient={addIngredient} key={ingredient._id} ingredient={ingredient} ingredients={currentIngredients} removeIngredient={removeIngredient} getIngredient={getIngredient} />)}
+          {sauces.map((ingredient) => <BurgerIngredient key={ingredient._id} ingredient={ingredient} getIngredient={getIngredient} />)}
         </ul>
         <h2 ref={mainRef} className={`${burgerIngredients.heading} mt-2 mb-6 text text_type_main-medium`}>Начинки</h2>
         <ul className={burgerIngredients.ingredientsContainer}>
-          {main.map((ingredient) => <BurgerIngredient addIngredient={addIngredient} key={ingredient._id} ingredient={ingredient} ingredients={currentIngredients} removeIngredient={removeIngredient} getIngredient={getIngredient} />)}
+          {main.map((ingredient) => <BurgerIngredient key={ingredient._id} ingredient={ingredient} getIngredient={getIngredient} />)}
         </ul>
       </div>
     </section>
@@ -66,10 +68,6 @@ export default function BurgerIngredients({ ingredients, addIngredient, currentI
 }
 
 BurgerIngredients.propTypes = {
-  ingredients: ingredientsPropType.isRequired,
-  addIngredient: PropTypes.func.isRequired,
-  removeIngredient: PropTypes.func.isRequired,
   getIngredient: PropTypes.func.isRequired,
-  currentIngredients: ingredientsPropType
 };
 
