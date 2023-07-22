@@ -1,19 +1,26 @@
 import burgerConstructor from './burger-constructor.module.css';
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import priceLogo from './../../images/price-logo.svg';
-import PropTypes from "prop-types";
 import { useDispatch, useSelector } from 'react-redux';
 import { DELETE_INGREDIENT } from "../../services/actions/burger-constructor";
+import { openModal } from '../../services/actions/modal';
+import { getOrder } from '../../services/actions/order-details';
 
-export default function BurgerConstructor({ openOrderModal }) {
+export default function BurgerConstructor() {
   const dispatch = useDispatch();
 
   const ingredients = useSelector(state => state.burgerConstructor.ingredientsConstructor);
+  const ingredientsId = ingredients.map(ingredient => ingredient._id);
+
+  const openOrderModal = () => {
+    dispatch(getOrder(ingredientsId));
+    dispatch(openModal('order'));
+  }
 
   const removeIngredient = (ingredientId) => {
     dispatch({ type: DELETE_INGREDIENT, id: ingredientId });
   }
-  console.log(ingredients);
+
   const ingredientPrice = ingredients.reduce((acc, current) => acc + current.price, 0);
   return (
     <section className={`${burgerConstructor.section}`}>
@@ -76,7 +83,3 @@ export default function BurgerConstructor({ openOrderModal }) {
     </section>
   )
 }
-
-BurgerConstructor.propTypes = {
-  openOrderModal: PropTypes.func.isRequired
-};

@@ -1,7 +1,18 @@
+import { useEffect } from 'react';
 import ingredientModule from './ingredient-details.module.css';
-import { ingredientPropType } from './../../utils/prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearIngredient } from '../../services/actions/ingredient-details';
 
-export default function IngredientDetails ({ingredient}) {
+export default function IngredientDetails () {
+  const dispatch = useDispatch();
+  const ingredient = useSelector(state => state.ingredientDetails.ingredient);
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearIngredient());
+    };
+  }, [dispatch]);
+
   return(
     <div>
       <h2 className={`${ingredientModule.heading} mt-10 text text_type_main-large`}>Детали ингредиента</h2>
@@ -30,7 +41,3 @@ export default function IngredientDetails ({ingredient}) {
     </div>
   )
 }
-
-IngredientDetails.propTypes = {
-  ingredient: ingredientPropType.isRequired
-};

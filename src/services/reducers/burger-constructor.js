@@ -2,6 +2,7 @@ import { ADD_INGREDIENT, DELETE_INGREDIENT } from "../actions/burger-constructor
 
 const burgerConstructorInitialState = {
   ingredientsConstructor: [],
+  bun: null
 }
 
 export const burgerConstructorReducer = (state = burgerConstructorInitialState, action) => {

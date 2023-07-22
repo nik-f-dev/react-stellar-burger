@@ -2,11 +2,9 @@ import burgerIngredients from './burger-ingredients.module.css';
 import { useState, useRef } from 'react';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientsPropType } from './../../utils/prop-types';
-import PropTypes from "prop-types";
 import { useSelector } from 'react-redux';
 
-export default function BurgerIngredients({ getIngredient }) {
+export default function BurgerIngredients() {
   const [current, setCurrent] = useState('bun');
   const ingredients = useSelector(state => state.burgerIngredients.ingredients);
 
@@ -52,22 +50,17 @@ export default function BurgerIngredients({ getIngredient }) {
       <div className={`${burgerIngredients.ingredientsWrapper} custom-scroll`}>
         <h2 ref={bunRef} className={`${burgerIngredients.heading} mb-6 text text_type_main-medium`}>Булки</h2>
         <ul className={burgerIngredients.ingredientsContainer}>
-          {buns.map((ingredient) => <BurgerIngredient key={ingredient._id} ingredient={ingredient} getIngredient={getIngredient} />)}
+          {buns.map((ingredient) => <BurgerIngredient key={ingredient._id} ingredient={ingredient} />)}
         </ul>
         <h2 ref={sauceRef} className={`${burgerIngredients.heading} mt-2 mb-5 text text_type_main-medium`}>Соусы</h2>
         <ul className={burgerIngredients.ingredientsContainer}>
-          {sauces.map((ingredient) => <BurgerIngredient key={ingredient._id} ingredient={ingredient} getIngredient={getIngredient} />)}
+          {sauces.map((ingredient) => <BurgerIngredient key={ingredient._id} ingredient={ingredient} />)}
         </ul>
         <h2 ref={mainRef} className={`${burgerIngredients.heading} mt-2 mb-6 text text_type_main-medium`}>Начинки</h2>
         <ul className={burgerIngredients.ingredientsContainer}>
-          {main.map((ingredient) => <BurgerIngredient key={ingredient._id} ingredient={ingredient} getIngredient={getIngredient} />)}
+          {main.map((ingredient) => <BurgerIngredient key={ingredient._id} ingredient={ingredient} />)}
         </ul>
       </div>
     </section>
   )
 }
-
-BurgerIngredients.propTypes = {
-  getIngredient: PropTypes.func.isRequired,
-};
-

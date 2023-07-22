@@ -1,5 +1,5 @@
 import styles from "./app.module.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import AppHeader from "../app-header/app-header";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
@@ -10,6 +10,8 @@ import { getIngredients } from "../../services/actions/burger-ingredients";
 import { useDispatch, useSelector } from "react-redux";
 
 function App() {
+  const modal = useSelector(state => state.modal);
+
   const dispatch = useDispatch();
 
   const { isLoading, hasError, error } = useSelector(state => ({
@@ -22,25 +24,6 @@ function App() {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const [isOpenModal, setIsOpenModal] = useState({
-    orderModal: false,
-    ingredientModal: false
-  });
-
-  const [ingredient, setIngredient] = useState(null);
-
-  const openIngredientModal = (ingredient) => {
-    setIngredient(ingredient);
-    setIsOpenModal({ ...isOpenModal, ingredientModal: true });
-  }
-
-  const openOrderModal = (ingredient) => {
-    setIngredient(ingredient);
-    setIsOpenModal({ ...isOpenModal, orderModal: true });
-  }
-
-  const isOpen = isOpenModal.ingredientModal || isOpenModal.orderModal;
-
   return (
     <div className={styles.app}>
       <AppHeader />
@@ -49,13 +32,15 @@ function App() {
         {hasError && error}
         {!isLoading &&
           !hasError &&
-          <BurgerIngredients getIngredient={openIngredientModal} />}
-        <BurgerConstructor openOrderModal={openOrderModal} />
+          <BurgerIngredients />}
+        <BurgerConstructor />
       </main>
-      {isOpen && <Modal isOpenModal={isOpenModal} setIsOpenModal={setIsOpenModal} isOpen={isOpen}>
-        {isOpenModal.ingredientModal && <IngredientDetails ingredient={ingredient} isOpenModal={isOpenModal}/>}
-        {isOpenModal.orderModal && <OrderDetails />}
-      </Modal>}
+      {modal.isOpen && (
+        <Modal isOpen={modal.isOpen}>
+          {modal.modalType === 'ingredient' && <IngredientDetails />}
+          {modal.modalType === 'order' && <OrderDetails />}
+        </Modal>
+      )}
     </div>
   );
 }

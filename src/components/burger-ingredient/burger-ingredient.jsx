@@ -1,12 +1,14 @@
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerIngredient from './burger-ingredient.module.css';
-import { ingredientPropType, ingredientsPropType } from './../../utils/prop-types';
+import { ingredientPropType } from './../../utils/prop-types';
 import PropTypes from "prop-types";
 import { ADD_INGREDIENT } from "../../services/actions/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from 'uuid';
+import { getIngredient } from '../../services/actions/ingredient-details';
+import { openModal } from '../../services/actions/modal';
 
-export default function BurgerIngredient({ ingredient, getIngredient }) {
+export default function BurgerIngredient({ ingredient }) {
   const dispatch = useDispatch();
   const ingredients = useSelector(state => state.burgerConstructor.ingredientsConstructor);
   const count = ingredients.filter(_ingredient => _ingredient._id === ingredient._id).length;
@@ -16,8 +18,9 @@ export default function BurgerIngredient({ ingredient, getIngredient }) {
   }
 
   function handleIngredientClick() {
+    dispatch(getIngredient(ingredient));
+    dispatch(openModal('ingredient'));
     addIngredient(ingredient);
-    getIngredient(ingredient);
   }
   return (
     <li className={`${burgerIngredient.element} ml-4 mr-4 mb-8`} onClick={handleIngredientClick}>
@@ -34,5 +37,4 @@ export default function BurgerIngredient({ ingredient, getIngredient }) {
 
 BurgerIngredient.propTypes = {
   ingredient: ingredientPropType,
-  getIngredient: PropTypes.func.isRequired
 };

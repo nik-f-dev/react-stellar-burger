@@ -4,20 +4,20 @@ import modal from './modal.module.css';
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useEffect } from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { closeModal } from "../../services/actions/modal";
 
 const modalRootElement = document.querySelector("#react-modals");
 
-export default function Modal({ children, isOpenModal, setIsOpenModal, isOpen }) {
-  function closeModal() {
-    setIsOpenModal({...isOpenModal,
-      orderModal: false,
-      ingredientModal: false
-    });
+export default function Modal({ children, isOpen }) {
+  const dispatch = useDispatch();
+  function closeModals() {
+    dispatch(closeModal());
   }
 
   function handleKeyDown(e) {
     if (e.key === 'Escape') {
-      closeModal();
+      dispatch(closeModal());
     }
   }
 
@@ -32,10 +32,10 @@ export default function Modal({ children, isOpenModal, setIsOpenModal, isOpen })
 
   return ReactDOM.createPortal(
     (
-      <div className={isOpen ? `${modal.active}`: `${modal.inactive}`}>
-        <ModalOverlay closeModal={closeModal}/>
+      <div className={modal.active}>
+        <ModalOverlay closeModal={closeModals}/>
         <div className={modal.modalBody}>
-          <button className={modal.closeButton} onClick={closeModal}>
+          <button className={modal.closeButton} onClick={closeModals}>
             <CloseIcon type="primary" />
           </button>
           {children}
@@ -48,9 +48,5 @@ export default function Modal({ children, isOpenModal, setIsOpenModal, isOpen })
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
-  isOpenModal: PropTypes.shape({
-    orderModal: PropTypes.bool.isRequired,
-    ingredientModal: PropTypes.bool.isRequired,
-  }).isRequired,
-  setIsOpenModal: PropTypes.func.isRequired
+  isOpen: PropTypes.bool.isRequired,
 }
