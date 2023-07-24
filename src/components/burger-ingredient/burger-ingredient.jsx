@@ -2,29 +2,37 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import burgerIngredient from './burger-ingredient.module.css';
 import { ingredientPropType } from './../../utils/prop-types';
 import PropTypes from "prop-types";
-import { ADD_INGREDIENT } from "../../services/actions/burger-constructor";
 import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuidv4 } from 'uuid';
 import { getIngredient } from '../../services/actions/ingredient-details';
 import { openModal } from '../../services/actions/modal';
+import { useDrag } from 'react-dnd';
 
 export default function BurgerIngredient({ ingredient }) {
   const dispatch = useDispatch();
   const ingredients = useSelector(state => state.burgerConstructor.ingredientsConstructor);
-  const count = ingredients.filter(_ingredient => _ingredient._id === ingredient._id).length;
+  const count = ingredients.filter(item => item._id === ingredient._id).length;
+  console.log(ingredients);
 
-  const addIngredient = (ingredient) => {
-    dispatch({ type: ADD_INGREDIENT, ingredient: ingredient, id: uuidv4() });
-  }
+  const [{isDrag}, drag] = useDrag(() => ({
+    type: 'ingredient',
+    item: { ...ingredient },
+    collect: (monitor) => ({
+      isDrag: !!monitor.isDragging(),
+    })
+  }))
 
   function handleIngredientClick() {
     dispatch(getIngredient(ingredient));
     dispatch(openModal('ingredient'));
-    addIngredient(ingredient);
   }
   return (
-    <li className={`${burgerIngredient.element} ml-4 mr-4 mb-8`} onClick={handleIngredientClick}>
-      <img src={ingredient.image} alt={ingredient.name} className='pl-4 pr-4' />
+    !isDrag &&
+    <li
+      ref={drag}
+      className={`${burgerIngredient.element} ml-4 mr-4 mb-8`}
+      onClick={handleIngredientClick}
+    >
+      <img draggable="false" src={ingredient.image} alt={ingredient.name} className='pl-4 pr-4' />
       <div className={`${burgerIngredient.priceContainer} mt-2 mb-2`}>
         <p className="text text_type_digits-default mr-2">{ingredient.price}</p>
         <CurrencyIcon type="primary" />

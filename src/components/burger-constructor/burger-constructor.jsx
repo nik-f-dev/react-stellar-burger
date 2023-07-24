@@ -2,14 +2,51 @@ import burgerConstructor from './burger-constructor.module.css';
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import priceLogo from './../../images/price-logo.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { DELETE_INGREDIENT } from "../../services/actions/burger-constructor";
+import { DELETE_INGREDIENT, addIngredient } from "../../services/actions/burger-constructor";
 import { openModal } from '../../services/actions/modal';
 import { getOrder } from '../../services/actions/order-details';
+import { useDrop, useDrag } from 'react-dnd';
+import { useMemo } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
 
-  const ingredients = useSelector(state => state.burgerConstructor.ingredientsConstructor);
+  const { ingredients, bun } = useSelector(state => ({
+    ingredients: state.burgerConstructor.ingredientsConstructor,
+    bun: state.burgerConstructor.bun
+  }));
+
+  const [{isHover}, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      dispatch(addIngredient(item));
+    },
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    })
+  });
+
+  const [{ isDrag }, dragTarget] = useDrag({
+    type: "construcorIngredient",
+    item: { id: uuidv4() },
+    collect: monitor => ({
+        isDrag: monitor.isDragging()
+    })
+  });
+
+  const [{isConstructorHover}, dropConstrucorTarget] = useDrop({
+    accept: "construcorIngredient",
+    drop(item) {
+      console.log(321);
+    },
+    collect: monitor => ({
+      isConstructorHover: monitor.isOver(),
+    })
+  });
+
+
+  const isBun = bun ? false : true;
   const ingredientsId = ingredients.map(ingredient => ingredient._id);
 
   const openOrderModal = () => {
@@ -21,9 +58,23 @@ export default function BurgerConstructor() {
     dispatch({ type: DELETE_INGREDIENT, id: ingredientId });
   }
 
-  const ingredientPrice = ingredients.reduce((acc, current) => acc + current.price, 0);
+  const ingredientPrice = useMemo(() => {
+    return ingredients.reduce((acc, current) => {
+      if (current.type === 'bun') {
+        return acc + current.price * 2;
+      } else {
+        return acc + current.price;
+      }
+    }, 0);
+  }, [ingredients]);
+
   return (
-    <section className={`${burgerConstructor.section}`}>
+    <section
+      ref={dropTarget}
+      className={`${burgerConstructor.section} ${
+        isHover ? burgerConstructor.sectionDrop : burgerConstructor.sectionNoDrop
+      }`}
+    >
       <div className='mr-4'>
         {ingredients.map((ingredient, index) => (
           ingredient.type === 'bun' &&
@@ -39,10 +90,17 @@ export default function BurgerConstructor() {
         ))}
       </div>
 
-      <ul className={`${burgerConstructor.shoppingCart} mb-2 mt-4 custom-scroll`}>
+      <ul
+        className={`${burgerConstructor.shoppingCart} ${isDrag ? burgerConstructor.sectionDrop: burgerConstructor.sectionNoDrop} mb-2 mt-4 custom-scroll`}
+        ref={dropConstrucorTarget}
+      >
         {ingredients.map((ingredient, index) => (
           ingredient.type !== 'bun' &&
-          <li className={burgerConstructor.shoppingCartWrapper} key={index}>
+          <li
+            className={`${burgerConstructor.shoppingCartWrapper}`}
+            key={index}
+            ref={dragTarget}
+          >
             <DragIcon type="primary" />
             <ConstructorElement
             text={ingredient.name}
@@ -76,7 +134,7 @@ export default function BurgerConstructor() {
           <p className="text text_type_digits-medium mr-2">{ingredientPrice}</p>
           <img src={priceLogo} alt="price logo" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={openOrderModal}>
+        <Button htmlType="button" type="primary" size="large" disabled={isBun} onClick={openOrderModal}>
           Оформить заказ
         </Button>
       </div>

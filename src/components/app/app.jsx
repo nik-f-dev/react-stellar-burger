@@ -8,6 +8,8 @@ import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 import { useDispatch, useSelector } from "react-redux";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   const modal = useSelector(state => state.modal);
@@ -27,6 +29,7 @@ function App() {
   return (
     <div className={styles.app}>
       <AppHeader />
+      <DndProvider backend={HTML5Backend}>
       <main className={styles.main}>
         {isLoading && 'Загрузка...'}
         {hasError && error}
@@ -41,6 +44,7 @@ function App() {
           {modal.modalType === 'order' && <OrderDetails />}
         </Modal>
       )}
+      </DndProvider>
     </div>
   );
 }
