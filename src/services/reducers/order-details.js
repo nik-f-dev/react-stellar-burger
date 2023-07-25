@@ -1,7 +1,7 @@
-import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED } from "../actions/order-details";
+import { GET_ORDER_REQUEST, GET_ORDER_SUCCESS, GET_ORDER_FAILED, CLEAR_ORDER_NUMBER } from "../actions/order-details";
 
 const orderDetailsInitialState = {
-  orderNumber: '',
+  orderNumber: null,
   orderRequest: false,
   orderFailed: false,
   error: ''
@@ -29,6 +29,12 @@ export const orderDetailsReducer = (state = orderDetailsInitialState, action) =>
         orderRequest: false,
         orderFailed: true,
         error: action.error
+      };
+    }
+    case CLEAR_ORDER_NUMBER: {
+      return {
+        ...state,
+        orderNumber: null
       };
     }
     default: {

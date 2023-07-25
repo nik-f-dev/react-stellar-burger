@@ -3,6 +3,7 @@ import { useState, useRef } from 'react';
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
+import IntersectionObserver from 'react-intersection-observer';
 
 export default function BurgerIngredients() {
   const [current, setCurrent] = useState('bun');

@@ -11,7 +11,6 @@ export default function BurgerIngredient({ ingredient }) {
   const dispatch = useDispatch();
   const ingredients = useSelector(state => state.burgerConstructor.ingredientsConstructor);
   const count = ingredients.filter(item => item._id === ingredient._id).length;
-  console.log(ingredients);
 
   const [{isDrag}, drag] = useDrag(() => ({
     type: 'ingredient',
