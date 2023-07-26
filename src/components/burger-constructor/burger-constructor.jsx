@@ -101,7 +101,7 @@ export default function BurgerConstructor() {
         })}
       </ul>
 
-      <div className={`${burgerConstructor.info} mt-10 mr-4`}>
+      <div className={`${burgerConstructor.info} mt-6 mr-4`}>
         <div className={`${burgerConstructor.price} mr-10`}>
           <p className="text text_type_digits-medium mr-2">{ingredientPrice}</p>
           <img src={priceLogo} alt="price logo" />
