@@ -5,4 +5,3 @@
 В дальнейшем будeт использоваться TypeScript.
 
 Используются технологии html, css, js, react, redux, react-dnd, react-intersection-observer, redux-thunk.
-

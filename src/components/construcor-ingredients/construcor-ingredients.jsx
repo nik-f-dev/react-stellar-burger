@@ -1,13 +1,23 @@
-import constructorIngredients from './construcor-ingredients.module.css';
-import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
+import constructorIngredients from "./construcor-ingredients.module.css";
+import {
+  ConstructorElement,
+  DragIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from "react-redux";
 import { DELETE_INGREDIENT } from "../../services/actions/burger-constructor";
-import { useDrag, useDrop } from 'react-dnd'
-import { useRef } from 'react';
+import { useDrag, useDrop } from "react-dnd";
+import { useRef } from "react";
 import PropTypes from "prop-types";
-import { ingredientPropType } from '../../utils/prop-types';
+import { ingredientPropType } from "../../utils/prop-types";
 
-export const ConstructorIngredient = ({index, ingredient, type, description, position, moveCard}) => {
+export const ConstructorIngredients = ({
+  index,
+  ingredient,
+  type,
+  description,
+  position,
+  moveCard,
+}) => {
   const dispatch = useDispatch();
 
   const removeIngredient = (ingredientId) => {
@@ -17,79 +27,84 @@ export const ConstructorIngredient = ({index, ingredient, type, description, pos
   const ref = useRef(null);
 
   const [{ handlerId }, drop] = useDrop({
-    accept: 'ingredientConstructor',
+    accept: "ingredientConstructor",
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
-      }
+      };
     },
     hover(item, monitor) {
       if (!ref.current) {
-        return
+        return;
       }
 
-      const dragIndex = item.index
-      const hoverIndex = index
+      const dragIndex = item.index;
+      const hoverIndex = index;
 
       if (dragIndex === hoverIndex) {
-        return
+        return;
       }
 
-      const hoverBoundingRect = ref.current?.getBoundingClientRect()
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return
-      };
+        return;
+      }
 
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
-      };
+        return;
+      }
 
-      moveCard(dragIndex, hoverIndex)
+      moveCard(dragIndex, hoverIndex);
 
-      item.index = hoverIndex
+      item.index = hoverIndex;
     },
-  })
+  });
   const [{ isDragging }, drag] = useDrag({
-    type: 'ingredientConstructor',
-    item: { id: ingredient.id, index: index },
+    type: "ingredientConstructor",
+    item: { index: index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  })
+  });
 
   drag(drop(ref));
 
-  return(
+  return (
     <li
-      className={`${type !== 'bun' ? constructorIngredients.shoppingCartWrapper: constructorIngredients.shoppingCartWrapperBun} ${isDragging ? constructorIngredients.draggedIngredient: ''}`}
-      key={index}
-      ref={type !== 'bun' ? ref : null}
-      data-handler-id={handlerId}
+      className={`${
+        type !== "bun"
+          ? constructorIngredients.shoppingCartWrapper
+          : constructorIngredients.shoppingCartWrapperBun
+      } ${isDragging ? constructorIngredients.draggedIngredient : ""}`}
+      key={ingredient.id}
+      ref={type !== "bun" ? ref : null}
+      data-handler-id={type !== "bun" ? handlerId : null}
     >
-      {type !== 'bun' && <DragIcon type="primary" />}
+      {type !== "bun" && <DragIcon type="primary" />}
       <ConstructorElement
-      type={position}
-      text={ingredient.name + (type === 'bun'? ` ${description}`: '')}
-      price={ingredient.price}
-      key={index}
-      isLocked={type === 'bun'}
-      thumbnail={ingredient.image}
-      handleClose={() => removeIngredient(ingredient.id)}
-      extraClass={`${constructorIngredients.shoppingCartElement} ml-2`}
+        type={position}
+        text={ingredient.name + (type === "bun" ? ` ${description}` : "")}
+        price={ingredient.price}
+        key={ingredient.id}
+        isLocked={type === "bun"}
+        thumbnail={ingredient.image}
+        handleClose={() => removeIngredient(ingredient.id)}
+        extraClass={`${constructorIngredients.shoppingCartElement} ml-2`}
       />
     </li>
-  )
-}
+  );
+};
 
-ConstructorIngredient.propTypes = {
+ConstructorIngredients.propTypes = {
   index: PropTypes.number.isRequired,
   ingredient: ingredientPropType,
   type: PropTypes.string.isRequired,
   description: PropTypes.string,
   position: PropTypes.string,
-  moveCard: PropTypes.func.isRequired
-}
+  moveCard: PropTypes.func.isRequired,
+};

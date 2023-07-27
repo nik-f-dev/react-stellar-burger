@@ -10,6 +10,7 @@ export const addIngredient = (ingredient) => {
     return {
       type: ADD_INGREDIENT_BUN,
       ingredient: ingredient,
+      id: uuidv4()
     }
   }
   return {

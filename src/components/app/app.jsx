@@ -12,14 +12,14 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-  const modal = useSelector(state => state.modal);
+  const modal = useSelector((state) => state.modal);
 
   const dispatch = useDispatch();
 
-  const { isLoading, hasError, error } = useSelector(state => ({
+  const { isLoading, hasError, error } = useSelector((state) => ({
     isLoading: state.burgerIngredients.ingredientsRequest,
     hasError: state.burgerIngredients.ingredientsFailed,
-    error: state.burgerIngredients.error
+    error: state.burgerIngredients.error,
   }));
 
   useEffect(() => {
@@ -30,20 +30,18 @@ function App() {
     <div className={styles.app}>
       <AppHeader />
       <DndProvider backend={HTML5Backend}>
-      <main className={styles.main}>
-        {isLoading && 'Загрузка...'}
-        {hasError && error}
-        {!isLoading &&
-          !hasError &&
-          <BurgerIngredients />}
-        <BurgerConstructor />
-      </main>
-      {modal.isOpen && (
-        <Modal isOpen={modal.isOpen}>
-          {modal.modalType === 'ingredient' && <IngredientDetails />}
-          {modal.modalType === 'order' && <OrderDetails />}
-        </Modal>
-      )}
+        <main className={styles.main}>
+          {isLoading && "Загрузка..."}
+          {hasError && error}
+          {!isLoading && !hasError && <BurgerIngredients />}
+          <BurgerConstructor />
+        </main>
+        {modal.isOpen && (
+          <Modal isOpen={modal.isOpen}>
+            {modal.modalType === "ingredient" && <IngredientDetails />}
+            {modal.modalType === "order" && <OrderDetails />}
+          </Modal>
+        )}
       </DndProvider>
     </div>
   );

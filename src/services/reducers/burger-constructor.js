@@ -12,13 +12,13 @@ export const burgerConstructorReducer = (state = burgerConstructorInitialState, 
     case ADD_INGREDIENT: {
       return {
         ...state,
-        ingredientsConstructor: [ ...state.ingredientsConstructor, { ...action.ingredient, id: action.id, order: state.ingredientsConstructor.length } ]
+        ingredientsConstructor: [ ...state.ingredientsConstructor, { ...action.ingredient, id: action.id } ]
       };
     }
     case ADD_INGREDIENT_BUN: {
       return {
         ...state,
-        ingredientsConstructor: [ ...state.ingredientsConstructor.filter(item => item.type !== 'bun'), { ...action.ingredient } ],
+        ingredientsConstructor: [ ...state.ingredientsConstructor.filter(item => item.type !== 'bun'), { ...action.ingredient, id: action.id } ],
         bun: action.ingredient
       };
     }
