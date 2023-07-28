@@ -1,0 +1,19 @@
+.shoppingCartWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: grab;
+}
+
+.shoppingCartWrapperBun {
+  list-style-type: none;
+}
+
+.shoppingCartElement {
+  width: 536px;
+  background: #1C1C21;
+}
+
+.draggedIngredient {
+  opacity: .5;
+}

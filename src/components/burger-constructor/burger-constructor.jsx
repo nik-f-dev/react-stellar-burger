@@ -1,75 +1,148 @@
-import burgerConstructor from './burger-constructor.module.css';
-import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import priceLogo from './../../images/price-logo.svg';
-import PropTypes from "prop-types";
-import { ingredientsPropType } from './../../utils/prop-types';
+import burgerConstructor from "./burger-constructor.module.css";
+import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
+import priceLogo from "./../../images/price-logo.svg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addIngredient,
+  moveCard,
+} from "../../services/actions/burger-constructor";
+import { openModal } from "../../services/actions/modal";
+import {
+  clearOrderNumber,
+  getOrder,
+} from "../../services/actions/order-details";
+import { useDrop } from "react-dnd";
+import { useCallback, useMemo } from "react";
+import { ConstructorIngredients } from "../construcor-ingredients/construcor-ingredients";
 
-export default function BurgerConstructor({ ingredients, removeIngredient, openOrderModal }) {
-  const ingredientPrice = ingredients.reduce((acc, current) => acc + current.price, 0);
+export default function BurgerConstructor() {
+  const dispatch = useDispatch();
+
+  const moveCardHandler = (dragIndex, hoverIndex) => {
+    dispatch(moveCard(dragIndex, hoverIndex));
+  };
+
+  const { ingredients, bun } = useSelector((state) => ({
+    ingredients: state.burgerConstructor.ingredientsConstructor,
+    bun: state.burgerConstructor.bun,
+  }));
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      dispatch(addIngredient(item));
+    },
+    collect: (monitor) => ({
+      isHover: monitor.isOver(),
+    }),
+  });
+
+  const isBun = bun ? false : true;
+  const ingredientsId = ingredients.map((ingredient) => ingredient._id);
+
+  const openOrderModal = () => {
+    dispatch(clearOrderNumber());
+    dispatch(getOrder(ingredientsId));
+    dispatch(openModal("order"));
+  };
+
+  const ingredientPrice = useMemo(() => {
+    return ingredients.reduce((acc, current) => {
+      if (current.type === "bun") {
+        return acc + current.price * 2;
+      } else {
+        return acc + current.price;
+      }
+    }, 0);
+  }, [ingredients]);
+
+  const renderCard = useCallback(
+    (ingredient, index, type, description, position) => {
+      return (
+        <ConstructorIngredients
+          key={ingredient.id}
+          ingredient={ingredient}
+          index={index}
+          type={type}
+          description={description}
+          position={position}
+          moveCard={moveCardHandler}
+        />
+      );
+    },
+    []
+  );
+
   return (
-    <section className={`${burgerConstructor.section}`}>
-      <div className='mr-4'>
-        {ingredients.map((ingredient, index) => (
-          ingredient.type === 'bun' &&
-          <ConstructorElement
-          type="top"
-          isLocked={true}
-          text={`${ingredient.name} (верх)`}
-          price={ingredient.price}
-          key={index}
-          thumbnail={ingredient.image}
-          extraClass={burgerConstructor.shoppingCartElement}
-          />
-        ))}
-      </div>
-
-      <ul className={`${burgerConstructor.shoppingCart} mb-2 mt-4 custom-scroll`}>
-        {ingredients.map((ingredient, index) => (
-          ingredient.type !== 'bun' &&
-          <li className={burgerConstructor.shoppingCartWrapper} key={index}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-            text={ingredient.name}
-            price={ingredient.price}
-            key={index}
-            thumbnail={ingredient.image}
-            handleClose={() => removeIngredient(ingredient.id)}
-            extraClass={`${burgerConstructor.shoppingCartElement} ml-2`}
-            />
-          </li>
-         ))}
+    <section
+      ref={dropTarget}
+      className={`${burgerConstructor.section} ${
+        isHover
+          ? burgerConstructor.sectionDrop
+          : burgerConstructor.sectionNoDrop
+      }`}
+    >
+      <ul className={`${burgerConstructor.shoppingCartBun}`}>
+        {ingredients.map((ingredient, index) => {
+          const description = "(верх)";
+          const position = "top";
+          return (
+            ingredient.type === "bun" &&
+            renderCard(
+              ingredient,
+              index,
+              ingredient.type,
+              description,
+              position
+            )
+          );
+        })}
       </ul>
 
-      <div className='mr-4 mt-2'>
-        {ingredients.map((ingredient, index) => (
-          ingredient.type === 'bun' &&
-          <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text={`${ingredient.name} (низ)`}
-          price={ingredient.price}
-          key={index}
-          thumbnail={ingredient.image}
-          extraClass={burgerConstructor.shoppingCartElement}
-        />
-        ))}
-      </div>
+      <ul
+        className={`${burgerConstructor.shoppingCart} mb-2 mt-4 custom-scroll`}
+      >
+        {" "}
+        {ingredients.map((ingredient, index) => {
+          return (
+            ingredient.type !== "bun" &&
+            renderCard(ingredient, index, ingredient.type)
+          );
+        })}
+      </ul>
 
-      <div className={`${burgerConstructor.info} mt-10 mr-4`}>
+      <ul className={`mt-2 mr-4`}>
+        {ingredients.map((ingredient, index) => {
+          const description = "(низ)";
+          const position = "bottom";
+          return (
+            ingredient.type === "bun" &&
+            renderCard(
+              ingredient,
+              index,
+              ingredient.type,
+              description,
+              position
+            )
+          );
+        })}
+      </ul>
+
+      <div className={`${burgerConstructor.info} mt-6 mr-4`}>
         <div className={`${burgerConstructor.price} mr-10`}>
           <p className="text text_type_digits-medium mr-2">{ingredientPrice}</p>
           <img src={priceLogo} alt="price logo" />
         </div>
-        <Button htmlType="button" type="primary" size="large" onClick={openOrderModal}>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="large"
+          disabled={isBun}
+          onClick={openOrderModal}
+        >
           Оформить заказ
         </Button>
       </div>
     </section>
-  )
+  );
 }
-
-BurgerConstructor.propTypes = {
-  ingredients: ingredientsPropType.isRequired,
-  removeIngredient: PropTypes.func.isRequired,
-  openOrderModal: PropTypes.func.isRequired
-};
