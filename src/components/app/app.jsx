@@ -1,49 +1,35 @@
-import styles from "./app.module.css";
-import { useEffect } from "react";
-import AppHeader from "../app-header/app-header";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import { getIngredients } from "../../services/actions/burger-ingredients";
-import { useDispatch, useSelector } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { Route, Routes } from "react-router-dom";
+import {
+  HomePage,
+  NotFound,
+  Layout,
+  ProfileLayout,
+  OrderTape,
+  RegisterPage,
+  LoginPage,
+  ResetPassword,
+  ForgotPassword,
+  ProfileOrders,
+  Profile,
+} from "../../pages/index";
 
 function App() {
-  const modal = useSelector((state) => state.modal);
-
-  const dispatch = useDispatch();
-
-  const { isLoading, hasError, error } = useSelector((state) => ({
-    isLoading: state.burgerIngredients.ingredientsRequest,
-    hasError: state.burgerIngredients.ingredientsFailed,
-    error: state.burgerIngredients.error,
-  }));
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [dispatch]);
-
   return (
-    <div className={styles.app}>
-      <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        <main className={styles.main}>
-          {isLoading && "Загрузка..."}
-          {hasError && error}
-          {!isLoading && !hasError && <BurgerIngredients />}
-          <BurgerConstructor />
-        </main>
-        {modal.isOpen && (
-          <Modal isOpen={modal.isOpen}>
-            {modal.modalType === "ingredient" && <IngredientDetails />}
-            {modal.modalType === "order" && <OrderDetails />}
-          </Modal>
-        )}
-      </DndProvider>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/order-tape" element={<OrderTape />} />
+        <Route path="/profile" element={<ProfileLayout />}>
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/orders" element={<ProfileOrders />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes>
   );
 }
 

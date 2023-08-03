@@ -1,0 +1,28 @@
+.wrapper {
+  width: 480px;
+  margin: 182px auto 0;
+}
+
+.header {
+  margin: 0;
+  text-align: center;
+}
+
+.LoginButton {
+  text-align: center;
+}
+
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  padding: 0 0 0 12px;
+  margin: 0;
+}
+
+.hint {
+  margin: 0;
+  color: #8585ad;
+}
