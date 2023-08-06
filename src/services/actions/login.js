@@ -1,4 +1,4 @@
-import { request, fetchWithRefresh } from "../../utils/api";
+import { request, getUser as getUserData } from "../../utils/api";
 
 export const GET_INPUT_VALUE = 'GET_INPUT_VALUE';
 export const GET_LOGIN_REQUEST = 'GET_LOGIN_REQUEST';
@@ -8,6 +8,12 @@ export const SET_AUTH_CHECKED = 'SET_AUTH_CHECKED';
 export const GET_USER = 'GET_USER';
 export const RESET_USER = 'RESET_USER';
 export const SHOW_PASSWORD = 'SHOW_PASSWORD';
+export const GET_LOGOUT_REQUEST = 'GET_LOGOUT_REQUEST';
+export const GET_LOGOUT_FAILED = 'GET_LOGOUT_FAILED';
+export const GET_PREVIOUS_USER = 'GET_PREVIOUS_USER';
+export const GET_CHANGES_FAILED = 'GET_CHANGES_FAILED';
+export const GET_PROFILE_VALUE = 'GET_PROFILE_VALUE';
+export const SWAP_USER = 'SWAP_USER';
 
 export function getInputValue(e) {
   return {
@@ -17,29 +23,43 @@ export function getInputValue(e) {
   }
 };
 
+export function changeProfileValue(e) {
+  return {
+    type: GET_PROFILE_VALUE,
+    name: e.target.name,
+    value: e.target.value
+  }
+};
+
+export function getPreviousUser() {
+  return {
+    type: SWAP_USER
+  }
+}
+
+export function getUserDate() {
+  return {
+    type: GET_PREVIOUS_USER
+  }
+}
+
 export const showPassword = () => {
   return ({ type: SHOW_PASSWORD });
 }
 
 export function getUser() {
   return (dispatch) => {
-    return fetchWithRefresh('https://norma.nomoreparties.space/api/auth/user', {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: localStorage.getItem("accessToken")
-      }
-    })
-    .then(res => {
-      if (res.success) {
-        dispatch({
-          type: GET_USER,
-          user: res.user
-        });
-      } else {
-        return Promise.reject("Ошибка данных с сервера");
-      }
-    });
+    return getUserData()
+      .then(res => {
+        if (res.success) {
+          dispatch({
+            type: GET_USER,
+            user: res.user
+          });
+        } else {
+          return Promise.reject("Ошибка данных с сервера");
+        }
+      });
   };
 }
 
@@ -102,5 +122,66 @@ export const checkUserAuth = () => {
       });
       dispatch({type: RESET_USER});
     }
+  };
+};
+
+export const logout = (token) => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_LOGOUT_REQUEST,
+    });
+    request("auth/logout", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        token: token,
+      }),
+    })
+      .then((res) => {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch({
+          type: RESET_USER,
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: GET_LOGOUT_FAILED,
+          error: err.message,
+        });
+      });
+  };
+};
+
+export const changeUser = (name, email, password) => {
+  return (dispatch) => {
+    request("auth/user", {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("accessToken")
+      },
+      body: JSON.stringify({
+        email: email,
+        name: name,
+        password: password
+      }),
+    })
+      .then((res) => {
+        dispatch({
+          type: GET_USER,
+          user: res.user
+        });
+      })
+      .catch((err) => {
+        dispatch({
+          type: GET_CHANGES_FAILED,
+          error: err.message,
+        });
+      });
   };
 };

@@ -21,7 +21,7 @@ export function request(endpoint, options) {
 }
 
 const refreshToken = () => {
-  request('auth/token', {
+  return request('auth/token', {
     method: "POST",
       headers: {
         Accept: "application/json",
@@ -32,6 +32,16 @@ const refreshToken = () => {
       })
   })
 };
+
+export function getUser() {
+    return fetchWithRefresh(`${baseUrl}auth/user`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: localStorage.getItem("accessToken")
+      }
+    })
+  };
 
 export const fetchWithRefresh = async (url, options) => {
   try {
@@ -47,7 +57,7 @@ export const fetchWithRefresh = async (url, options) => {
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       options.headers.authorization = refreshData.accessToken;
       const res = await fetch(url, options);
-      return await checkResponse(res);
+      return checkResponse(res);
     } else {
       return Promise.reject(err);
     }

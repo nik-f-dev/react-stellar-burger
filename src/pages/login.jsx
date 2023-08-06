@@ -8,12 +8,19 @@ import styles from "./login.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getInputValue, login, showPassword } from "../services/actions/login";
 import { Link } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
   const form = useSelector((state) => state.login);
 
   const inputFilled = form.email && form.password;
+
+  const emailInput = useRef();
+
+  useEffect(() => {
+    emailInput.current.focus();
+  }, []);
 
   const onChange = (e) => {
     dispatch(getInputValue(e));
@@ -34,6 +41,7 @@ export default function LoginPage() {
       <form onSubmit={submit}>
         <Input
           type={"email"}
+          ref={emailInput}
           placeholder={"E-mail"}
           name={"email"}
           error={false}

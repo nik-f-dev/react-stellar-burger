@@ -5,10 +5,17 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
 import IntersectionObserver from "react-intersection-observer";
 import { getTab } from "../../services/actions/tab";
+import {
+  enableIntersection,
+  disableIntersection,
+} from "../../services/actions/burger-ingredients";
 
 export default function BurgerIngredients() {
   const dispatch = useDispatch();
-
+  const intersection = useSelector(
+    (store) => store.burgerIngredients.handleIntersecion
+  );
+  console.log(intersection);
   const ingredients = useSelector(
     (state) => state.burgerIngredients.ingredients
   );
@@ -23,13 +30,14 @@ export default function BurgerIngredients() {
   const mainRef = useRef(null);
 
   const handleIntersection = (inView, entry) => {
-    if (inView) {
+    if (intersection && inView) {
       dispatch(getTab(entry.target.id));
     }
   };
 
   const handleNavigationClick = (value) => {
     dispatch(getTab(value));
+    dispatch(disableIntersection());
     switch (value) {
       case "bun":
         bunRef.current.scrollIntoView({ behavior: "smooth" });
@@ -43,6 +51,9 @@ export default function BurgerIngredients() {
       default:
         break;
     }
+    setTimeout(() => {
+      dispatch(enableIntersection());
+    }, 350);
   };
 
   return (

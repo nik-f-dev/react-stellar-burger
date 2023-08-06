@@ -3,6 +3,8 @@ import { request } from '../../utils/api';
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
+export const TURN_ON_HANDLE_INTERSECTION = 'TURN_ON_HANDLE_INTERSECTION';
+export const TURN_OFF_HANDLE_INTERSECTION = 'TURN_OFF_HANDLE_INTERSECTION';
 
 export function getIngredients() {
   return function(dispatch) {
@@ -23,4 +25,16 @@ export function getIngredients() {
         });
       });
   };
+}
+
+export function enableIntersection() {
+  return {
+      type: TURN_ON_HANDLE_INTERSECTION
+  }
+}
+
+export function disableIntersection() {
+  return {
+      type: TURN_OFF_HANDLE_INTERSECTION
+  }
 }

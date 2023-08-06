@@ -1,57 +1,82 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import {
   Input,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./profile.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeUser,
+  changeProfileValue,
+  getPreviousUser,
+  getUserDate,
+} from "../services/actions/login";
 
 export default function Profile() {
-  const [value, setValue] = useState("");
+  const dispatch = useDispatch();
   const nameInputRef = useRef(null);
   const loginInputRef = useRef(null);
   const passwordInputRef = useRef(null);
 
+  const onChange = (e) => {
+    dispatch(changeProfileValue(e));
+  };
+
+  useEffect(() => {
+    dispatch(getUserDate());
+  }, []);
+
+  const handleSave = () => {
+    dispatch(changeUser(form.user.name, form.user.email, form.user.password));
+  };
+
+  const handleReset = () => {
+    dispatch(getPreviousUser());
+  };
+
+  const form = useSelector((store) => store.login);
+
   return (
-    <div>
+    <form>
       <Input
         type={"text"}
         placeholder={"Имя"}
-        onChange={(e) => setValue(e.target.value)}
         icon={"EditIcon"}
-        value={value}
+        value={form.user.name}
         name={"name"}
         error={false}
         ref={nameInputRef}
         errorText={"Ошибка"}
         size={"default"}
         extraClass="mb-6"
+        onChange={onChange}
       />
       <Input
         type={"email"}
         placeholder={"Логин"}
-        onChange={(e) => setValue(e.target.value)}
         icon={"EditIcon"}
-        value={value}
-        name={"name"}
+        value={form.user.email}
+        name={"email"}
         error={false}
         ref={loginInputRef}
         errorText={"Ошибка"}
         size={"default"}
         extraClass="mb-6"
+        onChange={onChange}
       />
       <Input
         type={"password"}
         placeholder={"Пароль"}
-        onChange={(e) => setValue(e.target.value)}
         icon={"EditIcon"}
-        value={value}
-        name={"name"}
+        value={form.user.password || ""}
+        name={"password"}
         error={false}
         ref={passwordInputRef}
         errorText={"Ошибка"}
         size={"default"}
         extraClass="mb-6"
+        onChange={onChange}
       />
       <div className={styles.buttonWrapper}>
         <Button
@@ -59,6 +84,7 @@ export default function Profile() {
           type="secondary"
           size="medium"
           extraClass={styles.button}
+          onClick={handleReset}
         >
           Отмена
         </Button>
@@ -67,10 +93,11 @@ export default function Profile() {
           type="primary"
           size="medium"
           extraClass="ml-2"
+          onClick={handleSave}
         >
           Сохранить
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

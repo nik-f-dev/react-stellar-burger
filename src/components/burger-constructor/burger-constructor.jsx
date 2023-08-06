@@ -14,9 +14,16 @@ import {
 import { useDrop } from "react-dnd";
 import { useCallback, useMemo } from "react";
 import { ConstructorIngredients } from "../construcor-ingredients/construcor-ingredients";
+import { useNavigate } from "react-router-dom";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector((store) => store.login.user);
+
+  const handleNoUser = () => {
+    navigate("/register");
+  };
 
   const moveCardHandler = (dragIndex, hoverIndex) => {
     dispatch(moveCard(dragIndex, hoverIndex));
@@ -37,7 +44,7 @@ export default function BurgerConstructor() {
     }),
   });
 
-  const isBun = bun ? false : true;
+  const isBun = useMemo(() => !bun, [bun]);
   const ingredientsId = ingredients.map((ingredient) => ingredient._id);
 
   const openOrderModal = () => {
@@ -70,7 +77,7 @@ export default function BurgerConstructor() {
         />
       );
     },
-    []
+    [moveCardHandler]
   );
 
   return (
@@ -138,7 +145,7 @@ export default function BurgerConstructor() {
           type="primary"
           size="large"
           disabled={isBun}
-          onClick={openOrderModal}
+          onClick={user ? openOrderModal : handleNoUser}
         >
           Оформить заказ
         </Button>

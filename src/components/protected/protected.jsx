@@ -2,7 +2,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/actions/login";
-import styles from "./protected.module.css";
+import Loader from "../loader/loader";
 
 const Protected = ({ onlyUnAuth = false, component }) => {
   const dispatch = useDispatch();
@@ -16,11 +16,7 @@ const Protected = ({ onlyUnAuth = false, component }) => {
   const location = useLocation();
 
   if (!isAuthChecked) {
-    return (
-      <div className={styles.loaderWrapper}>
-        <span className={styles.loader}></span>
-      </div>
-    );
+    return <Loader />;
   }
 
   if (onlyUnAuth && user) {

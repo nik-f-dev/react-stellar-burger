@@ -5,15 +5,26 @@ import {
 
 import styles from "./reset.module.css";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getInput, showPassword } from "../services/actions/reset";
+import {
+  getInput,
+  showPassword,
+  getNewPassword,
+} from "../services/actions/reset";
+import { useEffect, useRef } from "react";
 
 export default function ResetPassword() {
   const dispatch = useDispatch();
-  const form = useSelector((state) => state.reset);
+  const form = useSelector((store) => store.reset);
 
   const inputFilled = form.code && form.password;
+
+  const passwordRef = useRef();
+
+  useEffect(() => {
+    passwordRef.current.focus();
+  }, []);
 
   const onChange = (e) => {
     dispatch(getInput(e));
@@ -21,12 +32,16 @@ export default function ResetPassword() {
 
   const onIconClick = () => {
     dispatch(showPassword());
-    console.log(form.showPassword);
   };
 
   const submit = (e) => {
     e.preventDefault();
+    dispatch(getNewPassword(form.password, form.code));
   };
+
+  if (form.isResetSuccess) {
+    return <Navigate to="/login" />;
+  }
   return (
     <div className={`${styles.wrapper}`}>
       <h2 className={`${styles.header} text text_type_main-medium`}>
@@ -34,6 +49,7 @@ export default function ResetPassword() {
       </h2>
       <form onSubmit={submit}>
         <Input
+          ref={passwordRef}
           type={!form.showPassword ? "password" : "text"}
           placeholder={"Введите новый пароль"}
           icon={!form.showPassword ? "ShowIcon" : "HideIcon"}
@@ -61,7 +77,7 @@ export default function ResetPassword() {
         />
         <div className={`${styles.LoginButton} mb-20`}>
           <Button
-            htmlType="button"
+            htmlType="submit"
             type="primary"
             size="medium"
             disabled={!inputFilled}

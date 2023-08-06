@@ -9,6 +9,7 @@ import { getIngredients } from "../services/actions/burger-ingredients";
 import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import Loader from "../components/loader/loader";
 
 function HomePage() {
   const modal = useSelector((state) => state.modal);
@@ -29,7 +30,11 @@ function HomePage() {
     <div className={styles.app}>
       <DndProvider backend={HTML5Backend}>
         <main className={styles.main}>
-          {isLoading && "Загрузка..."}
+          {isLoading && (
+            <div className={styles.loaderWrapper}>
+              <Loader />
+            </div>
+          )}
           {hasError && error}
           {!isLoading && !hasError && <BurgerIngredients />}
           <BurgerConstructor />

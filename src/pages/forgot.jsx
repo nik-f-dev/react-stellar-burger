@@ -5,13 +5,20 @@ import {
 
 import styles from "./forgot.module.css";
 
-import { Link } from "react-router-dom";
-import { getInput } from "../services/actions/forgot";
+import { Link, Navigate } from "react-router-dom";
+import { getInput, getSucessChange } from "../services/actions/forgot";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
 
 export default function ForgotPassword() {
   const dispatch = useDispatch();
   const form = useSelector((store) => store.forgot);
+
+  const emailRef = useRef();
+
+  useEffect(() => {
+    emailRef.current.focus();
+  }, []);
 
   const onChange = (e) => {
     dispatch(getInput(e));
@@ -19,7 +26,12 @@ export default function ForgotPassword() {
 
   const submit = (e) => {
     e.preventDefault();
+    dispatch(getSucessChange(form.email));
   };
+
+  if (form.isForgotSuccess) {
+    return <Navigate to="/reset-password" />;
+  }
   return (
     <div className={`${styles.wrapper}`}>
       <h2 className={`${styles.header} text text_type_main-medium`}>
@@ -27,6 +39,7 @@ export default function ForgotPassword() {
       </h2>
       <form onSubmit={submit}>
         <Input
+          ref={emailRef}
           type={"email"}
           placeholder={"Укажите E-mail"}
           name={"email"}
@@ -40,7 +53,7 @@ export default function ForgotPassword() {
         />
         <div className={`${styles.LoginButton} mb-20`}>
           <Button
-            htmlType="sumbit"
+            htmlType="submit"
             type="primary"
             size="medium"
             disabled={!form.email}

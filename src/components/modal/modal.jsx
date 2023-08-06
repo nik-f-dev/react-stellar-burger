@@ -6,13 +6,16 @@ import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../services/actions/modal";
+import { useNavigate } from "react-router-dom";
 
 const modalRootElement = document.querySelector("#react-modals");
 
 export default function Modal({ children, isOpen }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   function closeModals() {
     dispatch(closeModal());
+    navigate("/");
   }
 
   function handleKeyDown(e) {
