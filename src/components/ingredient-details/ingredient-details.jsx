@@ -29,8 +29,6 @@ export default function IngredientDetails() {
   const isModal = location.state;
   const ingredient = ingredients.find((elem) => elem._id === id);
 
-  console.log(isModal);
-
   const closeModals = () => {
     navigate("/");
   };

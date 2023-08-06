@@ -15,7 +15,6 @@ export default function BurgerIngredients() {
   const intersection = useSelector(
     (store) => store.burgerIngredients.handleIntersecion
   );
-  console.log(intersection);
   const ingredients = useSelector(
     (state) => state.burgerIngredients.ingredients
   );
