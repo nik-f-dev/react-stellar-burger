@@ -1,9 +1,10 @@
-import { GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED } from "../actions/burger-ingredients";
+import { GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED, TURN_ON_HANDLE_INTERSECTION, TURN_OFF_HANDLE_INTERSECTION } from "../actions/burger-ingredients";
 
 const burgerIngredientsInitialState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,
+  handleIntersecion: true,
   error: '',
 }
 
@@ -30,6 +31,18 @@ export const burgerIngredientsReducer = (state = burgerIngredientsInitialState, 
         ingredientsFailed: true,
         error: action.error
       };
+    }
+    case TURN_ON_HANDLE_INTERSECTION: {
+      return {
+        ...state,
+        handleIntersecion: true
+      }
+    }
+    case TURN_OFF_HANDLE_INTERSECTION: {
+      return {
+        ...state,
+        handleIntersecion: false
+      }
     }
     default: {
       return state;

@@ -1,49 +1,89 @@
-import styles from "./app.module.css";
-import { useEffect } from "react";
-import AppHeader from "../app-header/app-header";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { OnlyAuth, OnlyUnAuth } from "../protected/protected";
+import {
+  HomePage,
+  NotFound,
+  Layout,
+  ProfileLayout,
+  OrderTape,
+  RegisterPage,
+  LoginPage,
+  ResetPassword,
+  ForgotPassword,
+  ProfileOrders,
+  Profile,
+} from "../../pages/index";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { getIngredients } from "../../services/actions/burger-ingredients";
+import Modal from "../modal/modal";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { checkUserAuth } from "../../services/actions/login";
+import { getIngredients } from "../../services/actions/burger-ingredients";
+import OrderDetails from "../order-details/order-details";
 
 function App() {
-  const modal = useSelector((state) => state.modal);
-
   const dispatch = useDispatch();
 
-  const { isLoading, hasError, error } = useSelector((state) => ({
-    isLoading: state.burgerIngredients.ingredientsRequest,
-    hasError: state.burgerIngredients.ingredientsFailed,
-    error: state.burgerIngredients.error,
-  }));
-
+  const isSuccess = useSelector((store) => store.forgot.isForgotSuccess);
   useEffect(() => {
+    dispatch(checkUserAuth());
     dispatch(getIngredients());
-  }, [dispatch]);
+  }, []);
+  const location = useLocation();
+  const background = location.state && location.state.background;
 
   return (
-    <div className={styles.app}>
-      <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        <main className={styles.main}>
-          {isLoading && "Загрузка..."}
-          {hasError && error}
-          {!isLoading && !hasError && <BurgerIngredients />}
-          <BurgerConstructor />
-        </main>
-        {modal.isOpen && (
-          <Modal isOpen={modal.isOpen}>
-            {modal.modalType === "ingredient" && <IngredientDetails />}
-            {modal.modalType === "order" && <OrderDetails />}
-          </Modal>
-        )}
-      </DndProvider>
-    </div>
+    <>
+      <Routes location={background || location}>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/register"
+            element={<OnlyUnAuth component={<RegisterPage />} />}
+          />
+          <Route
+            path="/login"
+            element={<OnlyUnAuth component={<LoginPage />} />}
+          />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          {isSuccess ? (
+            <Route path="/reset-password" element={<ResetPassword />} />
+          ) : (
+            <Route path="/reset-password" element={<Navigate to="/" />} />
+          )}
+          <Route path="/order-tape" element={<OrderTape />} />
+          <Route
+            path="/profile"
+            element={<OnlyAuth component={<ProfileLayout />} />}
+          >
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/orders" element={<ProfileOrders />} />
+          </Route>
+          <Route path="/ingredients/:id" element={<IngredientDetails />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+      {background && (
+        <Routes>
+          <Route
+            path="/ingredients/:id"
+            element={
+              <Modal>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/order-modal"
+            element={
+              <Modal>
+                <OrderDetails />
+              </Modal>
+            }
+          />
+        </Routes>
+      )}
+    </>
   );
 }
 

@@ -2,10 +2,23 @@ import { useEffect } from "react";
 import ingredientModule from "./ingredient-details.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { clearIngredient } from "../../services/actions/ingredient-details";
+import { useLocation, useParams } from "react-router-dom";
+import Loader from "../loader/loader";
+
+const modalWrapper = `${ingredientModule.ingredientWrapper} ${ingredientModule.modalIngredientWrapper}`;
 
 export default function IngredientDetails() {
   const dispatch = useDispatch();
-  const ingredient = useSelector((state) => state.ingredientDetails.ingredient);
+  const location = useLocation();
+
+  const ingredients = useSelector(
+    (state) => state.burgerIngredients.ingredients
+  );
+
+  const { id } = useParams();
+
+  const isModal = location.state;
+  const ingredient = ingredients.find((elem) => elem._id === id);
 
   useEffect(() => {
     return () => {
@@ -13,8 +26,12 @@ export default function IngredientDetails() {
     };
   }, [dispatch]);
 
-  return (
-    <div>
+  return ingredient ? (
+    <div
+      className={`${
+        isModal ? modalWrapper : ingredientModule.ingredientWrapper
+      }`}
+    >
       <h2
         className={`${ingredientModule.heading} mt-10 text text_type_main-large`}
       >
@@ -79,5 +96,7 @@ export default function IngredientDetails() {
         </li>
       </ul>
     </div>
+  ) : (
+    <Loader />
   );
 }

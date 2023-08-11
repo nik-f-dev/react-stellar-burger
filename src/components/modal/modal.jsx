@@ -6,13 +6,16 @@ import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../services/actions/modal";
+import { useNavigate } from "react-router-dom";
 
 const modalRootElement = document.querySelector("#react-modals");
 
-export default function Modal({ children, isOpen }) {
+export default function Modal({ children }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   function closeModals() {
     dispatch(closeModal());
+    navigate(-1);
   }
 
   function handleKeyDown(e) {
@@ -22,13 +25,11 @@ export default function Modal({ children, isOpen }) {
   }
 
   useEffect(() => {
-    if (isOpen) {
-      document.addEventListener("keydown", handleKeyDown);
-    }
+    document.addEventListener("keydown", handleKeyDown);
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [isOpen]);
+  }, []);
 
   return ReactDOM.createPortal(
     <div className={modal.active}>
@@ -46,5 +47,4 @@ export default function Modal({ children, isOpen }) {
 
 Modal.propTypes = {
   children: PropTypes.node.isRequired,
-  isOpen: PropTypes.bool.isRequired,
 };

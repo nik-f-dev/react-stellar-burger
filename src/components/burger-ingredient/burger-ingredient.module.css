@@ -19,3 +19,8 @@
   min-height: 48px;
   text-overflow: ellipsis;
 }
+
+.link {
+  text-decoration: none;
+  color: white;
+}

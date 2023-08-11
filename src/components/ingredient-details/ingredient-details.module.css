@@ -1,6 +1,7 @@
 .heading {
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: left;
   width: 640px;
   min-height: 66px;
@@ -23,6 +24,8 @@
   justify-content: space-between;
   list-style-type: none;
   padding: 0;
+  width: 520px;
+  margin: 28px auto 60px;
 }
 
 .wrapper {
@@ -30,6 +33,23 @@
   flex-direction: column;
   width: 125px;
   height: 58px;
+  width: 125px;
+}
+
+.ingredientWrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  width: 640px;
+  border-radius: 40px;
+  margin: 80px auto 0;
+}
+
+.modalIngredientWrapper {
+  background-color: #1c1c21;
+  width: 720px;
+  margin-top: 0;
 }
 
 .text {
@@ -37,4 +57,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.closeButton {
+  position: absolute;
+  top: 60px;
+  right: 40px;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  padding: 0;
 }

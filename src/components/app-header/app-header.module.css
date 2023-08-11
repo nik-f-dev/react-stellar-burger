@@ -2,13 +2,18 @@
   display: flex;
   justify-content: center;
   width: 100%;
-  background: #1C1C21;
+  background: #1c1c21;
 }
 
 .navItem {
   display: flex;
   flex-direction: row;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.navItem:active {
+  color: white;
 }
 
 .absoluteNavItem {
@@ -35,6 +40,14 @@
 
 .logo {
   margin: 19px 0 0 22px;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.active {
+  color: white;
 }
 
 @media screen and (max-width: 1300px) {
