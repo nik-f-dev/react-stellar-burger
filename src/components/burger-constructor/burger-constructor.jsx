@@ -6,7 +6,6 @@ import {
   addIngredient,
   moveCard,
 } from "../../services/actions/burger-constructor";
-import { openModal } from "../../services/actions/modal";
 import {
   clearOrderNumber,
   getOrder,
@@ -14,15 +13,17 @@ import {
 import { useDrop } from "react-dnd";
 import { useCallback, useMemo } from "react";
 import { ConstructorIngredients } from "../construcor-ingredients/construcor-ingredients";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.login.user);
 
+  const location = useLocation();
+
   const handleNoUser = () => {
-    navigate("/register");
+    navigate("/login");
   };
 
   const moveCardHandler = (dragIndex, hoverIndex) => {
@@ -50,7 +51,7 @@ export default function BurgerConstructor() {
   const openOrderModal = () => {
     dispatch(clearOrderNumber());
     dispatch(getOrder(ingredientsId));
-    dispatch(openModal("order"));
+    navigate("/order-modal", { state: { background: location } });
   };
 
   const ingredientPrice = useMemo(() => {

@@ -14,9 +14,12 @@ import {
   Profile,
 } from "../../pages/index";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { checkUserAuth } from "../../services/actions/login";
+import { getIngredients } from "../../services/actions/burger-ingredients";
+import OrderDetails from "../order-details/order-details";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,6 +27,7 @@ function App() {
   const isSuccess = useSelector((store) => store.forgot.isForgotSuccess);
   useEffect(() => {
     dispatch(checkUserAuth());
+    dispatch(getIngredients());
   }, []);
   const location = useLocation();
   const background = location.state && location.state.background;
@@ -61,7 +65,22 @@ function App() {
       </Routes>
       {background && (
         <Routes>
-          <Route path="/ingredients/:id" element={<IngredientDetails />} />
+          <Route
+            path="/ingredients/:id"
+            element={
+              <Modal>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/order-modal"
+            element={
+              <Modal>
+                <OrderDetails />
+              </Modal>
+            }
+          />
         </Routes>
       )}
     </>
