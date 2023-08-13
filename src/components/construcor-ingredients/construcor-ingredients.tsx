@@ -7,8 +7,7 @@ import { useDispatch } from "react-redux";
 import { DELETE_INGREDIENT } from "../../services/actions/burger-constructor";
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
-import PropTypes from "prop-types";
-import { ingredientPropType } from "../../utils/prop-types";
+import { TConstructorProps } from "../../utils/types";
 
 export const ConstructorIngredients = ({
   index,
@@ -17,14 +16,14 @@ export const ConstructorIngredients = ({
   description,
   position,
   moveCard,
-}) => {
+}: TConstructorProps) => {
   const dispatch = useDispatch();
 
-  const removeIngredient = (ingredientId) => {
+  const removeIngredient = (ingredientId: string) => {
     dispatch({ type: DELETE_INGREDIENT, id: ingredientId });
   };
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   const [{ handlerId }, drop] = useDrop({
     accept: "ingredientConstructor",
@@ -33,7 +32,7 @@ export const ConstructorIngredients = ({
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: { index: number }, monitor) {
       if (!ref.current) {
         return;
       }
@@ -49,7 +48,9 @@ export const ConstructorIngredients = ({
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset?.y
+        ? clientOffset?.y - hoverBoundingRect.top
+        : 0;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -93,18 +94,9 @@ export const ConstructorIngredients = ({
         key={ingredient.id}
         isLocked={type === "bun"}
         thumbnail={ingredient.image}
-        handleClose={() => removeIngredient(ingredient.id)}
+        handleClose={() => ingredient.id && removeIngredient(ingredient.id)}
         extraClass={`${constructorIngredients.shoppingCartElement} ml-2`}
       />
     </li>
   );
-};
-
-ConstructorIngredients.propTypes = {
-  index: PropTypes.number.isRequired,
-  ingredient: ingredientPropType,
-  type: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  position: PropTypes.string,
-  moveCard: PropTypes.func.isRequired,
 };

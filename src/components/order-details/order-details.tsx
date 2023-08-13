@@ -3,7 +3,9 @@ import checkmark from "./../../images/checkmark.svg";
 import { useSelector } from "react-redux";
 
 export default function OrderDetails() {
-  const orderNumber = useSelector((state) => state.orderDetails.orderNumber);
+  const orderNumber = useSelector(
+    (state) => (state as any).orderDetails.orderNumber
+  ) as number;
   return (
     <div className="mt-30">
       <h2 className={`${styles.orderId} text text_type_digits-large`}>

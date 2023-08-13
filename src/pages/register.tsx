@@ -8,21 +8,26 @@ import styles from "./register.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getForm, register, showPassword } from "../services/actions/register";
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef, FormEvent } from "react";
+import { TRegisterState } from "../utils/types";
 
 export default function RegisterPage() {
   const dispatch = useDispatch();
-  const firstInput = useRef();
-  const passwordRef = useRef();
-  const form = useSelector((state) => state.register);
+  const firstInput = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const form = useSelector(
+    (state) => (state as any).register
+  ) as TRegisterState;
 
   const inputFilled = form.email && form.password && form.name;
 
   useEffect(() => {
-    firstInput.current.focus();
+    if (firstInput.current) {
+      firstInput.current.focus();
+    }
   }, []);
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(getForm(e));
   };
 
@@ -30,7 +35,7 @@ export default function RegisterPage() {
     dispatch(showPassword());
   };
 
-  const submit = (e) => {
+  const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(register(form.name, form.email, form.password));
   };
@@ -66,11 +71,11 @@ export default function RegisterPage() {
           required
         />
         <Input
-          type={!form.showPassword ? "text" : "password"}
+          type={form.showPassword ? "text" : "password"}
           placeholder={"Пароль"}
           ref={passwordRef}
           onIconClick={onIconClick}
-          icon={!form.showPassword ? "HideIcon" : "ShowIcon"}
+          icon={form.showPassword ? "HideIcon" : "ShowIcon"}
           name={"password"}
           error={false}
           errorText={"Ошибка"}

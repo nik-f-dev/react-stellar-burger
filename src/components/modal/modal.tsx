@@ -2,15 +2,18 @@ import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modal from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import { useEffect } from "react";
-import PropTypes from "prop-types";
+import { useEffect, ReactNode } from "react";
 import { useDispatch } from "react-redux";
 import { closeModal } from "../../services/actions/modal";
 import { useNavigate } from "react-router-dom";
 
-const modalRootElement = document.querySelector("#react-modals");
+const modalRootElement = document.querySelector("#react-modals")!;
 
-export default function Modal({ children }) {
+export type TModalProps = {
+  children: ReactNode;
+};
+
+export default function Modal({ children }: TModalProps) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   function closeModals() {
@@ -18,7 +21,7 @@ export default function Modal({ children }) {
     navigate(-1);
   }
 
-  function handleKeyDown(e) {
+  function handleKeyDown(e: KeyboardEvent) {
     if (e.key === "Escape") {
       closeModals();
     }
@@ -44,7 +47,3 @@ export default function Modal({ children }) {
     modalRootElement
   );
 }
-
-Modal.propTypes = {
-  children: PropTypes.node.isRequired,
-};

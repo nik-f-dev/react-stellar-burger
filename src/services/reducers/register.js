@@ -1,7 +1,7 @@
 import { GET_FORM_VALUE, GET_REGISTER_REQUEST, GET_REGISTER_SUCCESS, GET_REGISTER_FAILED, SHOW_PASSWORD } from "../actions/register";
 
 const registerInitialState = {
-  showPassword: 'false',
+  showPassword: false,
   registerRequest: false,
   registerFailed: false,
   error: '',

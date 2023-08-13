@@ -9,43 +9,53 @@ import {
   enableIntersection,
   disableIntersection,
 } from "../../services/actions/burger-ingredients";
+import { TIngredient } from "../../utils/types";
 
 export default function BurgerIngredients() {
   const dispatch = useDispatch();
   const intersection = useSelector(
-    (store) => store.burgerIngredients.handleIntersecion
-  );
+    (store) => (store as any).burgerIngredients.handleIntersecion
+  ) as boolean;
   const ingredients = useSelector(
-    (state) => state.burgerIngredients.ingredients
-  );
-  const tab = useSelector((state) => state.tab.currentTab);
+    (state) => (state as any).burgerIngredients.ingredients
+  ) as TIngredient[];
+  const tab = useSelector((state) => (state as any).tab.currentTab) as string;
 
   const buns = ingredients.filter((item) => item.type === "bun");
   const main = ingredients.filter((item) => item.type === "main");
   const sauces = ingredients.filter((item) => item.type === "sauce");
 
-  const bunRef = useRef(null);
-  const sauceRef = useRef(null);
-  const mainRef = useRef(null);
+  const bunRef = useRef<HTMLDivElement>(null);
+  const sauceRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLDivElement>(null);
 
-  const handleIntersection = (inView, entry) => {
+  const handleIntersection = (
+    inView: boolean,
+    entry: IntersectionObserverEntry
+  ) => {
     if (intersection && inView) {
       dispatch(getTab(entry.target.id));
     }
   };
 
-  const handleNavigationClick = (value) => {
+  const handleNavigationClick = (value: string) => {
     dispatch(getTab(value));
     dispatch(disableIntersection());
     switch (value) {
       case "bun":
-        bunRef.current.scrollIntoView({ behavior: "smooth" });
+        if (bunRef.current) {
+          bunRef.current.scrollIntoView({ behavior: "smooth" });
+        }
         break;
       case "sauce":
-        sauceRef.current.scrollIntoView({ behavior: "smooth" });
+        if (sauceRef.current) {
+          sauceRef.current.scrollIntoView({ behavior: "smooth" });
+        }
         break;
       case "main":
-        mainRef.current.scrollIntoView({ behavior: "smooth" });
+        if (mainRef.current) {
+          mainRef.current.scrollIntoView({ behavior: "smooth" });
+        }
         break;
       default:
         break;

@@ -8,21 +8,24 @@ import styles from "./login.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getInputValue, login, showPassword } from "../services/actions/login";
 import { Link } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, ChangeEvent, FormEvent } from "react";
+import { TLoginState } from "../utils/types";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
-  const form = useSelector((state) => state.login);
+  const form = useSelector((state) => (state as any).login) as TLoginState;
 
   const inputFilled = form.email && form.password;
 
-  const emailInput = useRef();
+  const emailInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    emailInput.current.focus();
+    if (emailInput.current) {
+      emailInput.current.focus();
+    }
   }, []);
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(getInputValue(e));
   };
 
@@ -31,7 +34,7 @@ export default function LoginPage() {
     console.log(form.showPassword);
   };
 
-  const submit = (e) => {
+  const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(login(form.email, form.password));
   };
@@ -53,9 +56,9 @@ export default function LoginPage() {
           required
         />
         <Input
-          type={!form.showPassword ? "text" : "password"}
+          type={form.showPassword ? "text" : "password"}
           placeholder={"Пароль"}
-          icon={!form.showPassword ? "HideIcon" : "ShowIcon"}
+          icon={form.showPassword ? "HideIcon" : "ShowIcon"}
           name={"password"}
           error={false}
           errorText={"Ошибка"}

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { ChangeEvent, useEffect, useRef } from "react";
 import {
   Input,
   Button,
@@ -12,14 +12,15 @@ import {
   getPreviousUser,
   getUserDate,
 } from "../services/actions/login";
+import { TLoginState } from "../utils/types";
 
 export default function Profile() {
   const dispatch = useDispatch();
-  const nameInputRef = useRef(null);
-  const loginInputRef = useRef(null);
-  const passwordInputRef = useRef(null);
+  const nameInputRef = useRef<HTMLInputElement>(null);
+  const loginInputRef = useRef<HTMLInputElement>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent) => {
     dispatch(changeProfileValue(e));
   };
 
@@ -28,14 +29,16 @@ export default function Profile() {
   }, []);
 
   const handleSave = () => {
-    dispatch(changeUser(form.user.name, form.user.email, form.user.password));
+    dispatch(
+      changeUser(form.user?.name, form.user?.email, form.user?.password)
+    );
   };
 
   const handleReset = () => {
     dispatch(getPreviousUser());
   };
 
-  const form = useSelector((store) => store.login);
+  const form = useSelector((store) => (store as any).login) as TLoginState;
 
   return (
     <form>
@@ -43,7 +46,7 @@ export default function Profile() {
         type={"text"}
         placeholder={"Имя"}
         icon={"EditIcon"}
-        value={form.user.name}
+        value={form.user?.name || ""}
         name={"name"}
         error={false}
         ref={nameInputRef}
@@ -56,7 +59,7 @@ export default function Profile() {
         type={"email"}
         placeholder={"Логин"}
         icon={"EditIcon"}
-        value={form.user.email}
+        value={form.user?.email || ""}
         name={"email"}
         error={false}
         ref={loginInputRef}
@@ -69,7 +72,7 @@ export default function Profile() {
         type={"password"}
         placeholder={"Пароль"}
         icon={"EditIcon"}
-        value={form.user.password || ""}
+        value={form.user?.password || ""}
         name={"password"}
         error={false}
         ref={passwordInputRef}

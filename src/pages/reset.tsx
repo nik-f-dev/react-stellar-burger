@@ -12,21 +12,24 @@ import {
   showPassword,
   getNewPassword,
 } from "../services/actions/reset";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, ChangeEvent, FormEvent } from "react";
+import { TResetState } from "../utils/types";
 
 export default function ResetPassword() {
   const dispatch = useDispatch();
-  const form = useSelector((store) => store.reset);
+  const form = useSelector((store) => (store as any).reset) as TResetState;
 
   const inputFilled = form.code && form.password;
 
-  const passwordRef = useRef();
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    passwordRef.current.focus();
+    if (passwordRef.current) {
+      passwordRef.current.focus();
+    }
   }, []);
 
-  const onChange = (e) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(getInput(e));
   };
 
@@ -34,7 +37,7 @@ export default function ResetPassword() {
     dispatch(showPassword());
   };
 
-  const submit = (e) => {
+  const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(getNewPassword(form.password, form.code));
   };
@@ -50,9 +53,9 @@ export default function ResetPassword() {
       <form onSubmit={submit}>
         <Input
           ref={passwordRef}
-          type={!form.showPassword ? "password" : "text"}
+          type={form.showPassword ? "text" : "password"}
           placeholder={"Введите новый пароль"}
-          icon={!form.showPassword ? "ShowIcon" : "HideIcon"}
+          icon={form.showPassword ? "HideIcon" : "ShowIcon"}
           name={"password"}
           error={false}
           errorText={"Ошибка"}

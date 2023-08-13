@@ -13,12 +13,14 @@ import {
 import { useDrop } from "react-dnd";
 import { useCallback, useMemo } from "react";
 import { ConstructorIngredients } from "../construcor-ingredients/construcor-ingredients";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import { TUser } from "../../utils/types";
+import { TIngredient } from "../../utils/types";
 
 export default function BurgerConstructor() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((store) => store.login.user);
+  const user = useSelector((store) => (store as any).login.user) as TUser;
 
   const location = useLocation();
 
@@ -26,14 +28,14 @@ export default function BurgerConstructor() {
     navigate("/login");
   };
 
-  const moveCardHandler = (dragIndex, hoverIndex) => {
+  const moveCardHandler = (dragIndex: number, hoverIndex: number) => {
     dispatch(moveCard(dragIndex, hoverIndex));
   };
 
-  const { ingredients, bun } = useSelector((state) => ({
-    ingredients: state.burgerConstructor.ingredientsConstructor,
-    bun: state.burgerConstructor.bun,
-  }));
+  const ingredients = useSelector(
+    (state) => (state as any).burgerConstructor.ingredientsConstructor
+  ) as TIngredient[];
+  const bun = useSelector((state) => (state as any).burgerConstructor.bun);
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
@@ -65,7 +67,13 @@ export default function BurgerConstructor() {
   }, [ingredients]);
 
   const renderCard = useCallback(
-    (ingredient, index, type, description, position) => {
+    (
+      ingredient: TIngredient,
+      index: number,
+      type: string,
+      description?: string,
+      position?: "top" | "bottom" | undefined
+    ) => {
       return (
         <ConstructorIngredients
           key={ingredient.id}
@@ -114,7 +122,7 @@ export default function BurgerConstructor() {
         {ingredients.map((ingredient, index) => {
           return (
             ingredient.type !== "bun" &&
-            renderCard(ingredient, index, ingredient.type)
+            renderCard(ingredient, index, ingredient.type, undefined, undefined)
           );
         })}
       </ul>

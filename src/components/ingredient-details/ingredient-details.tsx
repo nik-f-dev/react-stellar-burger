@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearIngredient } from "../../services/actions/ingredient-details";
 import { useLocation, useParams } from "react-router-dom";
 import Loader from "../loader/loader";
+import { TIngredient } from "../../utils/types";
 
 const modalWrapper = `${ingredientModule.ingredientWrapper} ${ingredientModule.modalIngredientWrapper}`;
 
@@ -12,8 +13,8 @@ export default function IngredientDetails() {
   const location = useLocation();
 
   const ingredients = useSelector(
-    (state) => state.burgerIngredients.ingredients
-  );
+    (state) => (state as any).burgerIngredients.ingredients
+  ) as TIngredient[];
 
   const { id } = useParams();
 

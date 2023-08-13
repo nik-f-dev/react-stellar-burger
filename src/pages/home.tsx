@@ -10,17 +10,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Loader from "../components/loader/loader";
+import { TModal, TIngredientsRequest } from "../utils/types";
 
 function HomePage() {
-  const modal = useSelector((state) => state.modal);
+  const modal = useSelector((state) => (state as any).modal) as TModal;
 
   const dispatch = useDispatch();
 
-  const { isLoading, hasError, error } = useSelector((state) => ({
-    isLoading: state.burgerIngredients.ingredientsRequest,
-    hasError: state.burgerIngredients.ingredientsFailed,
-    error: state.burgerIngredients.error,
-  }));
+  const { isLoading, hasError, error }: TIngredientsRequest = useSelector(
+    (state) => ({
+      isLoading: (state as any).burgerIngredients.ingredientsRequest,
+      hasError: (state as any).burgerIngredients.ingredientsFailed,
+      error: (state as any).burgerIngredients.error,
+    })
+  );
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -40,9 +43,11 @@ function HomePage() {
           <BurgerConstructor />
         </main>
         {modal.isOpen && (
-          <Modal isOpen={modal.isOpen}>
-            {modal.modalType === "ingredient" && <IngredientDetails />}
-            {modal.modalType === "order" && <OrderDetails />}
+          <Modal>
+            <>
+              {modal.modalType === "ingredient" && <IngredientDetails />}
+              {modal.modalType === "order" && <OrderDetails />}
+            </>
           </Modal>
         )}
       </DndProvider>

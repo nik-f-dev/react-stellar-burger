@@ -3,7 +3,7 @@ import { GET_INPUT_VALUE, GET_LOGIN_REQUEST, GET_LOGIN_SUCCESS, GET_LOGIN_FAILED
 const loginInitialState = {
   logoutRequest: false,
   logoutError: '',
-  showPassword: 'false',
+  showPassword: false,
   loginRequest: false,
   loginFailed: false,
   isAuthChecked: false,

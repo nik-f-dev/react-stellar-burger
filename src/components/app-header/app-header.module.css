@@ -12,10 +12,6 @@
   text-decoration: none;
 }
 
-.navItem:active {
-  color: white;
-}
-
 .absoluteNavItem {
   position: absolute;
   left: 186px;
@@ -47,6 +43,10 @@
 }
 
 .active {
+  color: white;
+}
+
+.inactive:active {
   color: white;
 }
 

@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 
-import appHeader from "./app-header.module.css";
+import styles from "./app-header.module.css";
 
 import {
   Logo,
@@ -9,24 +9,26 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
+const inactiveStyles = `text_color_inactive`;
+
 export default function AppHeader() {
   return (
-    <header className={appHeader.header}>
-      <div className={appHeader.navWrapper}>
-        <nav className={appHeader.nav}>
-          <div className={appHeader.navItemWrapper}>
+    <header className={styles.header}>
+      <div className={styles.navWrapper}>
+        <nav className={styles.nav}>
+          <div className={styles.navItemWrapper}>
             <NavLink
               to="/"
-              className={`${appHeader.navItem} pl-5 pr-5 pb-4 pt-4 mr-2 mt-4 mb-4`}
+              className={`${styles.navItem} pl-5 pr-5 pb-4 pt-4 mr-2 mt-4 mb-4`}
             >
               {({ isActive }) => (
                 <>
                   <BurgerIcon type={isActive ? "primary" : "secondary"} />
                   <p
                     className={`${
-                      appHeader.link
+                      styles.link
                     } text text_type_main-default ml-2 ${
-                      isActive ? appHeader.active : "text_color_inactive"
+                      isActive ? styles.active : inactiveStyles
                     }`}
                   >
                     Конструктор
@@ -37,16 +39,16 @@ export default function AppHeader() {
 
             <NavLink
               to="/order-tape"
-              className={`${appHeader.navItem} ${appHeader.absoluteNavItem} pl-5 pr-5 pb-4 pt-4 mr-2 mt-4 mb-4`}
+              className={`${styles.navItem} ${styles.absoluteNavItem} pl-5 pr-5 pb-4 pt-4 mr-2 mt-4 mb-4`}
             >
               {({ isActive }) => (
                 <>
                   <ListIcon type={isActive ? "primary" : "secondary"} />
                   <p
                     className={`${
-                      appHeader.link
+                      styles.link
                     } text text_type_main-default text_color_inactive ml-2 ${
-                      isActive ? appHeader.active : "text_color_inactive"
+                      isActive ? styles.active : inactiveStyles
                     }`}
                   >
                     Лента заказов
@@ -56,22 +58,22 @@ export default function AppHeader() {
             </NavLink>
           </div>
 
-          <Link to="/" className={appHeader.logo}>
+          <Link to="/" className={styles.logo}>
             <Logo />
           </Link>
 
           <NavLink
             to="/profile"
-            className={`${appHeader.navItem} pl-5 pr-5 pb-4 pt-4 mt-4 mb-4`}
+            className={`${styles.navItem} pl-5 pr-5 pb-4 pt-4 mt-4 mb-4`}
           >
             {({ isActive }) => (
               <>
                 <ProfileIcon type={isActive ? "primary" : "secondary"} />
                 <p
                   className={`${
-                    appHeader.link
+                    styles.link
                   } text text_type_main-default text_color_inactive ml-2 ${
-                    isActive ? appHeader.active : "text_color_inactive"
+                    isActive ? styles.active : inactiveStyles
                   }`}
                 >
                   Личный кабинет
