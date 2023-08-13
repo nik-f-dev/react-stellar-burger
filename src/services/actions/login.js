@@ -8,8 +8,6 @@ export const SET_AUTH_CHECKED = 'SET_AUTH_CHECKED';
 export const GET_USER = 'GET_USER';
 export const RESET_USER = 'RESET_USER';
 export const SHOW_PASSWORD = 'SHOW_PASSWORD';
-export const GET_LOGOUT_REQUEST = 'GET_LOGOUT_REQUEST';
-export const GET_LOGOUT_FAILED = 'GET_LOGOUT_FAILED';
 export const GET_PREVIOUS_USER = 'GET_PREVIOUS_USER';
 export const GET_CHANGES_FAILED = 'GET_CHANGES_FAILED';
 export const GET_PROFILE_VALUE = 'GET_PROFILE_VALUE';
@@ -127,9 +125,11 @@ export const checkUserAuth = () => {
 
 export const logout = (token) => {
   return (dispatch) => {
-    dispatch({
-      type: GET_LOGOUT_REQUEST,
-    });
+    localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        dispatch({
+          type: RESET_USER,
+        });
     request("auth/logout", {
       method: "POST",
       headers: {
@@ -140,19 +140,6 @@ export const logout = (token) => {
         token: token,
       }),
     })
-      .then((res) => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        dispatch({
-          type: RESET_USER,
-        });
-      })
-      .catch((err) => {
-        dispatch({
-          type: GET_LOGOUT_FAILED,
-          error: err.message,
-        });
-      });
   };
 };
 

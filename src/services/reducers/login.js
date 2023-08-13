@@ -1,4 +1,4 @@
-import { GET_INPUT_VALUE, GET_LOGIN_REQUEST, GET_LOGIN_SUCCESS, GET_LOGIN_FAILED, SET_AUTH_CHECKED, GET_USER, RESET_USER, SHOW_PASSWORD, GET_LOGOUT_FAILED, GET_LOGOUT_REQUEST, GET_PREVIOUS_USER, GET_CHANGES_FAILED, GET_PROFILE_VALUE, SWAP_USER } from "../actions/login";
+import { GET_INPUT_VALUE, GET_LOGIN_REQUEST, GET_LOGIN_SUCCESS, GET_LOGIN_FAILED, SET_AUTH_CHECKED, GET_USER, RESET_USER, SHOW_PASSWORD, GET_PREVIOUS_USER, GET_CHANGES_FAILED, GET_PROFILE_VALUE, SWAP_USER } from "../actions/login";
 
 const loginInitialState = {
   logoutRequest: false,
@@ -90,18 +90,6 @@ export const loginReducer = (state = loginInitialState, action) => {
       return {
         ...state,
         showPassword: !state.showPassword
-      }
-    }
-    case GET_LOGOUT_REQUEST: {
-      return {
-        ...state,
-        logoutRequest: true,
-      }
-    }
-    case GET_LOGOUT_FAILED: {
-      return {
-        ...state,
-        logoutError: action.error
       }
     }
     case SWAP_USER: {
