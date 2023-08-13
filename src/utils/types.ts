@@ -85,3 +85,9 @@ export type TConstructorProps = {
   position?: "top" | "bottom" | undefined;
   moveCard: (dragIndex: number, hoverIndex: number) => void;
 };
+
+export type TCustomResponse = Response & {
+  success: boolean;
+  accessToken?: string;
+  refreshToken?: string;
+};
