@@ -15,7 +15,7 @@ const checkSuccess = (response: TCustomResponse) => {
   return Promise.reject(`Ответ не success: ${response}`);
 };
 
-export function request(endpoint: string, options: any) {
+export function request(endpoint: string, options: RequestInit) {
   return fetch(`${baseUrl}${endpoint}`, options)
     .then(checkResponse)
     .then(checkSuccess);

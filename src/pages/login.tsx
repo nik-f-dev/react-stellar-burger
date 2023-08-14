@@ -30,7 +30,6 @@ export default function LoginPage() {
 
   const onIconClick = () => {
     dispatch(showPassword());
-    console.log(form.showPassword);
   };
 
   const submit = (e: FormEvent<HTMLFormElement>) => {

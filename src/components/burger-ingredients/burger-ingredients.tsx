@@ -2,7 +2,6 @@ import burgerIngredients from "./burger-ingredients.module.css";
 import { useRef } from "react";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import IntersectionObserver from "react-intersection-observer";
 import { getTab } from "../../services/actions/tab";
