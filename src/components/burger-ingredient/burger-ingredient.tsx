@@ -3,7 +3,7 @@ import {
   Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngredient from "./burger-ingredient.module.css";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
 import { TIngredient } from "../../utils/types";
@@ -14,7 +14,7 @@ export default function BurgerIngredient({
   ingredient: TIngredient;
 }) {
   const location = useLocation();
-  const ingredients = useSelector(
+  const ingredients = useAppSelector(
     (state) => (state as any).burgerConstructor.ingredientsConstructor
   ) as TIngredient[];
   const count = ingredients.filter(

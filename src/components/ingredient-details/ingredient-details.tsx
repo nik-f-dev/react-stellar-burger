@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import ingredientModule from "./ingredient-details.module.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { clearIngredient } from "../../services/actions/ingredient-details";
 import { useLocation, useParams } from "react-router-dom";
 import Loader from "../loader/loader";
@@ -9,10 +9,10 @@ import { TIngredient } from "../../utils/types";
 const modalWrapper = `${ingredientModule.ingredientWrapper} ${ingredientModule.modalIngredientWrapper}`;
 
 export default function IngredientDetails() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const location = useLocation();
 
-  const ingredients = useSelector(
+  const ingredients = useAppSelector(
     (state) => (state as any).burgerIngredients.ingredients
   ) as TIngredient[];
 

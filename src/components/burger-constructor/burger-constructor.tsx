@@ -1,7 +1,7 @@
 import burgerConstructor from "./burger-constructor.module.css";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import priceLogo from "./../../images/price-logo.svg";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import {
   addIngredient,
   moveCard,
@@ -18,9 +18,9 @@ import { TUser } from "../../utils/types";
 import { TIngredient } from "../../utils/types";
 
 export default function BurgerConstructor() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const user = useSelector((store) => (store as any).login.user) as TUser;
+  const user = useAppSelector((store) => store.login.user) as TUser;
 
   const location = useLocation();
 
@@ -32,10 +32,12 @@ export default function BurgerConstructor() {
     dispatch(moveCard(dragIndex, hoverIndex));
   };
 
-  const ingredients = useSelector(
+  const ingredients = useAppSelector(
     (state) => (state as any).burgerConstructor.ingredientsConstructor
   ) as TIngredient[];
-  const bun = useSelector((state) => (state as any).burgerConstructor.bun);
+  const bun = useAppSelector(
+    (state) => (state as any).burgerConstructor.bun
+  ) as boolean | null;
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",

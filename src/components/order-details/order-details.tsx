@@ -1,10 +1,10 @@
 import styles from "./order-details.module.css";
 import checkmark from "./../../images/checkmark.svg";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../../utils/hooks";
 
 export default function OrderDetails() {
-  const orderNumber = useSelector(
-    (state) => (state as any).orderDetails.orderNumber
+  const orderNumber = useAppSelector(
+    (state) => state.orderDetails.orderNumber
   ) as number;
   return (
     <div className="mt-30">

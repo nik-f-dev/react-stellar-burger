@@ -3,18 +3,21 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
-import { createStore, compose, applyMiddleware} from "redux";
-import { Provider } from 'react-redux';
-import { rootReducer } from "./services/reducers/index.js";
-import thunk from 'redux-thunk';
-import { BrowserRouter } from 'react-router-dom';
+import { createStore, compose, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import { rootReducer } from "./services/reducers/index";
+import thunk from "redux-thunk";
+import { BrowserRouter } from "react-router-dom";
 
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
 
-const store = createStore(
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(
   rootReducer,
   composeEnhancers(applyMiddleware(thunk))
 );

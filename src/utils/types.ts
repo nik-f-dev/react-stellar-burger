@@ -1,3 +1,5 @@
+import { store } from "../index";
+
 export type TForm = {
   isForgotSuccess: boolean;
   forgotRequest: boolean;
@@ -91,3 +93,7 @@ export type TCustomResponse = Response & {
   accessToken?: string;
   refreshToken?: string;
 };
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export type DispatchFunc = () => AppDispatch;

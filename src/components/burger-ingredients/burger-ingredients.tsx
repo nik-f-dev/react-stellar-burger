@@ -3,6 +3,7 @@ import { useRef } from "react";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import IntersectionObserver from "react-intersection-observer";
 import { getTab } from "../../services/actions/tab";
 import {
@@ -12,14 +13,14 @@ import {
 import { TIngredient } from "../../utils/types";
 
 export default function BurgerIngredients() {
-  const dispatch = useDispatch();
-  const intersection = useSelector(
-    (store) => (store as any).burgerIngredients.handleIntersecion
-  ) as boolean;
-  const ingredients = useSelector(
+  const dispatch = useAppDispatch();
+  const intersection = useAppSelector(
+    (store) => store.burgerIngredients.handleIntersecion
+  );
+  const ingredients = useAppSelector(
     (state) => (state as any).burgerIngredients.ingredients
   ) as TIngredient[];
-  const tab = useSelector((state) => (state as any).tab.currentTab) as string;
+  const tab = useAppSelector((state) => state.tab.currentTab) as string;
 
   const buns = ingredients.filter((item) => item.type === "bun");
   const main = ingredients.filter((item) => item.type === "main");

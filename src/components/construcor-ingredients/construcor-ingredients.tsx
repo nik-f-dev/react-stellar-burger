@@ -3,7 +3,7 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../utils/hooks";
 import { DELETE_INGREDIENT } from "../../services/actions/burger-constructor";
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
@@ -17,7 +17,7 @@ export const ConstructorIngredients = ({
   position,
   moveCard,
 }: TConstructorProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const removeIngredient = (ingredientId: string) => {
     dispatch({ type: DELETE_INGREDIENT, id: ingredientId });

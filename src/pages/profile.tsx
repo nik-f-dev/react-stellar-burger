@@ -5,17 +5,16 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./profile.module.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import {
   changeUser,
   changeProfileValue,
   getPreviousUser,
   getUserDate,
 } from "../services/actions/login";
-import { TLoginState } from "../utils/types";
 
 export default function Profile() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const nameInputRef = useRef<HTMLInputElement>(null);
   const loginInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
@@ -38,7 +37,7 @@ export default function Profile() {
     dispatch(getPreviousUser());
   };
 
-  const form = useSelector((store) => (store as any).login) as TLoginState;
+  const form = useAppSelector((store) => store.login);
 
   return (
     <form>

@@ -6,18 +6,17 @@ import {
 import styles from "./reset.module.css";
 
 import { Link, Navigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import {
   getInput,
   showPassword,
   getNewPassword,
 } from "../services/actions/reset";
 import { useEffect, useRef, ChangeEvent, FormEvent } from "react";
-import { TResetState } from "../utils/types";
 
 export default function ResetPassword() {
-  const dispatch = useDispatch();
-  const form = useSelector((store) => (store as any).reset) as TResetState;
+  const dispatch = useAppDispatch();
+  const form = useAppSelector((store) => store.reset);
 
   const inputFilled = form.code && form.password;
 

@@ -3,27 +3,24 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modal from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useEffect, ReactNode } from "react";
-import { useDispatch } from "react-redux";
-import { closeModal } from "../../services/actions/modal";
 import { useNavigate } from "react-router-dom";
 
 const modalRootElement = document.querySelector("#react-modals")!;
 
 export type TModalProps = {
   children: ReactNode;
+  closePath?: string;
 };
 
-export default function Modal({ children }: TModalProps) {
+export default function Modal({ children, closePath }: TModalProps) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  function closeModals() {
-    dispatch(closeModal());
-    navigate(-1);
+  function closeModals(path: string) {
+    navigate(path);
   }
 
   function handleKeyDown(e: KeyboardEvent) {
-    if (e.key === "Escape") {
-      closeModals();
+    if (e.key === "Escape" && closePath) {
+      closeModals(closePath);
     }
   }
 
@@ -36,9 +33,12 @@ export default function Modal({ children }: TModalProps) {
 
   return ReactDOM.createPortal(
     <div className={modal.active}>
-      <ModalOverlay closeModal={closeModals} />
+      <ModalOverlay closeModal={() => closePath && closeModals(closePath)} />
       <div className={modal.modalBody}>
-        <button className={modal.closeButton} onClick={closeModals}>
+        <button
+          className={modal.closeButton}
+          onClick={() => closePath && closeModals(closePath)}
+        >
           <CloseIcon type="primary" />
         </button>
         {children}

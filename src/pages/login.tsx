@@ -5,15 +5,14 @@ import {
 
 import styles from "./login.module.css";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { getInputValue, login, showPassword } from "../services/actions/login";
 import { Link } from "react-router-dom";
 import { useEffect, useRef, ChangeEvent, FormEvent } from "react";
-import { TLoginState } from "../utils/types";
 
 export default function LoginPage() {
-  const dispatch = useDispatch();
-  const form = useSelector((state) => (state as any).login) as TLoginState;
+  const dispatch = useAppDispatch();
+  const form = useAppSelector((state) => state.login);
 
   const inputFilled = form.email && form.password;
 

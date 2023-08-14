@@ -3,17 +3,15 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { TForm } from "../utils/types";
-
 import styles from "./forgot.module.css";
 import { Link, Navigate } from "react-router-dom";
 import { getInput, getSucessChange } from "../services/actions/forgot";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { useEffect, useRef, FormEvent, ChangeEvent } from "react";
 
 export default function ForgotPassword() {
-  const dispatch = useDispatch();
-  const form = useSelector((store) => (store as any).forgot) as TForm;
+  const dispatch = useAppDispatch();
+  const form = useAppSelector((store) => store.forgot);
 
   const emailRef = useRef<HTMLInputElement | null>(null);
 

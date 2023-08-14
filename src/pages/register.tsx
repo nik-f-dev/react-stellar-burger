@@ -5,19 +5,16 @@ import {
 
 import styles from "./register.module.css";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { getForm, register, showPassword } from "../services/actions/register";
 import { Link } from "react-router-dom";
 import { ChangeEvent, useEffect, useRef, FormEvent } from "react";
-import { TRegisterState } from "../utils/types";
 
 export default function RegisterPage() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const firstInput = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const form = useSelector(
-    (state) => (state as any).register
-  ) as TRegisterState;
+  const form = useAppSelector((state) => state.register);
 
   const inputFilled = form.email && form.password && form.name;
 

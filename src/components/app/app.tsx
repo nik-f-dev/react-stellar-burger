@@ -16,15 +16,15 @@ import {
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { checkUserAuth } from "../../services/actions/login";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 import OrderDetails from "../order-details/order-details";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const isSuccess = useSelector(
+  const isSuccess = useAppSelector(
     (store) => (store as any).forgot.isForgotSuccess
   ) as boolean;
   useEffect(() => {
@@ -63,7 +63,7 @@ function App() {
       <Route
         path="/ingredients/:id"
         element={
-          <Modal>
+          <Modal closePath="/">
             <IngredientDetails />
           </Modal>
         }
@@ -71,7 +71,7 @@ function App() {
       <Route
         path="/order-modal"
         element={
-          <Modal>
+          <Modal closePath="/">
             <OrderDetails />
           </Modal>
         }

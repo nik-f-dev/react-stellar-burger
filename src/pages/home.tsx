@@ -4,20 +4,19 @@ import BurgerIngredients from "../components/burger-ingredients/burger-ingredien
 import Modal from "../components/modal/modal";
 import OrderDetails from "../components/order-details/order-details";
 import IngredientDetails from "../components/ingredient-details/ingredient-details";
-import { useSelector } from "react-redux";
+import { useAppSelector } from "../utils/hooks";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Loader from "../components/loader/loader";
-import { TModal, TIngredientsRequest } from "../utils/types";
 
 function HomePage() {
-  const modal = useSelector<any>((state) => state.modal) as TModal;
+  const modal = useAppSelector((state) => state.modal);
 
-  const { isLoading, hasError, error } = useSelector<any>((state) => ({
+  const { isLoading, hasError, error } = useAppSelector((state) => ({
     isLoading: state.burgerIngredients.ingredientsRequest,
     hasError: state.burgerIngredients.ingredientsFailed,
     error: state.burgerIngredients.error,
-  })) as TIngredientsRequest;
+  }));
 
   return (
     <div className={styles.app}>
