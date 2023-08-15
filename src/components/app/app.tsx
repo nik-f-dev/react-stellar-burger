@@ -20,6 +20,7 @@ import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { checkUserAuth } from "../../services/actions/login";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 import OrderDetails from "../order-details/order-details";
+import { CompleteOrder } from "../complete-order/complete-order";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -48,11 +49,13 @@ function App() {
       ) : (
         <Route path="/reset-password" element={<Navigate to="/" />} />
       )}
-      <Route path="/order-tape" element={<OrderTape />} />
+      <Route path="/feed" element={<OrderTape />} />
+      <Route path="/feed/:id" element={<CompleteOrder />} />
       <Route path="/profile" element={<OnlyAuth>{<ProfileLayout />}</OnlyAuth>}>
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/orders" element={<ProfileOrders />} />
       </Route>
+      <Route path="/profile/orders/:id" element={<CompleteOrder />} />
       <Route path="/ingredients/:id" element={<IngredientDetails />} />
       <Route path="*" element={<NotFound />} />
     </Route>
@@ -73,6 +76,22 @@ function App() {
         element={
           <Modal closePath="/">
             <OrderDetails />
+          </Modal>
+        }
+      />
+      <Route
+        path="/feed/:id"
+        element={
+          <Modal closePath="/feed">
+            <CompleteOrder isModal={true} />
+          </Modal>
+        }
+      />
+      <Route
+        path="/profile/orders/:id"
+        element={
+          <Modal closePath="/profile/orders">
+            <CompleteOrder isModal={true} />
           </Modal>
         }
       />

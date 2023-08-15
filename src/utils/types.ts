@@ -94,6 +94,21 @@ export type TCustomResponse = Response & {
   refreshToken?: string;
 };
 
+export type TIngredientPictureProps = {
+  index: number;
+  numberOfPhotos?: string;
+  ingredient: TIngredient;
+  pictureWithNumber?: boolean;
+};
+
+export type TOrderProps = {
+  fromProfile?: boolean;
+};
+
+export type TCompleteOrderProps = {
+  isModal?: boolean;
+};
+
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type DispatchFunc = () => AppDispatch;

@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import ingredientModule from "./ingredient-details.module.css";
-import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { clearIngredient } from "../../services/actions/ingredient-details";
 import { useLocation, useParams } from "react-router-dom";
 import Loader from "../loader/loader";
+import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import { TIngredient } from "../../utils/types";
 
 const modalWrapper = `${ingredientModule.ingredientWrapper} ${ingredientModule.modalIngredientWrapper}`;

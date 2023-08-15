@@ -38,7 +38,7 @@ export default function AppHeader() {
             </NavLink>
 
             <NavLink
-              to="/order-tape"
+              to="/feed"
               className={`${styles.navItem} ${styles.absoluteNavItem} pl-5 pr-5 pb-4 pt-4 mr-2 mt-4 mb-4`}
             >
               {({ isActive }) => (
