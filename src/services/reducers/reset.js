@@ -1,5 +1,5 @@
 import {
-  GET_INPUT_VALUE,
+  GET_FORM_VALUE,
   SHOW_PASSWORD,
   GET_RESET_REQUEST,
   GET_RESET_SUCCESS,
@@ -20,7 +20,7 @@ export const resetPasswordReducer = (
   action
 ) => {
   switch (action.type) {
-    case GET_INPUT_VALUE: {
+    case GET_FORM_VALUE: {
       const { inputName, value } = action;
       return {
         ...state,
