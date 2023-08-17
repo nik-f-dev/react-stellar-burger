@@ -7,11 +7,11 @@ import { TRegisterActions } from "../../services/actions/register";
 import { TProfileActions } from "../../services/actions/profile";
 import { TOrderDetailsActions } from "../../services/actions/order-details";
 import { TModalActions } from "../../services/actions/modal";
-import { TLoginActions } from "../../services/actions/login";
 import { TIngredientDetailsActions } from "../../services/actions/ingredient-details";
 import { TForgotActions } from "../../services/actions/forgot";
 import { TBurgerIngredientsActions } from "../../services/actions/burger-ingredients";
 import { TBurgerConstructorActions } from "../../services/actions/burger-constructor";
+import { TLoginActions } from "../../services/actions/login";
 
 export type TForm = {
   isForgotSuccess: boolean;
@@ -23,7 +23,7 @@ export type TForm = {
 export type TUser = {
   email: string;
   name: string;
-  password: string;
+  password?: string;
 };
 
 export type TLoginState = {
@@ -128,7 +128,7 @@ export type TCompleteOrderProps = {
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-export type DispatchFunc = () => AppDispatch;
+export type DispatchFunc = () => AppDispatch | AppThunk;
 
 type TApplicationActions =
   | TTabActions
@@ -137,12 +137,12 @@ type TApplicationActions =
   | TProfileActions
   | TOrderDetailsActions
   | TModalActions
-  | TLoginActions
   | TIngredientDetailsActions
   | TForgotActions
   | TBurgerIngredientsActions
-  | TBurgerConstructorActions;
+  | TBurgerConstructorActions
+  | TLoginActions;
 
-export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
 >;

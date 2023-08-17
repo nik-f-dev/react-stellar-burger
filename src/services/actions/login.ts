@@ -167,7 +167,7 @@ export const checkUserAuth: AppThunk = () => {
   return async (dispatch: AppDispatch) => {
     if (localStorage.getItem("accessToken")) {
       try {
-        await dispatch(getUser());
+        await getUser();
       } catch {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");

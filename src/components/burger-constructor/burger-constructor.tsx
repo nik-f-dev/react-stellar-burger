@@ -28,9 +28,12 @@ export default function BurgerConstructor() {
     navigate("/login");
   };
 
-  const moveCardHandler = (dragIndex: number, hoverIndex: number) => {
-    dispatch(moveCard(dragIndex, hoverIndex));
-  };
+  const moveCardHandler = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      dispatch(moveCard(dragIndex, hoverIndex));
+    },
+    [dispatch]
+  );
 
   const ingredients = useAppSelector(
     (state) => (state as any).burgerConstructor.ingredientsConstructor

@@ -12,13 +12,13 @@ import { resetPasswordReducer } from "./reset";
 import { profileReducer } from "./profile";
 
 export const rootReducer = combineReducers({
+  login: loginReducer,
   burgerIngredients: burgerIngredientsReducer,
   orderDetails: orderDetailsReducer,
   burgerConstructor: burgerConstructorReducer,
   ingredientDetails: ingredientDetailsReducer,
   modal: modalReducer,
   tab: tabReducer,
-  login: loginReducer,
   register: registerReducer,
   forgot: forgotPasswordReducer,
   reset: resetPasswordReducer,

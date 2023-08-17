@@ -1,3 +1,4 @@
+import { TUser } from "../../utils/types/types";
 import {
   GET_INPUT_VALUE,
   GET_LOGIN_REQUEST,
@@ -11,9 +12,25 @@ import {
   GET_CHANGES_FAILED,
   GET_PROFILE_VALUE,
   SWAP_USER,
+  TLoginActions,
 } from "../actions/login";
 
-const loginInitialState = {
+type TLoginState = {
+  logoutRequest: boolean;
+  logoutError: string;
+  showPassword: boolean;
+  loginRequest: boolean;
+  loginFailed: boolean;
+  isAuthChecked: boolean;
+  user: null | TUser;
+  previousUser: null | TUser;
+  changeError: string;
+  email: string;
+  password: string;
+  name: string;
+};
+
+const loginInitialState: TLoginState = {
   logoutRequest: false,
   logoutError: "",
   showPassword: false,
@@ -28,7 +45,10 @@ const loginInitialState = {
   name: "",
 };
 
-export const loginReducer = (state = loginInitialState, action) => {
+export const loginReducer = (
+  state = loginInitialState,
+  action: TLoginActions
+): TLoginState => {
   switch (action.type) {
     case GET_INPUT_VALUE: {
       const { name, value } = action;
@@ -42,7 +62,8 @@ export const loginReducer = (state = loginInitialState, action) => {
       return {
         ...state,
         user: {
-          ...state.user,
+          name: state.user?.name || "",
+          email: state.user?.email || "",
           [name]: value,
         },
       };
