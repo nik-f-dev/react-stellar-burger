@@ -3,19 +3,29 @@ import {
   GET_FORGOT_REQUEST,
   GET_FORGOT_SUCCESS,
   GET_FORGOT_FAILED,
+  TForgotActions,
 } from "../actions/forgot";
 
-const forgotPasswordInitialState = {
+type TForgotPasswordState = {
+  isForgotSuccess: boolean;
+  forgotRequest: boolean;
+  forgotFailed: boolean;
+  email: string;
+  error: string;
+};
+
+const forgotPasswordInitialState: TForgotPasswordState = {
   isForgotSuccess: false,
   forgotRequest: false,
   forgotFailed: false,
   email: "",
+  error: "",
 };
 
 export const forgotPasswordReducer = (
   state = forgotPasswordInitialState,
-  action
-) => {
+  action: TForgotActions
+): TForgotPasswordState => {
   switch (action.type) {
     case GET_INPUT_VALUE: {
       const { inputName, value } = action;

@@ -19,7 +19,7 @@ export default function Profile() {
   const loginInputRef = useRef<HTMLInputElement>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
-  const onChange = (e: ChangeEvent) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(changeProfileValue(e));
   };
 

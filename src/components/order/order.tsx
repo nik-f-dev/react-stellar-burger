@@ -4,9 +4,8 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./order.module.css";
 import { useAppSelector } from "../../utils/hooks";
-import { TIngredient, TOrderProps } from "../../utils/types";
+import { TIngredient, TOrderProps } from "../../utils/types/types";
 import { IngredientPicture } from "../ingredient-picture/ingredient-picture";
-import { Link } from "react-router-dom";
 
 const today = new Date();
 const orderWrapperProfile = `${styles.orderWrapperFromProfile} mb-6 mr-2`;

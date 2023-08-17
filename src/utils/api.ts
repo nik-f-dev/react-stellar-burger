@@ -1,4 +1,4 @@
-import { TCustomResponse } from "./types";
+import { TCustomResponse } from "./types/types";
 const baseUrl = "https://norma.nomoreparties.space/api/";
 
 const checkResponse = (response: Response) => {
@@ -39,12 +39,12 @@ export function getUser() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      authorization: localStorage.getItem("accessToken"),
+      authorization: localStorage.getItem("accessToken") as string,
     },
   });
 }
 
-export const fetchWithRefresh = async (url: string, options: any) => {
+export const fetchWithRefresh = async (url: string, options: RequestInit) => {
   try {
     const res = await fetch(url, options);
     return await checkResponse(res);
@@ -56,11 +56,15 @@ export const fetchWithRefresh = async (url: string, options: any) => {
       }
       if (refreshData.accessToken) {
         localStorage.setItem("accessToken", refreshData.accessToken);
+        options.headers = {
+          ...options.headers,
+          authorization: refreshData.accessToken,
+        };
       }
       if (refreshData.refreshToken) {
         localStorage.setItem("refreshToken", refreshData.refreshToken);
       }
-      options.headers.authorization = refreshData.accessToken;
+
       const res = await fetch(url, options);
       return checkResponse(res);
     } else {

@@ -3,11 +3,11 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useAppDispatch } from "../../utils/hooks";
-import { DELETE_INGREDIENT } from "../../services/actions/burger-constructor";
 import { useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
-import { TConstructorProps } from "../../utils/types";
+import { TConstructorProps } from "../../utils/types/types";
+import { removeIngredient } from "../../services/actions/burger-constructor";
+import { useAppDispatch } from "../../utils/hooks";
 
 export const ConstructorIngredients = ({
   index,
@@ -18,11 +18,6 @@ export const ConstructorIngredients = ({
   moveCard,
 }: TConstructorProps) => {
   const dispatch = useAppDispatch();
-
-  const removeIngredient = (ingredientId: string) => {
-    dispatch({ type: DELETE_INGREDIENT, id: ingredientId });
-  };
-
   const ref = useRef<HTMLLIElement>(null);
 
   const [{ handlerId }, drop] = useDrop({
@@ -94,7 +89,9 @@ export const ConstructorIngredients = ({
         key={ingredient.id}
         isLocked={type === "bun"}
         thumbnail={ingredient.image}
-        handleClose={() => ingredient.id && removeIngredient(ingredient.id)}
+        handleClose={() =>
+          ingredient.id && dispatch(removeIngredient(ingredient.id))
+        }
         extraClass={`${constructorIngredients.shoppingCartElement} ml-2`}
       />
     </li>

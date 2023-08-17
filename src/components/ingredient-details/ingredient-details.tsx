@@ -4,7 +4,7 @@ import { clearIngredient } from "../../services/actions/ingredient-details";
 import { useLocation, useParams } from "react-router-dom";
 import Loader from "../loader/loader";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
-import { TIngredient } from "../../utils/types";
+import { TIngredient } from "../../utils/types/types";
 
 const modalWrapper = `${ingredientModule.ingredientWrapper} ${ingredientModule.modalIngredientWrapper}`;
 

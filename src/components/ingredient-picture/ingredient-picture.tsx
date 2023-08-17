@@ -1,5 +1,5 @@
 import styles from "./ingredient-picture.module.css";
-import { TIngredientPictureProps } from "../../utils/types";
+import { TIngredientPictureProps } from "../../utils/types/types";
 
 export const IngredientPicture = ({
   index,

@@ -6,7 +6,7 @@ import burgerIngredient from "./burger-ingredient.module.css";
 import { useAppSelector } from "../../utils/hooks";
 import { useDrag } from "react-dnd";
 import { Link, useLocation } from "react-router-dom";
-import { TIngredient } from "../../utils/types";
+import { TIngredient } from "../../utils/types/types";
 
 export default function BurgerIngredient({
   ingredient,

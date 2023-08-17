@@ -1,7 +1,6 @@
 import { ChangeEvent } from "react";
 import { request } from "../../utils/api";
-import { AppDispatch, RootState } from "../../utils/types";
-import { ThunkAction } from "redux-thunk";
+import { AppDispatch, AppThunk } from "../../utils/types/types";
 
 export const GET_FORM_VALUE: "GET_FORM_VALUE" = "GET_FORM_VALUE";
 export const GET_RESET_REQUEST: "GET_RESET_REQUEST" = "GET_RESET_REQUEST";
@@ -18,7 +17,7 @@ export type TGetInput = {
 export type TGetNewPassword =
   | { readonly type: typeof GET_RESET_REQUEST }
   | { readonly type: typeof GET_RESET_SUCCESS }
-  | { readonly type: typeof GET_RESET_FAILED };
+  | { readonly type: typeof GET_RESET_FAILED; readonly error: string };
 
 export type TShowPassword = {
   readonly type: typeof SHOW_PASSWORD;
@@ -32,11 +31,8 @@ export function getInput(e: ChangeEvent<HTMLInputElement>): TGetInput {
   };
 }
 
-export const getNewPassword = (
-  password: string,
-  token: string
-): ThunkAction<void, RootState, unknown, TGetNewPassword> => {
-  return (dispatch) => {
+export const getNewPassword: AppThunk = (password: string, token: string) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: GET_RESET_REQUEST,
     });
@@ -68,3 +64,5 @@ export const getNewPassword = (
 export const showPassword = () => {
   return { type: SHOW_PASSWORD };
 };
+
+export type TResetActions = TGetInput | TShowPassword | TGetNewPassword;

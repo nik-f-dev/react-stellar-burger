@@ -3,9 +3,7 @@ import checkmark from "./../../images/checkmark.svg";
 import { useAppSelector } from "../../utils/hooks";
 
 export default function OrderDetails() {
-  const orderNumber = useAppSelector(
-    (state) => state.orderDetails.orderNumber
-  ) as number;
+  const orderNumber = useAppSelector((state) => state.orderDetails.orderNumber);
   return (
     <div className="mt-30">
       <h2 className={`${styles.orderId} text text_type_digits-large`}>

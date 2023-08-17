@@ -1,5 +1,5 @@
 import burgerIngredients from "./burger-ingredients.module.css";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useAppDispatch, useAppSelector } from "../../utils/hooks";
@@ -9,13 +9,14 @@ import {
   enableIntersection,
   disableIntersection,
 } from "../../services/actions/burger-ingredients";
-import { TIngredient } from "../../utils/types";
+import { TIngredient } from "../../utils/types/types";
 
 export default function BurgerIngredients() {
   const dispatch = useAppDispatch();
   const intersection = useAppSelector(
     (store) => store.burgerIngredients.handleIntersecion
   );
+  const currentTab = useAppSelector((state) => state.tab.currentTab);
   const ingredients = useAppSelector(
     (state) => (state as any).burgerIngredients.ingredients
   ) as TIngredient[];

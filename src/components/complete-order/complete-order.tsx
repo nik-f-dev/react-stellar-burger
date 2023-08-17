@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../utils/hooks";
-import { TCompleteOrderProps, TIngredient } from "../../utils/types";
+import { TCompleteOrderProps, TIngredient } from "../../utils/types/types";
 import { IngredientPicture } from "../ingredient-picture/ingredient-picture";
 import styles from "./complete-order.module.css";
 import {

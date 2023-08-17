@@ -1,4 +1,17 @@
-import { store } from "../index";
+import { Action, ActionCreator } from "redux";
+import { store } from "../../index";
+import { ThunkAction } from "redux-thunk";
+import { TTabActions } from "../../services/actions/tab";
+import { TResetActions } from "../../services/actions/reset";
+import { TRegisterActions } from "../../services/actions/register";
+import { TProfileActions } from "../../services/actions/profile";
+import { TOrderDetailsActions } from "../../services/actions/order-details";
+import { TModalActions } from "../../services/actions/modal";
+import { TLoginActions } from "../../services/actions/login";
+import { TIngredientDetailsActions } from "../../services/actions/ingredient-details";
+import { TForgotActions } from "../../services/actions/forgot";
+import { TBurgerIngredientsActions } from "../../services/actions/burger-ingredients";
+import { TBurgerConstructorActions } from "../../services/actions/burger-constructor";
 
 export type TForm = {
   isForgotSuccess: boolean;
@@ -88,10 +101,14 @@ export type TConstructorProps = {
   moveCard: (dragIndex: number, hoverIndex: number) => void;
 };
 
+//Типизировать data
 export type TCustomResponse = Response & {
   success: boolean;
   accessToken?: string;
   refreshToken?: string;
+  order?: { number: string };
+  user?: TUser;
+  data?: any;
 };
 
 export type TIngredientPictureProps = {
@@ -112,3 +129,20 @@ export type TCompleteOrderProps = {
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type DispatchFunc = () => AppDispatch;
+
+type TApplicationActions =
+  | TTabActions
+  | TResetActions
+  | TRegisterActions
+  | TProfileActions
+  | TOrderDetailsActions
+  | TModalActions
+  | TLoginActions
+  | TIngredientDetailsActions
+  | TForgotActions
+  | TBurgerIngredientsActions
+  | TBurgerConstructorActions;
+
+export type AppThunk<ReturnType = void> = ActionCreator<
+  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
+>;

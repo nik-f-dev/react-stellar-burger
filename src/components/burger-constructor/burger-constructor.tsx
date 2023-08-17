@@ -14,8 +14,8 @@ import { useDrop } from "react-dnd";
 import { useCallback, useMemo } from "react";
 import { ConstructorIngredients } from "../construcor-ingredients/construcor-ingredients";
 import { useNavigate, useLocation } from "react-router-dom";
-import { TUser } from "../../utils/types";
-import { TIngredient } from "../../utils/types";
+import { TUser } from "../../utils/types/types";
+import { TIngredient } from "../../utils/types/types";
 
 export default function BurgerConstructor() {
   const dispatch = useAppDispatch();
@@ -41,7 +41,7 @@ export default function BurgerConstructor() {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop(item: any) {
       dispatch(addIngredient(item));
     },
     collect: (monitor) => ({

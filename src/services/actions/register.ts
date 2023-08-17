@@ -1,6 +1,5 @@
-import { ThunkAction } from "redux-thunk";
 import { request } from "../../utils/api";
-import { RootState } from "../../utils/types";
+import { AppDispatch, AppThunk } from "../../utils/types/types";
 import { ChangeEvent } from "react";
 
 export const GET_FORM_VALUE: "GET_FORM_VALUE" = "GET_FORM_VALUE";
@@ -22,6 +21,10 @@ export type TGetForm = {
   readonly value: string;
 };
 
+export type TShowPassword = {
+  readonly type: typeof SHOW_PASSWORD;
+};
+
 export function getForm(e: ChangeEvent<HTMLInputElement>): TGetForm {
   return {
     type: GET_FORM_VALUE,
@@ -30,16 +33,16 @@ export function getForm(e: ChangeEvent<HTMLInputElement>): TGetForm {
   };
 }
 
-export const showPassword = () => {
+export const showPassword = (): TShowPassword => {
   return { type: SHOW_PASSWORD };
 };
 
-export function register(
+export const register: AppThunk = (
   name: string,
   email: string,
   password: string
-): ThunkAction<void, RootState, unknown, TRegister> {
-  return (dispatch) => {
+) => {
+  return (dispatch: AppDispatch) => {
     dispatch({
       type: GET_REGISTER_REQUEST,
     });
@@ -67,4 +70,6 @@ export function register(
         });
       });
   };
-}
+};
+
+export type TRegisterActions = TRegister | TGetForm | TShowPassword;

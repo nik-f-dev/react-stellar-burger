@@ -3,7 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../utils/hooks";
 import { useEffect } from "react";
 import { checkUserAuth } from "../../services/actions/login";
 import Loader from "../loader/loader";
-import { TProtected } from "../../utils/types";
+import { TProtected } from "../../utils/types/types";
 
 const Protected = ({ onlyUnAuth = false, children }: TProtected) => {
   const dispatch = useAppDispatch();
