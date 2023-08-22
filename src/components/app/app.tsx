@@ -21,6 +21,7 @@ import { checkUserAuth } from "../../services/actions/login";
 import { getIngredients } from "../../services/actions/burger-ingredients";
 import OrderDetails from "../order-details/order-details";
 import { CompleteOrder } from "../complete-order/complete-order";
+import { WS_CONNECTION_START } from "../../services/actions/wsActionTypes";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ function App() {
   useEffect(() => {
     dispatch(checkUserAuth());
     dispatch(getIngredients());
+    dispatch({ type: WS_CONNECTION_START });
   }, []);
   const location = useLocation();
   const background = location.state && location.state.background;

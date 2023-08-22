@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./order-tape.module.css";
 import Loader from "../components/loader/loader";
 import { OrdersSection } from "../components/orders-section/orders-section";

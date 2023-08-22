@@ -8,6 +8,14 @@ import { Provider } from "react-redux";
 import { rootReducer } from "./services/reducers/index";
 import thunk from "redux-thunk";
 import { BrowserRouter } from "react-router-dom";
+import { socketMiddleware } from "./services/middleware/socketMiddleware";
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_CLOSED,
+  WS_CONNECTION_ERROR,
+  WS_GET_DATA,
+} from "./services/actions/wsActionTypes";
 
 declare global {
   interface Window {
@@ -15,11 +23,21 @@ declare global {
   }
 }
 
+const wsUrl = "wss://norma.nomoreparties.space/orders/all";
+
+const wsActions = {
+  wsInit: WS_CONNECTION_START,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_DATA,
+};
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk))
+  composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions)))
 );
 
 ReactDOM.render(

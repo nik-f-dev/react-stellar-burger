@@ -96,7 +96,7 @@ export function getPreviousUser(): TGetPreviousUser {
   };
 }
 
-export function getUserDate(): TGetUserDate {
+export function getPreviousUserData(): TGetUserDate {
   return {
     type: GET_PREVIOUS_USER,
   };

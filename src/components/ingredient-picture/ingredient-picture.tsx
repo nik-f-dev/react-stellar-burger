@@ -21,9 +21,8 @@ export const IngredientPicture = ({
       )}
       <div className={styles.imageBefore}>
         <img
+          className={styles.image}
           src={ingredient.image_mobile}
-          width="60px"
-          height="60px"
           alt={ingredient.name}
         />
       </div>

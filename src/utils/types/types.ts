@@ -26,24 +26,14 @@ export type TUser = {
   password?: string;
 };
 
-export type TLoginState = {
-  logoutRequest: boolean;
-  logoutError: string;
-  showPassword: boolean;
-  loginRequest: boolean;
-  loginFailed: boolean;
-  isAuthChecked: boolean;
-  user: null | TUser;
-  previousUser: null | TUser;
-  changeError: string;
-  email: string;
-  password: string;
+export type TOrder = {
+  createdAt: string;
+  ingredients: string[];
   name: string;
-};
-
-export type TModal = {
-  isOpen: boolean;
-  modalType: null;
+  number: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
 };
 
 export type TIngredientsRequest = {
@@ -101,7 +91,6 @@ export type TConstructorProps = {
   moveCard: (dragIndex: number, hoverIndex: number) => void;
 };
 
-//Типизировать data
 export type TCustomResponse = Response & {
   success: boolean;
   accessToken?: string;
@@ -120,6 +109,7 @@ export type TIngredientPictureProps = {
 
 export type TOrderProps = {
   fromProfile?: boolean;
+  orderData?: TOrder;
 };
 
 export type TCompleteOrderProps = {

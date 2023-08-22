@@ -10,6 +10,7 @@ import { registerReducer } from "./register";
 import { forgotPasswordReducer } from "./forgot";
 import { resetPasswordReducer } from "./reset";
 import { profileReducer } from "./profile";
+import { wsReducer } from "./wsReducer";
 
 export const rootReducer = combineReducers({
   login: loginReducer,
@@ -23,4 +24,5 @@ export const rootReducer = combineReducers({
   forgot: forgotPasswordReducer,
   reset: resetPasswordReducer,
   profile: profileReducer,
+  ws: wsReducer,
 });

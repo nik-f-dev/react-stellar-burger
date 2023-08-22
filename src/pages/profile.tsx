@@ -10,7 +10,7 @@ import {
   changeUser,
   changeProfileValue,
   getPreviousUser,
-  getUserDate,
+  getPreviousUserData,
 } from "../services/actions/login";
 
 export default function Profile() {
@@ -24,7 +24,7 @@ export default function Profile() {
   };
 
   useEffect(() => {
-    dispatch(getUserDate());
+    dispatch(getPreviousUserData());
   }, []);
 
   const handleSave = () => {
