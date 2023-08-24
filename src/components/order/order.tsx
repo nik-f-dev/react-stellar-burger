@@ -51,6 +51,19 @@ export const Order = ({ fromProfile, orderData }: TOrderProps) => {
   const status = orderData?.status;
   const orderDate = orderData && orderData.createdAt;
 
+  let orderStatus = "";
+  switch (status) {
+    case "pending":
+      orderStatus = "Ожидается";
+      break;
+    case "created":
+      orderStatus = "Создан";
+      break;
+    case "done":
+      orderStatus = "Выполнен";
+      break;
+  }
+
   return (
     <div className={`${fromProfile ? orderWrapperProfile : orderWrapper}`}>
       <div className={`${styles.idWrapper} p-6`}>
@@ -76,9 +89,11 @@ export const Order = ({ fromProfile, orderData }: TOrderProps) => {
       </p>
       {fromProfile && (
         <p
-          className={`${styles.orderName} pl-6 pr-6 pt-2 text text_type_main-default`}
+          className={`${
+            orderStatus === "done" ? styles.orderName : styles.orderNameDone
+          } pl-6 pr-6 pt-2 text text_type_main-default`}
         >
-          {status}
+          {orderStatus}
         </p>
       )}
       <div className={`${styles.bottomWrapper} p-6`}>

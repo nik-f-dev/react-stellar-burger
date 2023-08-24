@@ -7,6 +7,16 @@ export const WS_CONNECTION_ERROR: "WS_CONNECTION_ERROR" = "WS_CONNECTION_ERROR";
 export const WS_CONNECTION_CLOSED: "WS_CONNECTION_CLOSED" =
   "WS_CONNECTION_CLOSED";
 export const WS_GET_DATA: "WS_GET_DATA" = "WS_GET_DATA";
+export const WS_CLEAR_ORDERS: "WS_CLEAR_ORDERS" = "WS_CLEAR_ORDERS";
+
+export type TWsConnectionStart = {
+  readonly type: typeof WS_CONNECTION_START;
+  readonly payload: string | null;
+};
+
+export type TWsClearOrders = {
+  readonly type: typeof WS_CLEAR_ORDERS;
+};
 
 export type TWsConnectionSuccess = {
   readonly type: typeof WS_CONNECTION_SUCCESS;
@@ -45,8 +55,16 @@ export const wsConnectionClosed = (): TWsConnectionClosed => {
   };
 };
 
+export const clearOrders = (): TWsClearOrders => {
+  return {
+    type: WS_CLEAR_ORDERS,
+  };
+};
+
 export type TWsActions =
+  | TWsConnectionStart
   | TWsConnectionSuccess
   | TWsConnectionError
   | TWsConnectionClosed
-  | TWsGetData;
+  | TWsGetData
+  | TWsClearOrders;

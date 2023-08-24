@@ -6,6 +6,7 @@ import {
   MOVE_CARD,
   DELETE_INGREDIENT,
   TBurgerConstructorActions,
+  RESET_INGREDIENTS,
 } from "../actions/burger-constructor";
 import { TIngredient } from "../../utils/types/types";
 
@@ -63,6 +64,13 @@ export const burgerConstructorReducer = (
             [hoverIndex, 0, state.ingredientsConstructor[dragIndex]],
           ],
         }),
+      };
+    }
+    case RESET_INGREDIENTS: {
+      return {
+        ...state,
+        ingredientsConstructor: [],
+        bun: null,
       };
     }
     default: {

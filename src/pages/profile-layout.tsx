@@ -1,8 +1,6 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-
 import styles from "./profile-layout.module.css";
 import { useAppDispatch } from "../utils/hooks";
-
 import { logout } from "../services/actions/login";
 
 const styleActive = `${styles.link} ${styles.active} text text_type_main-medium`;

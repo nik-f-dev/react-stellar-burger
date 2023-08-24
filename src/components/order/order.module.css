@@ -27,6 +27,11 @@
   white-space: nowrap;
 }
 
+.orderNameDone {
+  composes: orderName;
+  color: #00cccc;
+}
+
 .bottomWrapper {
   display: flex;
   justify-content: space-between;

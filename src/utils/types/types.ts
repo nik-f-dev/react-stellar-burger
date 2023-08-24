@@ -12,6 +12,7 @@ import { TForgotActions } from "../../services/actions/forgot";
 import { TBurgerIngredientsActions } from "../../services/actions/burger-ingredients";
 import { TBurgerConstructorActions } from "../../services/actions/burger-constructor";
 import { TLoginActions } from "../../services/actions/login";
+import { TWsActions } from "../../services/actions/wsActionTypes";
 
 export type TForm = {
   isForgotSuccess: boolean;
@@ -34,6 +35,7 @@ export type TOrder = {
   status: string;
   updatedAt: string;
   _id: string;
+  owner?: string;
 };
 
 export type TIngredientsRequest = {
@@ -120,7 +122,7 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type DispatchFunc = () => AppDispatch | AppThunk;
 
-type TApplicationActions =
+export type TApplicationActions =
   | TTabActions
   | TResetActions
   | TRegisterActions
@@ -131,7 +133,8 @@ type TApplicationActions =
   | TForgotActions
   | TBurgerIngredientsActions
   | TBurgerConstructorActions
-  | TLoginActions;
+  | TLoginActions
+  | TWsActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>

@@ -29,10 +29,11 @@ export const getOrder: AppThunk = (ingredientsId) => {
     dispatch({
       type: GET_ORDER_REQUEST,
     });
-    request("orders", {
-      method: "POST",
+    request(`orders`, {
+      method: `POST`,
       headers: {
         "Content-Type": "application/json",
+        authorization: localStorage.getItem("accessToken") as string,
       },
       body: JSON.stringify({ ingredients: ingredientsId }),
     })

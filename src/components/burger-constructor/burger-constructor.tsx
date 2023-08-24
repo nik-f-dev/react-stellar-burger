@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../../utils/hooks";
 import {
   addIngredient,
   moveCard,
+  resetIngredients,
 } from "../../services/actions/burger-constructor";
 import {
   clearOrderNumber,
@@ -57,6 +58,7 @@ export default function BurgerConstructor() {
 
   const openOrderModal = () => {
     dispatch(clearOrderNumber());
+    dispatch(resetIngredients());
     dispatch(getOrder(ingredientsId));
     navigate("/order-modal", { state: { background: location } });
   };

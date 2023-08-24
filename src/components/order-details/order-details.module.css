@@ -2,6 +2,12 @@
   text-align: center;
 }
 
+.orderWrapper {
+  height: 602px;
+  display: flex;
+  flex-direction: column;
+}
+
 .orderInfo {
   text-align: center;
 }
@@ -15,13 +21,19 @@
   justify-content: center;
 }
 
+.loaderWrapper {
+  display: flex;
+  justify-content: center;
+}
+
 .loader {
   border: 4px solid #3a3a55;
   border-radius: 50%;
   border-top: 4px solid #4c4cff;
-  width: 60px;
-  height: 60px;
+  width: 120px;
+  height: 120px;
   animation: spin 1s linear infinite;
+  margin-top: 50px;
 }
 
 @keyframes spin {

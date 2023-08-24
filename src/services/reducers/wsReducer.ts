@@ -3,6 +3,7 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_DATA,
+  WS_CLEAR_ORDERS,
   TWsActions,
 } from "../actions/wsActionTypes";
 
@@ -48,9 +49,14 @@ export const wsReducer = (
     case WS_GET_DATA:
       return {
         ...state,
-        orders: [...action.orders],
+        orders: action.orders,
         total: action.total,
         totalToday: action.totalToday,
+      };
+    case WS_CLEAR_ORDERS:
+      return {
+        ...state,
+        orders: null,
       };
     default:
       return state;

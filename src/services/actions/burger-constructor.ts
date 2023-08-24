@@ -5,6 +5,7 @@ export const ADD_INGREDIENT: "ADD_INGREDIENT" = "ADD_INGREDIENT";
 export const DELETE_INGREDIENT: "DELETE_INGREDIENT" = "DELETE_INGREDIENT";
 export const ADD_INGREDIENT_BUN: "ADD_INGREDIENT_BUN" = "ADD_INGREDIENT_BUN";
 export const MOVE_CARD: "MOVE_CARD" = "MOVE_CARD";
+export const RESET_INGREDIENTS: "RESET_INGREDIENTS" = "RESET_INGREDIENTS";
 
 export type TRemoveIngredient = {
   readonly type: typeof DELETE_INGREDIENT;
@@ -26,6 +27,10 @@ export type TAddIngredient =
 export type TMoveCard = {
   readonly type: typeof MOVE_CARD;
   payload: { dragIndex: number; hoverIndex: number };
+};
+
+export type TResetIngredients = {
+  readonly type: typeof RESET_INGREDIENTS;
 };
 
 export const removeIngredient = (ingredientId: string): TRemoveIngredient => {
@@ -53,7 +58,12 @@ export const moveCard = (dragIndex: number, hoverIndex: number): TMoveCard => ({
   payload: { dragIndex, hoverIndex },
 });
 
+export const resetIngredients = (): TResetIngredients => {
+  return { type: RESET_INGREDIENTS };
+};
+
 export type TBurgerConstructorActions =
   | TAddIngredient
   | TMoveCard
-  | TRemoveIngredient;
+  | TRemoveIngredient
+  | TResetIngredients;

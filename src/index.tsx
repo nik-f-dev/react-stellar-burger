@@ -23,8 +23,6 @@ declare global {
   }
 }
 
-const wsUrl = "wss://norma.nomoreparties.space/orders/all";
-
 const wsActions = {
   wsInit: WS_CONNECTION_START,
   onOpen: WS_CONNECTION_SUCCESS,
@@ -37,7 +35,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions)))
+  composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsActions)))
 );
 
 ReactDOM.render(

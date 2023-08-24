@@ -20,20 +20,39 @@ export const CompleteOrder = ({ isModal }: TCompleteOrderProps) => {
   const { id } = useParams();
 
   const order = orderData && orderData.find((elem) => elem._id === id);
+
   const orderStatus = order && order.status;
 
-  const orderIngredients: Array<TIngredient> = [];
+  function getIngredients() {
+    const orderIngredients: Array<TIngredient> = [];
+    order?.ingredients.forEach((order) => {
+      const foundIngredient = ingredients.find(
+        (ingredient) => ingredient._id === order
+      );
+      if (foundIngredient) {
+        orderIngredients.push(foundIngredient);
+      }
+    });
+    return orderIngredients;
+  }
 
-  order?.ingredients.forEach((order) => {
-    const foundIngredient = ingredients.find(
-      (ingredient) => ingredient._id === order
-    );
-    if (foundIngredient) {
-      orderIngredients.push(foundIngredient);
-    }
-  });
+  const orderIngredients: Array<TIngredient> = getIngredients();
 
-  console.log(orderIngredients);
+  const uniqueIngredients: Array<TIngredient> = getIngredients().reduce(
+    (accumulator: Array<TIngredient>, currentValue) => {
+      if (!accumulator.some((item) => item._id === currentValue._id)) {
+        accumulator.push(currentValue);
+      }
+      return accumulator;
+    },
+    []
+  );
+
+  const orderPrice = orderIngredients.reduce((acc, ingredient) => {
+    return acc + ingredient.price;
+  }, 0);
+
+  const orderDate = order && order.createdAt;
 
   return (
     <div className={`${isModal ? modalStyles : styles.orderWrapper}`}>
@@ -58,7 +77,18 @@ export const CompleteOrder = ({ isModal }: TCompleteOrderProps) => {
         Состав:
       </p>
       <div className={`${styles.ingredientsWraper} mb-10 custom-scroll`}>
-        {orderIngredients.slice(0, 6).map((ingredient, index) => {
+        {uniqueIngredients.map((ingredient, index) => {
+          let ingredientTotal = 0;
+          let modalIngredient: TIngredient | undefined = orderIngredients.find(
+            (value) => value === ingredient
+          );
+          orderIngredients.map((value) => {
+            if (value === ingredient && value.type !== "bun") {
+              ingredientTotal++;
+            } else if (value === ingredient && value.type === "bun") {
+              ingredientTotal += 2;
+            }
+          });
           return (
             <div key={index} className={`${styles.ingredient}`}>
               <div className={`${styles.nameWrapper}`}>
@@ -71,7 +101,7 @@ export const CompleteOrder = ({ isModal }: TCompleteOrderProps) => {
               </div>
               <div className={`${styles.priceWrapper}`}>
                 <p className={`${styles.price} text text_type_digits-default`}>
-                  2 x 20
+                  {ingredientTotal} x {modalIngredient?.price}
                 </p>
                 <CurrencyIcon type="primary" />
               </div>
@@ -80,19 +110,23 @@ export const CompleteOrder = ({ isModal }: TCompleteOrderProps) => {
         })}
       </div>
       <div className={`${styles.bottomWrapper}`}>
-        <div
-          className={`${styles.dateWrapper} text text_type_main-default text_color_inactive`}
-        >
-          {/* <FormattedDate
-            className={`text text_type_main-default text_color_inactive mr-2`}
-            date={new Date(orderDate)}
-          /> */}
-          <p className={`text text_type_main-default text_color_inactive`}>
-            i-GMT+3
-          </p>
-        </div>
+        {orderDate && (
+          <div
+            className={`${styles.dateWrapper} text text_type_main-default text_color_inactive`}
+          >
+            <FormattedDate
+              className={`text text_type_main-default text_color_inactive mr-2`}
+              date={new Date(orderDate)}
+            />
+            <p className={`text text_type_main-default text_color_inactive`}>
+              i-GMT+3
+            </p>
+          </div>
+        )}
         <div className={`${styles.priceWrapper}`}>
-          <p className={`${styles.price} text text_type_digits-default`}>510</p>
+          <p className={`${styles.price} text text_type_digits-default`}>
+            {orderPrice}
+          </p>
           <CurrencyIcon type="primary" />
         </div>
       </div>
