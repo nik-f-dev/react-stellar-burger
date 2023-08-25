@@ -25,9 +25,7 @@ import { CompleteOrder } from "../complete-order/complete-order";
 function App() {
   const dispatch = useAppDispatch();
 
-  const isSuccess = useAppSelector(
-    (store) => (store as any).forgot.isForgotSuccess
-  ) as boolean;
+  const isSuccess = useAppSelector((store) => store.forgot.isForgotSuccess);
   useEffect(() => {
     dispatch(checkUserAuth());
     dispatch(getIngredients());
@@ -55,7 +53,10 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/profile/orders" element={<ProfileOrders />} />
       </Route>
-      <Route path="/profile/orders/:id" element={<CompleteOrder />} />
+      <Route
+        path="/profile/orders/:id"
+        element={<OnlyAuth>{<CompleteOrder />}</OnlyAuth>}
+      />
       <Route path="/ingredients/:id" element={<IngredientDetails />} />
       <Route path="*" element={<NotFound />} />
     </Route>

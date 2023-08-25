@@ -1,10 +1,5 @@
 import { TCustomResponse } from "./types/types";
 const baseUrl = "https://norma.nomoreparties.space/api/";
-export const wsOrderTapeUrl = "wss://norma.nomoreparties.space/orders/all";
-export const wsUserOrderUrl = "wss://norma.nomoreparties.space/orders";
-let accessTokenWithBearer = localStorage.getItem("accessToken");
-export let accessToken =
-  accessTokenWithBearer && accessTokenWithBearer.split(" ")[1];
 
 const checkResponse = (response: Response) => {
   if (response.ok) {

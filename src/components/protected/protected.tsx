@@ -13,7 +13,7 @@ const Protected = ({ onlyUnAuth = false, children }: TProtected) => {
   }, [dispatch]);
 
   const isAuthChecked = useAppSelector((store) => store.login.isAuthChecked);
-  const user = useAppSelector((store) => (store as any).login.user);
+  const user = useAppSelector((store) => store.login.user);
   const location = useLocation();
 
   if (!isAuthChecked) {

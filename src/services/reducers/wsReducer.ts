@@ -2,9 +2,9 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
-  WS_GET_DATA,
-  WS_CLEAR_ORDERS,
   TWsActions,
+  WS_GET_ORDER_DATA,
+  WS_GET_USER_ORDER_DATA,
 } from "../actions/wsActionTypes";
 
 import { TOrder } from "../../utils/types/types.js";
@@ -14,6 +14,9 @@ export type TWsState = {
   orders: null | [TOrder];
   total: null | number;
   totalToday: null | number;
+  userTotal: null | number;
+  userTotalToday: null | number;
+  userOrders: null | [TOrder];
 };
 
 const wsInitialState: TWsState = {
@@ -21,6 +24,9 @@ const wsInitialState: TWsState = {
   orders: null,
   total: null,
   totalToday: null,
+  userTotal: null,
+  userTotalToday: null,
+  userOrders: null,
 };
 
 export const wsReducer = (
@@ -45,18 +51,19 @@ export const wsReducer = (
         ...state,
         wsConnected: false,
       };
-
-    case WS_GET_DATA:
+    case WS_GET_USER_ORDER_DATA:
       return {
         ...state,
-        orders: action.orders,
-        total: action.total,
-        totalToday: action.totalToday,
+        userOrders: action.payload.orders,
+        userTotal: action.payload.total,
+        userTotalToday: action.payload.totalToday,
       };
-    case WS_CLEAR_ORDERS:
+    case WS_GET_ORDER_DATA:
       return {
         ...state,
-        orders: null,
+        orders: action.payload.orders,
+        total: action.payload.total,
+        totalToday: action.payload.totalToday,
       };
     default:
       return state;

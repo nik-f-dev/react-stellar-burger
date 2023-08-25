@@ -1,6 +1,11 @@
 import { ChangeEvent } from "react";
 import { request, getUser as getUserData } from "../../utils/api";
-import { AppDispatch, AppThunk, TUser } from "../../utils/types/types";
+import {
+  AppDispatch,
+  AppThunk,
+  DispatchFunc,
+  TUser,
+} from "../../utils/types/types";
 
 export const GET_INPUT_VALUE: "GET_INPUT_VALUE" = "GET_INPUT_VALUE";
 export const GET_LOGIN_REQUEST: "GET_LOGIN_REQUEST" = "GET_LOGIN_REQUEST";
@@ -107,8 +112,8 @@ export const showPassword = (): TShowPassword => {
 };
 
 export const getUser: AppThunk = () => {
-  return (dispatch: AppDispatch) => {
-    return getUserData().then((res) => {
+  return async (dispatch: AppDispatch) => {
+    getUserData().then((res) => {
       if (res.success) {
         dispatch({
           type: GET_USER,
@@ -164,10 +169,10 @@ export const login: AppThunk = (email: string, password: string) => {
 };
 
 export const checkUserAuth: AppThunk = () => {
-  return async (dispatch: AppDispatch) => {
+  return async (dispatch: ReturnType<DispatchFunc>) => {
     if (localStorage.getItem("accessToken")) {
       try {
-        await getUser();
+        await dispatch(getUser());
       } catch {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");

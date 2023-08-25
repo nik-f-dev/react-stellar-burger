@@ -14,7 +14,8 @@ import {
   WS_CONNECTION_SUCCESS,
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_ERROR,
-  WS_GET_DATA,
+  WS_GET_ORDER_DATA,
+  WS_GET_USER_ORDER_DATA,
 } from "./services/actions/wsActionTypes";
 
 declare global {
@@ -23,19 +24,38 @@ declare global {
   }
 }
 
-const wsActions = {
+export const wsOrderTapeUrl = "wss://norma.nomoreparties.space/orders/all";
+export const wsUserOrderUrl = "wss://norma.nomoreparties.space/orders";
+
+const wsOrdersActions = {
   wsInit: WS_CONNECTION_START,
   onOpen: WS_CONNECTION_SUCCESS,
   onClose: WS_CONNECTION_CLOSED,
   onError: WS_CONNECTION_ERROR,
-  onMessage: WS_GET_DATA,
+  onMessage: WS_GET_ORDER_DATA,
 };
+
+const wsUserOrdersActions = {
+  wsInit: WS_CONNECTION_START,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onClose: WS_CONNECTION_CLOSED,
+  onError: WS_CONNECTION_ERROR,
+  onMessage: WS_GET_USER_ORDER_DATA,
+};
+
+const middlewareAllOrders = socketMiddleware(wsOrderTapeUrl, wsOrdersActions);
+const middlewareUserOrders = socketMiddleware(
+  wsUserOrderUrl,
+  wsUserOrdersActions
+);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsActions)))
+  composeEnhancers(
+    applyMiddleware(thunk, middlewareAllOrders, middlewareUserOrders)
+  )
 );
 
 ReactDOM.render(

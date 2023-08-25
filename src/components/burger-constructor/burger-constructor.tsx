@@ -15,13 +15,12 @@ import { useDrop } from "react-dnd";
 import { useCallback, useMemo } from "react";
 import { ConstructorIngredients } from "../construcor-ingredients/construcor-ingredients";
 import { useNavigate, useLocation } from "react-router-dom";
-import { TUser } from "../../utils/types/types";
 import { TIngredient } from "../../utils/types/types";
 
 export default function BurgerConstructor() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const user = useAppSelector((store) => store.login.user) as TUser;
+  const user = useAppSelector((store) => store.login.user);
 
   const location = useLocation();
 
@@ -37,11 +36,9 @@ export default function BurgerConstructor() {
   );
 
   const ingredients = useAppSelector(
-    (state) => (state as any).burgerConstructor.ingredientsConstructor
-  ) as TIngredient[];
-  const bun = useAppSelector(
-    (state) => (state as any).burgerConstructor.bun
-  ) as boolean | null;
+    (state) => state.burgerConstructor.ingredientsConstructor
+  );
+  const bun = useAppSelector((state) => state.burgerConstructor.bun);
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: "ingredient",

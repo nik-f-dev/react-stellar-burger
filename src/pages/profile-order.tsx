@@ -5,7 +5,6 @@ import { Link, useLocation } from "react-router-dom";
 import {
   WS_CONNECTION_CLOSED,
   WS_CONNECTION_START,
-  clearOrders,
 } from "../services/actions/wsActionTypes";
 import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import Loader from "../components/loader/loader";
@@ -22,10 +21,9 @@ export default function ProfileOrders() {
 
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch({ type: WS_CONNECTION_START, payload: "userOrder" });
+    dispatch({ type: WS_CONNECTION_START, payload: "withToken" });
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
-      dispatch(clearOrders());
     };
   }, []);
   const location = useLocation();
