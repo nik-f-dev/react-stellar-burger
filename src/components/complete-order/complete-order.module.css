@@ -1,0 +1,66 @@
+.orderWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  height: 620px;
+  margin: 122px auto 0;
+}
+
+.orderModalWrapper {
+  composes: orderWrapper;
+  margin: 58px auto 40px;
+}
+
+.ingredientsWraper {
+  height: calc(366px - 54px);
+  overflow-y: scroll;
+}
+
+.oderNumber {
+  text-align: center;
+}
+
+.oderModalNumber {
+  text-align: left;
+}
+
+.ingredient {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 592px;
+  height: 64px;
+  display: flex;
+  list-style: none;
+  margin: 0 0 16px 16px;
+  padding: 0;
+}
+
+.priceWrapper {
+  display: flex;
+  align-items: center;
+  height: 20px;
+}
+
+.price {
+  margin: 0 9px 0 0;
+}
+
+.dateWrapper {
+  display: flex;
+}
+
+.nameWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.bottomWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.readyStatus {
+  color: #00cccc;
+}

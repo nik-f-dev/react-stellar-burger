@@ -1,0 +1,68 @@
+.imageWrapper {
+  background: linear-gradient(to top right, #800080, #0000ff);
+  width: 64px;
+  height: 64px;
+  margin-left: -16px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.imageWrapper:nth-child(1) {
+  z-index: 7;
+}
+
+.imageWrapper:nth-child(2) {
+  z-index: 6;
+}
+
+.imageWrapper:nth-child(3) {
+  z-index: 5;
+}
+
+.imageWrapper:nth-child(4) {
+  z-index: 4;
+}
+
+.imageWrapper:nth-child(5) {
+  z-index: 3;
+}
+
+.imageBefore {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  background: rgb(0, 0, 0);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+.orderImageNumber {
+  width: 64px;
+  position: absolute;
+  margin: 20px 0 0;
+  text-align: center;
+  z-index: 2;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+.opacity {
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  width: 62px;
+  height: 62px;
+  background: rgba(0, 0, 0, 40%);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.image {
+  max-height: 56px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
