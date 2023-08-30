@@ -106,6 +106,7 @@ export const loginReducer = (
       return {
         ...state,
         previousUser: state.user,
+        user: state.previousUser,
       };
     }
     case GET_CHANGES_FAILED: {

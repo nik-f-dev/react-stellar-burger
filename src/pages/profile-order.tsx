@@ -11,7 +11,7 @@ import Loader from "../components/loader/loader";
 
 export default function ProfileOrders() {
   const { orders } = useAppSelector((store) => store.ws);
-  console.log(orders);
+
   orders &&
     orders.sort((a, b) => {
       const dateA = new Date(a.createdAt).getTime();

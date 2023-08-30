@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
     dispatch(checkUserAuth());
     dispatch(getIngredients());
-  }, []);
+  }, [dispatch]);
   const location = useLocation();
   const background = location.state && location.state.background;
 
