@@ -1,26 +1,36 @@
-import { burgerConstructorReducer } from './burger-constructor';
+import { burgerConstructorReducer, burgerConstructorInitialState } from './burger-constructor';
 import * as types from '../actions/burger-constructor';
+
+const ingredientToAdd = {
+  id: '123',
+  type: 'souce',
+  name: 'souce',
+};
+
+const ingredientsConstructor = [
+  {
+    id: '1',
+    type: 'sauce',
+    name: 'соус',
+  },
+  {
+    id: '2',
+    type: 'sauce',
+    name: 'соус2',
+  },
+  {
+    id: '3',
+    type: 'sauce',
+    name: 'соус3',
+  }
+]
 
 describe('forgot password reducer', () => {
   it('should return the initial state', () => {
-    expect(burgerConstructorReducer(undefined, {})).toEqual({
-      ingredientsConstructor: [],
-      bun: null,
-    });
+    expect(burgerConstructorReducer(undefined, {})).toEqual(burgerConstructorInitialState);
   });
 
   it('should handle ADD_INGREDIENT', () => {
-    const initialState = {
-      ingredientsConstructor: [],
-      bun: null,
-    };
-
-    const ingredientToAdd = {
-      id: '123',
-      type: 'souce',
-      name: 'souce',
-    };
-
     const action = {
       type: types.ADD_INGREDIENT,
       ingredient: ingredientToAdd,
@@ -28,25 +38,15 @@ describe('forgot password reducer', () => {
     };
 
     const expectedState = {
+      ...burgerConstructorInitialState,
       ingredientsConstructor: [ingredientToAdd],
       bun: null,
     };
 
-    expect(burgerConstructorReducer(initialState, action)).toEqual(expectedState);
+    expect(burgerConstructorReducer(burgerConstructorInitialState, action)).toEqual(expectedState);
   });
 
   it('should handle ADD_INGREDIENT_BUN', () => {
-    const initialState = {
-      ingredientsConstructor: [],
-      bun: null,
-    };
-
-    const ingredientToAdd = {
-      id: '123',
-      type: 'bun',
-      name: 'булка',
-    };
-
     const action = {
       type: types.ADD_INGREDIENT_BUN,
       ingredient: ingredientToAdd,
@@ -54,41 +54,40 @@ describe('forgot password reducer', () => {
     };
 
     const expectedState = {
+      ...burgerConstructorInitialState,
       ingredientsConstructor: [ingredientToAdd],
       bun: ingredientToAdd,
     };
 
-    expect(burgerConstructorReducer(initialState, action)).toEqual(expectedState);
+    expect(burgerConstructorReducer(burgerConstructorInitialState, action)).toEqual(expectedState);
   });
 
   it('should handle DELETE_INGREDIENT', () => {
     const initialState = {
+      ...burgerConstructorInitialState,
       ingredientsConstructor: [
-        {
-          id: '123',
-          type: 'sauce',
-          name: 'соус',
-        },
-        {
-          id: '124',
-          type: 'sauce',
-          name: 'соус2',
-        }
+        ...ingredientsConstructor
       ],
       bun: null,
     };
 
     const action = {
       type: types.DELETE_INGREDIENT,
-      id: '123',
+      id: '1',
     };
 
     const expectedState = {
+      ...burgerConstructorInitialState,
       ingredientsConstructor: [
         {
-          id: '124',
+          id: '2',
           type: 'sauce',
           name: 'соус2',
+        },
+        {
+          id: '3',
+          type: 'sauce',
+          name: 'соус3',
         }
       ],
       bun: null,
@@ -99,20 +98,12 @@ describe('forgot password reducer', () => {
 
   it('should handle RESET_INGREDIENTS', () => {
     const initialState = {
+      ...burgerConstructorInitialState,
       ingredientsConstructor: [
-        {
-          id: '123',
-          type: 'sauce',
-          name: 'соус',
-        },
-        {
-          id: '124',
-          type: 'sauce',
-          name: 'соус2',
-        }
+        ...ingredientsConstructor
       ],
       bun: {
-        id: '123',
+        id: '3',
         type: 'bun',
         name: 'булка',
       }
@@ -123,6 +114,7 @@ describe('forgot password reducer', () => {
     };
 
     const expectedState = {
+      ...burgerConstructorInitialState,
       ingredientsConstructor: [],
       bun: null,
     };
@@ -132,10 +124,9 @@ describe('forgot password reducer', () => {
 
   it('should handle MOVE_CARD', () => {
     const initialState = {
+      ...burgerConstructorInitialState,
       ingredientsConstructor: [
-        { id: '1', type: 'souce' },
-        { id: '2', type: 'main' },
-        { id: '3', type: 'souce' },
+        ...ingredientsConstructor
       ],
       bun: null,
     };
@@ -149,10 +140,23 @@ describe('forgot password reducer', () => {
     };
 
     const expectedState = {
+      ...burgerConstructorInitialState,
       ingredientsConstructor: [
-        { id: '2', type: 'main' },
-        { id: '3', type: 'souce' },
-        { id: '1', type: 'souce' },
+        {
+          id: '2',
+          type: 'sauce',
+          name: 'соус2',
+        },
+        {
+          id: '3',
+          type: 'sauce',
+          name: 'соус3',
+        },
+        {
+          id: '1',
+          type: 'sauce',
+          name: 'соус',
+        }
       ],
       bun: null,
     };

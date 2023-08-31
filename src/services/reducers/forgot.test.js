@@ -1,19 +1,13 @@
-import { forgotPasswordReducer } from './forgot';
+import { forgotPasswordReducer, forgotPasswordInitialState } from './forgot';
 import * as types from '../actions/forgot';
 
 describe('forgot password reducer', () => {
   it('should return the initial state', () => {
-    expect(forgotPasswordReducer(undefined, {})).toEqual({
-      isForgotSuccess: false,
-      forgotRequest: false,
-      forgotFailed: false,
-      email: "",
-      error: "",
-    });
+    expect(forgotPasswordReducer(undefined, {})).toEqual(forgotPasswordInitialState);
   });
 
   it('should handle GET_INPUT_VALUE', () => {
-    expect(forgotPasswordReducer({},
+    expect(forgotPasswordReducer(forgotPasswordInitialState,
       {
         type: types.GET_INPUT_VALUE,
         inputName: 'password',
@@ -21,26 +15,28 @@ describe('forgot password reducer', () => {
       }
     )).toEqual(
       {
+        ...forgotPasswordInitialState,
         password: '0000'
       }
     );
   });
 
   it('should handle GET_FORGOT_REQUEST', () => {
-    expect(forgotPasswordReducer({},
+    expect(forgotPasswordReducer(forgotPasswordInitialState,
       {
         type: types.GET_FORGOT_REQUEST,
         forgotRequest: true
       }
     )).toEqual(
       {
+        ...forgotPasswordInitialState,
         forgotRequest: true
       }
     );
   });
 
   it('should handle GET_FORGOT_SUCCESS', () => {
-    expect(forgotPasswordReducer({},
+    expect(forgotPasswordReducer(forgotPasswordInitialState,
       {
         type: types.GET_FORGOT_SUCCESS,
         forgotRequest: false,
@@ -49,6 +45,7 @@ describe('forgot password reducer', () => {
       }
     )).toEqual(
       {
+        ...forgotPasswordInitialState,
         forgotRequest: false,
         forgotFailed: false,
         isForgotSuccess: true,
@@ -57,7 +54,7 @@ describe('forgot password reducer', () => {
   });
 
   it('should handle GET_FORGOT_FAILED', () => {
-    expect(forgotPasswordReducer({},
+    expect(forgotPasswordReducer(forgotPasswordInitialState,
       {
         type: types.GET_FORGOT_FAILED,
         forgotRequest: false,
@@ -66,6 +63,7 @@ describe('forgot password reducer', () => {
       }
     )).toEqual(
       {
+        ...forgotPasswordInitialState,
         forgotRequest: false,
         forgotFailed: true,
         error: 'error',

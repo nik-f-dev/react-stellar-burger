@@ -1,32 +1,27 @@
-import { burgerIngredientsReducer } from './burger-ingredients';
+import { burgerIngredientsReducer, burgerIngredientsInitialState } from './burger-ingredients';
 import * as types from '../actions/burger-ingredients';
 
 describe('forgot password reducer', () => {
   it('should return the initial state', () => {
-    expect(burgerIngredientsReducer(undefined, {})).toEqual({
-      ingredients: [],
-      ingredientsRequest: false,
-      ingredientsFailed: false,
-      handleIntersecion: true,
-      error: "",
-    });
+    expect(burgerIngredientsReducer(undefined, {})).toEqual(burgerIngredientsInitialState);
   });
 
   it('should handle GET_INGREDIENTS_REQUEST', () => {
-    expect(burgerIngredientsReducer({},
+    expect(burgerIngredientsReducer(burgerIngredientsInitialState,
       {
         type: types.GET_INGREDIENTS_REQUEST,
         ingredientsRequest: true,
       }
     )).toEqual(
       {
+        ...burgerIngredientsInitialState,
         ingredientsRequest: true,
       }
     );
   });
 
   it('should handle GET_INGREDIENTS_SUCCESS', () => {
-    expect(burgerIngredientsReducer({},
+    expect(burgerIngredientsReducer(burgerIngredientsInitialState,
       {
         type: types.GET_INGREDIENTS_SUCCESS,
         ingredientsRequest: false,
@@ -35,6 +30,7 @@ describe('forgot password reducer', () => {
       }
     )).toEqual(
       {
+        ...burgerIngredientsInitialState,
         ingredientsRequest: false,
         ingredientsFailed: false,
         ingredients: [{}],
@@ -43,7 +39,7 @@ describe('forgot password reducer', () => {
   });
 
   it('should handle GET_INGREDIENTS_FAILED', () => {
-    expect(burgerIngredientsReducer({},
+    expect(burgerIngredientsReducer(burgerIngredientsInitialState,
       {
         type: types.GET_INGREDIENTS_FAILED,
         ingredientsRequest: false,
@@ -52,6 +48,7 @@ describe('forgot password reducer', () => {
       }
     )).toEqual(
       {
+        ...burgerIngredientsInitialState,
         ingredientsRequest: false,
         ingredientsFailed: true,
         error: 'error'
@@ -60,26 +57,28 @@ describe('forgot password reducer', () => {
   });
 
   it('should handle TURN_ON_HANDLE_INTERSECTION', () => {
-    expect(burgerIngredientsReducer({ handleIntersecion: false },
+    expect(burgerIngredientsReducer(burgerIngredientsInitialState,
       {
         type: types.TURN_ON_HANDLE_INTERSECTION,
         handleIntersecion: true,
       }
     )).toEqual(
       {
+        ...burgerIngredientsInitialState,
         handleIntersecion: true,
       }
     );
   });
 
   it('should handle TURN_OFF_HANDLE_INTERSECTION', () => {
-    expect(burgerIngredientsReducer({ handleIntersecion: true },
+    expect(burgerIngredientsReducer(burgerIngredientsInitialState,
       {
         type: types.TURN_OFF_HANDLE_INTERSECTION,
         handleIntersecion: false,
       }
     )).toEqual(
       {
+        ...burgerIngredientsInitialState,
         handleIntersecion: false
       }
     );

@@ -30,7 +30,7 @@ type TLoginState = {
   name: string;
 };
 
-const loginInitialState: TLoginState = {
+export const loginInitialState: TLoginState = {
   logoutRequest: false,
   logoutError: "",
   showPassword: false,

@@ -1,16 +1,13 @@
-import { modalReducer } from './modal';
+import { modalReducer, modalInitialState } from './modal';
 import * as types from '../actions/modal';
 
 describe('modal reducer', () => {
   it('should return the initial state', () => {
-    expect(modalReducer(undefined, {})).toEqual({
-      isOpen: false,
-      modalType: null,
-    });
+    expect(modalReducer(undefined, {})).toEqual(modalInitialState);
   });
 
   it('should handle OPEN_MODAL', () => {
-    expect(modalReducer({},
+    expect(modalReducer(modalInitialState,
       {
         type: types.OPEN_MODAL,
         isOpen: true,
@@ -18,6 +15,7 @@ describe('modal reducer', () => {
       }
     )).toEqual(
       {
+        ...modalInitialState,
         isOpen: true,
         modalType: 'someModal'
       }
@@ -26,10 +24,7 @@ describe('modal reducer', () => {
 
   it('should handle CLOSE_MODAL', () => {
     expect(modalReducer(
-      {
-        isOpen: true,
-        modalType: 'someModal'
-      },
+      modalInitialState,
       {
         type: types.CLOSE_MODAL,
         isOpen: false,
@@ -37,6 +32,7 @@ describe('modal reducer', () => {
       }
     )).toEqual(
       {
+        ...modalInitialState,
         isOpen: false,
         modalType: null,
       }

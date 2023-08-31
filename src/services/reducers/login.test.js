@@ -1,26 +1,19 @@
-import { loginReducer } from './login';
+import { loginReducer, loginInitialState } from './login';
 import * as types from '../actions/login';
+
+const user = {
+  name: "Vasya",
+  email: "vasya@yandex.ru",
+  login: 'vasya@yandex.ru'
+};
 
 describe('login reducer', () => {
   it('should return the initial state', () => {
-    expect(loginReducer(undefined, {})).toEqual({
-      logoutRequest: false,
-      logoutError: "",
-      showPassword: false,
-      loginRequest: false,
-      loginFailed: false,
-      isAuthChecked: false,
-      user: null,
-      previousUser: null,
-      changeError: "",
-      email: "",
-      password: "",
-      name: "",
-    });
+    expect(loginReducer(undefined, {})).toEqual(loginInitialState);
   });
 
   it('should handle GET_INPUT_VALUE', () => {
-    expect(loginReducer({},
+    expect(loginReducer(loginInitialState,
       {
         type: types.GET_INPUT_VALUE,
         name: 'name',
@@ -28,13 +21,14 @@ describe('login reducer', () => {
       }
     )).toEqual(
       {
+        ...loginInitialState,
         name: 'Vasya'
       }
     );
   });
 
   it('should handle GET_PROFILE_VALUE', () => {
-    expect(loginReducer({},
+    expect(loginReducer(loginInitialState,
       {
         type: types.GET_PROFILE_VALUE,
         name: 'login',
@@ -42,6 +36,7 @@ describe('login reducer', () => {
       }
     )).toEqual(
       {
+        ...loginInitialState,
         user: {
           name: "",
           email: "",
@@ -52,13 +47,14 @@ describe('login reducer', () => {
   });
 
   it('should handle GET_LOGIN_REQUEST', () => {
-    expect(loginReducer({},
+    expect(loginReducer(loginInitialState,
       {
         type: types.GET_LOGIN_REQUEST,
         loginRequest: true,
       }
     )).toEqual(
       {
+        ...loginInitialState,
         loginRequest: true,
       }
     );
@@ -66,40 +62,27 @@ describe('login reducer', () => {
 
   it('should handle GET_LOGIN_SUCCESS', () => {
     expect(loginReducer(
-      {
-        user: {
-          name: "",
-          email: "",
-          login: 'petya@yandex.ru'
-        }
-      },
+      loginInitialState,
       {
         type: types.GET_LOGIN_SUCCESS,
         loginRequest: false,
         loginFailed: false,
         isAuthChecked: true,
-        user: {
-          name: "",
-          email: "",
-          login: 'vasya@yandex.ru'
-        }
+        user: {...user}
       }
     )).toEqual(
       {
+        ...loginInitialState,
         loginRequest: false,
         loginFailed: false,
         isAuthChecked: true,
-        user: {
-          name: "",
-          email: "",
-          login: 'vasya@yandex.ru'
-        }
+        user: {...user}
       }
     );
   });
 
   it('should handle GET_LOGIN_FAILED', () => {
-    expect(loginReducer({},
+    expect(loginReducer(loginInitialState,
       {
         type: types.GET_LOGIN_FAILED,
         loginRequest: false,
@@ -107,6 +90,7 @@ describe('login reducer', () => {
       }
     )).toEqual(
       {
+        ...loginInitialState,
         loginRequest: false,
         loginFailed: true,
       }
@@ -114,134 +98,97 @@ describe('login reducer', () => {
   });
 
   it('should handle SET_AUTH_CHECKED', () => {
-    expect(loginReducer({},
+    expect(loginReducer(loginInitialState,
       {
         type: types.SET_AUTH_CHECKED,
         isAuthChecked: true,
       }
     )).toEqual(
       {
+        ...loginInitialState,
         isAuthChecked: true,
       }
     );
   });
 
   it('should handle GET_USER', () => {
-    expect(loginReducer({},
+    expect(loginReducer(loginInitialState,
       {
         type: types.GET_USER,
-        user: {
-          name: "Vasya",
-          email: "vasya@yandex.ru",
-          login: 'vasya@yandex.ru'
-        }
+        user: {...user}
       }
     )).toEqual(
       {
-        user: {
-          name: "Vasya",
-          email: "vasya@yandex.ru",
-          login: 'vasya@yandex.ru'
-        }
+        ...loginInitialState,
+        user: {...user}
       }
     );
   });
 
   it('should handle GET_PREVIOUS_USER', () => {
-    const state = {
-      user: {
-        name: "Vasya",
-        email: "vasya@yandex.ru",
-        login: 'vasya@yandex.ru'
-      }
-    }
-
-    expect(loginReducer(state,
+    expect(loginReducer(loginInitialState,
       {
         type: types.GET_PREVIOUS_USER,
-        previousUser: state.user
+        previousUser: loginInitialState.user
       }
     )).toEqual(
       {
-        previousUser: {
-          name: "Vasya",
-          email: "vasya@yandex.ru",
-          login: 'vasya@yandex.ru'
-        }
+        ...loginInitialState
       }
     );
   });
 
   it('should handle GET_CHANGES_FAILED', () => {
-    expect(loginReducer({},
+    expect(loginReducer(loginInitialState,
       {
         type: types.GET_CHANGES_FAILED,
         error: 'error',
       }
     )).toEqual(
       {
+        ...loginInitialState,
         changeError: 'error',
       }
     );
   });
 
   it('should handle RESET_USER', () => {
-    expect(loginReducer({ user: {name: 'Vasya', email: "vasya@yandex.ru"} },
+    expect(loginReducer(loginInitialState,
       {
         type: types.RESET_USER,
         user: null,
       }
     )).toEqual(
       {
+        ...loginInitialState,
         user: null,
       }
     );
   });
 
   it('should handle SHOW_PASSWORD', () => {
-    expect(loginReducer({},
+    expect(loginReducer(loginInitialState,
       {
         type: types.SHOW_PASSWORD,
         showPassword: !false
       }
     )).toEqual(
       {
+        ...loginInitialState,
         showPassword: true
       }
     );
   });
 
   it('should handle SWAP_USER', () => {
-    const state = {
-      previousUser: {
-        name: "Vasya",
-        email: "vasya@yandex.ru",
-        login: 'vasya@yandex.ru'
-      },
-      user: {
-        name: "Nikita",
-        email: "nikita@yandex.ru",
-        login: 'nikita@yandex.ru'
-      }
-    }
-
-    expect(loginReducer(state,
+    expect(loginReducer(loginInitialState,
       {
         type: types.SWAP_USER,
-        user: state.previousUser
+        user: loginInitialState.previousUser
       }
     )).toEqual(
       {
-        previousUser: {
-          name: "Vasya",
-          email: "vasya@yandex.ru",
-          login: 'vasya@yandex.ru'
-        },
-        user: {
-          name: "Vasya",
-          email: "vasya@yandex.ru",
-          login: 'vasya@yandex.ru'
-        }
+        ...loginInitialState,
       }
     );
   });

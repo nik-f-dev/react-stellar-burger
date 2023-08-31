@@ -17,7 +17,7 @@ type TProfileState = {
   error: string;
 };
 
-const profileInitialState: TProfileState = {
+export const profileInitialState: TProfileState = {
   profileRequest: false,
   profileFailed: false,
   user: null,

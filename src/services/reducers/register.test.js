@@ -1,21 +1,13 @@
-import { registerReducer } from './register';
+import { registerReducer, registerInitialState } from './register';
 import * as types from '../actions/register';
 
 describe('register reducer', () => {
   it('should return the initial state', () => {
-    expect(registerReducer(undefined, {})).toEqual({
-      showPassword: false,
-      registerRequest: false,
-      registerFailed: false,
-      error: "",
-      name: "",
-      email: "",
-      password: "",
-    });
+    expect(registerReducer(undefined, {})).toEqual(registerInitialState);
   });
 
   it('should handle GET_FORM_VALUE', () => {
-    expect(registerReducer({},
+    expect(registerReducer(registerInitialState,
       {
         type: types.GET_FORM_VALUE,
         inputName: 'name',
@@ -23,11 +15,12 @@ describe('register reducer', () => {
       }
     )).toEqual(
       {
+        ...registerInitialState,
         name: 'Vasya'
       }
     );
 
-    expect(registerReducer({ name: 'Vasya' },
+    expect(registerReducer(registerInitialState,
       {
         type: types.GET_FORM_VALUE,
         inputName: 'password',
@@ -35,27 +28,28 @@ describe('register reducer', () => {
       }
     )).toEqual(
       {
-        name: 'Vasya',
+        ...registerInitialState,
         password: '0000'
       }
     );
   });
 
   it('should handle GET_REGISTER_REQUEST', () => {
-    expect(registerReducer({},
+    expect(registerReducer(registerInitialState,
       {
         type: types.GET_REGISTER_REQUEST,
         registerRequest: true
       }
     )).toEqual(
       {
+        ...registerInitialState,
         registerRequest: true
       }
     );
   });
 
   it('should handle GET_REGISTER_SUCCESS', () => {
-    expect(registerReducer({},
+    expect(registerReducer(registerInitialState,
       {
         type: types.GET_REGISTER_SUCCESS,
         registerRequest: false,
@@ -63,6 +57,7 @@ describe('register reducer', () => {
       }
     )).toEqual(
       {
+        ...registerInitialState,
         registerRequest: false,
         registerFailed: false,
       }
@@ -70,7 +65,7 @@ describe('register reducer', () => {
   });
 
   it('should handle GET_REGISTER_FAILED', () => {
-    expect(registerReducer({},
+    expect(registerReducer(registerInitialState,
       {
         type: types.GET_REGISTER_FAILED,
         registerRequest: false,
@@ -79,6 +74,7 @@ describe('register reducer', () => {
       }
     )).toEqual(
       {
+        ...registerInitialState,
         registerRequest: false,
         registerFailed: true,
         error: 'error'
@@ -87,13 +83,14 @@ describe('register reducer', () => {
   });
 
   it('should handle SHOW_PASSWORD', () => {
-    expect(registerReducer({},
+    expect(registerReducer(registerInitialState,
       {
         type: types.SHOW_PASSWORD,
         showPassword: false
       }
     )).toEqual(
       {
+        ...registerInitialState,
         showPassword: true
       }
     );

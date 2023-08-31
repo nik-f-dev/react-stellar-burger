@@ -1,7 +1,7 @@
 
 describe('service is available', function() {
   before(function() {
-    cy.visit('http://localhost:3000');
+    cy.visit('/');
     cy.location().should((location) => {
       expect(location.pathname).to.eq('/');
     })

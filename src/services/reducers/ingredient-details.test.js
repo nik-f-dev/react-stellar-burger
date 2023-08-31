@@ -1,5 +1,10 @@
-import { ingredientDetailsReducer } from './ingredient-details';
+import { ingredientDetailsReducer, ingredientDetailsInitialState } from './ingredient-details';
 import * as types from '../actions/ingredient-details';
+
+const ingredient = {
+  name: 'ingredient',
+  price: '1000'
+}
 
 describe('ingredient details reducer', () => {
   it('should return the initial state', () => {
@@ -9,19 +14,18 @@ describe('ingredient details reducer', () => {
   });
 
   it('should handle GET_INGREDIENTS', () => {
-    expect(ingredientDetailsReducer({ ingredient: {} },
+    expect(ingredientDetailsReducer(ingredientDetailsInitialState,
       {
         type: types.GET_INGREDIENTS,
         payload: {
-          name: 'ingredient',
-          price: '1000'
+          ...ingredient
         }
       }
     )).toEqual(
       {
+        ...ingredientDetailsInitialState,
         ingredient: {
-          name: 'ingredient',
-          price: '1000'
+          ...ingredient
         }
       }
     );
@@ -29,18 +33,14 @@ describe('ingredient details reducer', () => {
 
   it('should handle CLEAR_INGREDIENT', () => {
     expect(ingredientDetailsReducer(
-      {
-        ingredient: {
-          name: 'ingredient',
-          price: '1000'
-        }
-      },
+      ingredientDetailsInitialState,
       {
         type: types.CLEAR_INGREDIENT,
         ingredient: {}
       }
     )).toEqual(
       {
+        ...ingredientDetailsInitialState,
         ingredient: {}
       }
     );

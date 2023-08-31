@@ -91,9 +91,13 @@ function App() {
       <Route
         path="/profile/orders/:id"
         element={
-          <Modal closePath="/profile/orders">
-            <CompleteOrder isModal={true} />
-          </Modal>
+          <OnlyAuth>
+            {
+              <Modal closePath="/profile/orders">
+                <CompleteOrder isModal={true} />
+              </Modal>
+            }
+          </OnlyAuth>
         }
       />
     </>

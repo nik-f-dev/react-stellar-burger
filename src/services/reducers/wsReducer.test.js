@@ -1,53 +1,54 @@
-import { wsReducer } from './wsReducer';
+import { wsReducer, wsInitialState } from './wsReducer';
 import * as types from '../actions/wsActionTypes';
+
+const payload = {
+  orders: {},
+  total: 6000,
+  totalToday: 40,
+}
 
 describe('WebSocket reducer', () => {
   it('should return the initial state', () => {
-    expect(wsReducer(undefined, {})).toEqual({
-      wsConnected: false,
-      orders: null,
-      total: null,
-      totalToday: null,
-      userTotal: null,
-      userTotalToday: null,
-      userOrders: null,
-    });
+    expect(wsReducer(undefined, {})).toEqual(wsInitialState);
   });
 
   it('should handle WS_CONNECTION_SUCCESS', () => {
-    expect(wsReducer({},
+    expect(wsReducer(wsInitialState,
       {
         type: types.WS_CONNECTION_SUCCESS,
         wsConnected: true
       }
     )).toEqual(
       {
+        ...wsInitialState,
         wsConnected: true
       }
     );
   });
 
   it('should handle WS_CONNECTION_ERROR', () => {
-    expect(wsReducer({},
+    expect(wsReducer(wsInitialState,
       {
         type: types.WS_CONNECTION_ERROR,
         wsConnected: false
       }
     )).toEqual(
       {
+        ...wsInitialState,
         wsConnected: false
       }
     );
   });
 
   it('should handle WS_CONNECTION_CLOSED', () => {
-    expect(wsReducer({},
+    expect(wsReducer(wsInitialState,
       {
         type: types.WS_CONNECTION_CLOSED,
         wsConnected: false
       }
     )).toEqual(
       {
+        ...wsInitialState,
         wsConnected: false
       }
     );
@@ -55,21 +56,16 @@ describe('WebSocket reducer', () => {
 
   it('should handle WS_GET_USER_ORDER_DATA', () => {
     expect(wsReducer(
-      {
-        userOrders: {},
-        userTotal: 5000,
-        userTotalToday: 30,
-      },
+      wsInitialState,
       {
         type: types.WS_GET_USER_ORDER_DATA,
         payload: {
-          orders: {},
-          total: 6000,
-          totalToday: 40,
+          ...payload
         }
       }
     )).toEqual(
       {
+        ...wsInitialState,
         userOrders: {},
         userTotal: 6000,
         userTotalToday: 40,
@@ -79,24 +75,19 @@ describe('WebSocket reducer', () => {
 
   it('should handle WS_GET_ORDER_DATA', () => {
     expect(wsReducer(
-      {
-        orders: {},
-        total: 2000,
-        totalToday: 22,
-      },
+      wsInitialState,
       {
         type: types.WS_GET_ORDER_DATA,
         payload: {
-          orders: {},
-          total: 3000,
-          totalToday: 50,
+          ...payload
         }
       }
     )).toEqual(
       {
+        ...wsInitialState,
         orders: {},
-        total: 3000,
-        totalToday: 50,
+        total: 6000,
+        totalToday: 40,
       }
     );
   });

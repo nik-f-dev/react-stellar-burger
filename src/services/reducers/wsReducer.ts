@@ -19,7 +19,7 @@ export type TWsState = {
   userOrders: null | [TOrder];
 };
 
-const wsInitialState: TWsState = {
+export const wsInitialState: TWsState = {
   wsConnected: false,
   orders: null,
   total: null,

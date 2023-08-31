@@ -14,7 +14,7 @@ type TForgotPasswordState = {
   error: string;
 };
 
-const forgotPasswordInitialState: TForgotPasswordState = {
+export const forgotPasswordInitialState: TForgotPasswordState = {
   isForgotSuccess: false,
   forgotRequest: false,
   forgotFailed: false,
