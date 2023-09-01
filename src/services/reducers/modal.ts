@@ -5,7 +5,7 @@ type TModalState = {
   modalType: null | string;
 };
 
-const modalInitialState: TModalState = {
+export const modalInitialState: TModalState = {
   isOpen: false,
   modalType: null,
 };

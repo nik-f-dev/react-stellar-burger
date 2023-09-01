@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
     dispatch(checkUserAuth());
     dispatch(getIngredients());
-  }, []);
+  }, [dispatch]);
   const location = useLocation();
   const background = location.state && location.state.background;
 
@@ -91,9 +91,13 @@ function App() {
       <Route
         path="/profile/orders/:id"
         element={
-          <Modal closePath="/profile/orders">
-            <CompleteOrder isModal={true} />
-          </Modal>
+          <OnlyAuth>
+            {
+              <Modal closePath="/profile/orders">
+                <CompleteOrder isModal={true} />
+              </Modal>
+            }
+          </OnlyAuth>
         }
       />
     </>

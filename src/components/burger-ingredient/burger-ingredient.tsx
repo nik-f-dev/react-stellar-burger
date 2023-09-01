@@ -15,8 +15,8 @@ export default function BurgerIngredient({
 }) {
   const location = useLocation();
   const ingredients = useAppSelector(
-    (state) => (state as any).burgerConstructor.ingredientsConstructor
-  ) as TIngredient[];
+    (state) => state.burgerConstructor.ingredientsConstructor
+  );
   const count = ingredients.filter(
     (item) => item._id === ingredient._id
   ).length;

@@ -17,7 +17,7 @@ type TRegisterState = {
   password: string;
 };
 
-const registerInitialState: TRegisterState = {
+export const registerInitialState: TRegisterState = {
   showPassword: false,
   registerRequest: false,
   registerFailed: false,

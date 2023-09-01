@@ -150,7 +150,11 @@ export default function BurgerConstructor() {
 
       <div className={`${burgerConstructor.info} mt-6 mr-4`}>
         <div className={`${burgerConstructor.price} mr-10`}>
-          <p className="text text_type_digits-medium mr-2">{ingredientPrice}</p>
+          <p
+            className={`${burgerConstructor.fieldPrice} text text_type_digits-medium`}
+          >
+            {ingredientPrice}
+          </p>
           <img src={priceLogo} alt="price logo" />
         </div>
         <Button

@@ -24,7 +24,7 @@ export const CompleteOrder = ({ isModal }: TCompleteOrderProps) => {
     return () => {
       dispatch({ type: WS_CONNECTION_CLOSED });
     };
-  }, []);
+  }, [dispatch]);
   const ingredients = useAppSelector(
     (state) => state.burgerIngredients.ingredients
   );

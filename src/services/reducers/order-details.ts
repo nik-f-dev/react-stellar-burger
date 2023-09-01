@@ -13,7 +13,7 @@ type TOrderDetailsState = {
   error: string | { error: string };
 };
 
-const orderDetailsInitialState: TOrderDetailsState = {
+export const orderDetailsInitialState: TOrderDetailsState = {
   orderNumber: null,
   orderRequest: false,
   orderFailed: false,

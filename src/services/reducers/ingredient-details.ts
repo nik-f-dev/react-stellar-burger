@@ -9,7 +9,7 @@ type TIngredientDetailsState = {
   ingredient: {} | TIngredient;
 };
 
-const ingredientDetailsInitialState: TIngredientDetailsState = {
+export const ingredientDetailsInitialState: TIngredientDetailsState = {
   ingredient: {},
 };
 

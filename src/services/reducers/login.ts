@@ -30,7 +30,7 @@ type TLoginState = {
   name: string;
 };
 
-const loginInitialState: TLoginState = {
+export const loginInitialState: TLoginState = {
   logoutRequest: false,
   logoutError: "",
   showPassword: false,
@@ -106,6 +106,7 @@ export const loginReducer = (
       return {
         ...state,
         previousUser: state.user,
+        user: state.previousUser,
       };
     }
     case GET_CHANGES_FAILED: {

@@ -9,7 +9,7 @@ type TResetPasswordState = {
   code: string;
 };
 
-const resetPasswordInitialState: TResetPasswordState = {
+export const resetPasswordInitialState: TResetPasswordState = {
   showPassword: false,
   isResetSuccess: false,
   resetRequest: false,

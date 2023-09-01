@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0Y2QyMjcwODJlMjc3MDAxYmZhNmQwZSIsImlhdCI6MTY5MzQ5OTY3NywiZXhwIjoxNjkzNTAwODc3fQ.4yZnYPyqKGd2Onp-KAdcwDfb0FKNSSCwEVGDE-WRNgw",
+  "refreshToken": "637e8120047e20f515b70b5ee7915a97eacd92865dea49f56acd5dde0075f97172e01350412ff75b",
+  "user": {
+    "email": "nikita@mail.ru",
+    "name": "Nikita"
+  }
+}
