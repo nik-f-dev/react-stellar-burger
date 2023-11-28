@@ -1,9 +1,8 @@
 # [Проект: Stellar Burger](https://nik-f-dev.github.io/react-stellar-burger/ "Ссылка на сайт")
 
-Проект Stellar Burger - интернет-магазин с конструктором бургеров.
+Проект "Stellar Burger" - интернет-магазин с конструктором бургеров.
 
-Используются технологии html, css, ts, react, redux, react-dnd, react-intersection-observer, redux-thunk, react-router-dom.
-Инструменты тестирования jest, cypress.
+Используются технологии: HTML, CSS, TypeScript, React, Redux, React DnD, React Intersection Observer, Redux Thunk, React Router DOM. Инструменты тестирования: Jest, Cypress.
 
 ## Установка и запуск приложения:
 
